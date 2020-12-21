@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 /* GET users listing. */
 router.get('/login', function(req, res, next) {
@@ -86,14 +87,27 @@ router.post('/login', (req, res, next) => {
     failureRedirect: '/users/login',
     failureFlash: true
   })(req, res, next);
+
+  const maxAge = 3 *24 *60 *60 ;
+  const createToken = (id) => {
+    return jwt.sign({id},'strasno',{
+      expiresIn: maxAge
+    });
+  }
+  const token = createToken(User._id);
+  res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+  console.log(req.user.name);
 });
 
 // Logout
 router.get('/logout', (req, res) => {
+  res.cookie('jwt','',{maxAge: 1 });
   req.logout();
   req.flash('success_msg', 'You are logged out');
   res.redirect('/users/login');
 });
 
-
+router.get('dashboard',passport.authenticate('jwt',{session: false}),function (req,res,next){
+  res.render('dashboard');
+});
 module.exports = router;
