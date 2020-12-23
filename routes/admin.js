@@ -100,7 +100,7 @@ router.get('/logout', (req, res) => {
 
 router.get('/get-data',function (req,res,next) {
   User.find({}, function(err, users) {
-    var userMap = {};
+    const userMap = {};
     users.forEach(function(user) {
       userMap[user._id] = user;
     });
@@ -108,5 +108,25 @@ router.get('/get-data',function (req,res,next) {
   });
 });
 
+router.get('/dashboard/customers',function (req,res,next) {
+  User.find({}, function(err, Users){
+    if (err)
+      return done(err);
 
+    if (Users) {
+      //console.log("Users count : " + user.length);
+      res.render('admin/users', {
+        usersArray: Users
+      });
+    }
+  });
+});
+
+
+router.get('/dashboard/customers/:id',function (req,res,next) {
+  User.find({_id: req.params.id}, function(err, docs){
+    if(err) res.json(err);
+    else    res.json( {user: docs[0]._id});
+  });
+});
 module.exports = router;

@@ -96,7 +96,7 @@ router.post('/login', (req, res, next) => {
   }
   const token = createToken(User._id);
   res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-  console.log(req.user.name);
+  //console.log(req.user.name);
 });
 
 // Logout
