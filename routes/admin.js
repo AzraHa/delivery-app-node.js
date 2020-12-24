@@ -4,12 +4,11 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const Admin = require('../models/Admin');
 const User = require('../models/User');
-var mongoose = require('mongoose');
 
-/* GET home page. */
-router.get('/dashboard',function (req,res,next){
-  res.render('admin/dashboard');
-});
+const jwt = require('jsonwebtoken');
+const {ensureAuthenticatedAdmin} = require('../config/auth');
+
+
 router.get('/login', function(req, res, next) {
   res.render('admin/login');
 });
@@ -44,8 +43,8 @@ router.post('/register',function (req,res,next){
     });
   }else {
 
-    Admin.findOne({ email: email }).then(admin => {
-      if (admin) {
+    Admin.findOne({ email: email }).then(user => {
+      if (user) {
         errors.push({ msg: 'Email already exists' });
         res.render('register', {
           errors,
@@ -69,7 +68,7 @@ router.post('/register',function (req,res,next){
             newAdmin.password = hash;
             newAdmin
                 .save()
-                .then(admin => {
+                .then(user =>{
                   req.flash(
                       'success_msg',
                       'You are now registered and can log in'
@@ -90,10 +89,21 @@ router.post('/login',function (req,res,next){
     failureRedirect: '/admin/login',
     failureFlash: true
   })(req, res, next);
+  const maxAge = 3 *24 *60 *60 ;
+  const createToken = (id) => {
+    return jwt.sign({id},'strasno',{
+      expiresIn: maxAge
+    });
+  }
+  const token = createToken(Admin._id);
+  res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+
+
 });
 
 // Logout
 router.get('/logout', (req, res) => {
+  res.cookie('jwt','',{maxAge: 1 });
   req.logout();
   req.flash('success_msg', 'You are logged out');
   res.redirect('/admin/login');
@@ -109,7 +119,7 @@ router.get('/get-data',function (req,res,next) {
   });
 });
 
-router.get('/dashboard/customers',function (req,res,next) {
+router.get('/customers',function (req,res,next) {
   User.find({}, function(err, Users){
     if (err)
       return done(err);
@@ -117,6 +127,7 @@ router.get('/dashboard/customers',function (req,res,next) {
     if (Users) {
       console.log(Users);
       res.render('admin/users', {
+        user: req.user,
         usersArray: Users
       });
     }
@@ -130,4 +141,34 @@ router.get('/dashboard/customers/:id',function (req,res,next) {
     else    res.json( {user: docs[0]._id});
   });
 });
+
+router.get('/add-restourant-admin',function (req,res,next){
+  res.render('admin/add-restourant-admin');
+})
+/* GET home page. */
+router.get('/dashboard',ensureAuthenticatedAdmin,function (req,res,next){
+  res.render('admin/dashboard', {
+    user: req.user
+  })
+
+});
+
+router.put('/delete-customers/:id', (req, res) => {
+  let userId = req.params.id,
+    userParams = {
+      status:true};
+  User.findByIdAndUpdate(userId, {
+    $set: userParams
+  })
+    .then(user => {
+      res.locals.redirect = '/admin/customers';
+      res.locals.user = user;
+
+    })
+    .catch(error => {
+      console.log(`Error updating user by ID: ${error.message}`);
+
+    });
+});
+
 module.exports = router;

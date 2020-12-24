@@ -13,4 +13,7 @@ router.get('/dashboard',ensureAuthenticated, function(req, res, next) {
     user: req.user
   })
 });
+router.get('/account', ensureAuthenticated, function(req, res){
+  res.render('account', { user: req.user });
+});
 module.exports = router;

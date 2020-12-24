@@ -110,6 +110,7 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('dashboard',passport.authenticate('jwt',{session: false}),function (req,res,next){
+  console.log(req.cookies);
   res.render('dashboard');
 });
 module.exports = router;

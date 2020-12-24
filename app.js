@@ -15,6 +15,7 @@ var adminRouter = require('./routes/admin');
 
 var app = express();
 
+
 // Passport Config
 require('./config/passport')(passport);
 
@@ -54,7 +55,6 @@ app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
 }));
 
 // Passport middleware
