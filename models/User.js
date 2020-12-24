@@ -22,7 +22,8 @@ const UserSchema = new mongoose.Schema({
         default: Date.now
     },
     status:{
-        type: Boolean
+        type: Boolean,
+      required:true
     }
 });
 

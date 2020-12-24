@@ -16,7 +16,7 @@ router.get('/register', function(req, res, next) {
 router.post('/register',function (req,res,next) {
   const {name, email, password, password2, address} = req.body;
   let errors = [];
-
+  const status = true;
   if (!name || !email || !password || !password2 || !address) {
     errors.push({msg: 'Please enter all fields'});
   }
@@ -37,6 +37,7 @@ router.post('/register',function (req,res,next) {
       password,
       password2,
       address
+
     });
   }else {
     User.findOne({ email: email }).then(user => {
@@ -55,7 +56,8 @@ router.post('/register',function (req,res,next) {
           name,
           email,
           password,
-          address
+          address,
+          status
         });
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
