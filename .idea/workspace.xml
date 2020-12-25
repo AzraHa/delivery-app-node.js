@@ -2,22 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/models/RestaurantAdmin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/adminRestaurant.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/dashboard.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/admin/users-inactive.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routes/supplier.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/passport.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/passport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/adminControllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/adminControllers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/userController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/add-restourant-admin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/add-restaurant-admin.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/partials/sidebar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/partials/sidebar.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/users.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/users.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/adminRestaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/adminRestaurant.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +78,7 @@
       <workItem from="1608825758618" duration="6197000" />
       <workItem from="1608832372344" duration="205000" />
       <workItem from="1608884106321" duration="14293000" />
+      <workItem from="1608905457960" duration="1981000" />
     </task>
     <servers />
   </component>
