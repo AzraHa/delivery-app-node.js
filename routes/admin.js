@@ -27,9 +27,9 @@ router.get('/customers/inactive',adminController.find_customers_inactive);
 
 router.get('/delete-customers/:id', adminController.delete_customers);
 
-router.get('/add-restaurant-admin',adminController.add_admin_get);
+router.get('/add-restaurant-admin',adminController.add_restaurant_admin_get);
 
-router.post('/add-restaurant-admin',adminController.add_admin_post);
+router.post('/add-restaurant-admin',adminController.add_restaurant_admin_post);
 
 router.get('/dashboard/customers/active/:id',function (req,res,next) {
   User.find({_id: req.params.id,status:true}, function(err, docs){

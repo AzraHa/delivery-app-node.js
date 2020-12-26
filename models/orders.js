@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 
-const RestaurantAdminSchema = new mongoose.Schema({
-  name: {
+const orderSchema = new mongoose.Schema({
+  customer: {
+    type: String,
+    required: true
+  },
+  address:{
     type: String,
     required: true
   },
@@ -10,16 +14,8 @@ const RestaurantAdminSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  password: {
-    type: String,
-    required: true
-  },
-  restaurant:{
-    type: String
-  },
-  address:{
-    type: String,
-    required: true
+  admin:{
+
   },
   date: {
     type: Date,

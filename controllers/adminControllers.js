@@ -141,10 +141,10 @@ module.exports.delete_customers = (req,res,next) => {
     res.redirect('/admin/customers');
   });
 }
-module.exports.add_admin_get = (req,res,next) => {
+module.exports.add_restaurant_admin_get = (req,res,next) => {
   res.render('admin/add-restaurant-admin');
 }
-module.exports.add_admin_post = (req,res,next) => {
+module.exports.add_restaurant_admin_post = (req,res,next) => {
   const {name, email, password, password2, restaurantName, addressRestaurant,typeRestaurant,address} = req.body;
   let errors = [];
   const status = true;
@@ -184,7 +184,7 @@ module.exports.add_admin_post = (req,res,next) => {
       });
     } else {
       const newAdmin = new RestaurantAdmin({
-        name, email, password, password2, restaurantName, addressRestaurant,typeRestaurant,address,status
+        name, email, password, restaurantName, addressRestaurant,typeRestaurant,address,status
       });
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newAdmin.password, salt, (err, hash) => {
