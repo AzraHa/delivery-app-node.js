@@ -36,12 +36,18 @@
                 <!-- TABLE: LATEST ORDERS -->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Customers/Active<a class="btn btn-primary btn-sm float-right" href="/admin/customers/inactive">
-                                <i class="fa fa-folder">
-                                </i>
-                                Inactive
-                            </a></h3>
-
+                        <%if(stat===false){%>
+                        <h3 class="card-title">Customers/Active
+                            <a class="btn btn-primary btn-sm float-right" href="/admin/customers/true">
+                                <i class="fa fa-folder"></i>Active
+                            </a>
+                        </h3>
+                        <%} else {%>
+                                <h3 class="card-title">Customers/Active<a class="btn btn-primary btn-sm float-right" href="/admin/customers/false">
+                                        <i class="fa fa-folder"></i>Inactive
+                                    </a>
+                                </h3>
+                        <%}%>
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
@@ -58,10 +64,8 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <% if (typeof usersArray !== 'undefined' && usersArray.length > 0) {%>
+                                    <% if (typeof usersArray !== 'undefined' && usersArray.length >= 0) {%>
                                         <%for (var i = 0; i < usersArray.length; i++) { %>
-                                    <% if(usersArray[i].status === true) {%>
-
                                                 <td><%= i+1 %> </td>
                                                 <td><%= usersArray[i].name %></td>
                                                 <td><%= usersArray[i].email %></td>
@@ -85,7 +89,7 @@
                                                         Delete
                                                     </a>
                                                 </td>
-                                    <% } %>
+
                                 </tr>
                                         <%}%>
                                 <% } %>

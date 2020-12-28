@@ -21,9 +21,7 @@ router.post('/login',adminController.admin_login_post);
 
 router.get('/logout',adminController.admin_logout);
 
-router.get('/customers/active',adminController.find_customers_active);
-
-router.get('/customers/inactive',adminController.find_customers_inactive);
+router.get('/customers/:status',adminController.find_customers);
 
 router.get('/delete-customers/:id', adminController.delete_customers);
 
@@ -38,12 +36,12 @@ router.get('/dashboard/customers/active/:id',function (req,res,next) {
   });
 });
 
-router.get('/dashboard/customers/inactive/:id',function (req,res,next) {
-  User.find({_id: req.params.id,status:false}, function(err, docs){
-    if(err) res.json(err);
-    else    res.json( {user: docs[0]._id});
-  });
-});
+router.get('/admins',adminController.find_restaurant_admin);
+router.get('/suppliers',adminController.find_suppliers);
+
+router.get('/user',function (req,res,next){
+  res.send(req.user);
+})
 
 
 module.exports = router;

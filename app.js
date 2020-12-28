@@ -38,14 +38,7 @@ mongoose
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-// Express session
-app.use(
-    session({
-      secret: 'secret',
-      resave: true,
-      saveUninitialized: true
-    })
-);
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -54,7 +47,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //Express Session
 app.use(session({
-    secret: 'keyboard cat',
+    secret: 'secret',
     resave: false,
     saveUninitialized: true,
 }));

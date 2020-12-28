@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const Admin = require('../models/Admin');
 const User = require('../models/User');
+const Supplier = require('../models/suppliers');
 const RestaurantAdmin = require('../models/RestaurantAdmin');
 const jwt = require('jsonwebtoken');
 const {ensureAuthenticatedAdmin} = require('../config/auth');
@@ -103,8 +104,13 @@ module.exports.admin_logout = (req,res,next) => {
   req.flash('success_msg', 'You are logged out');
   res.redirect('/admin/login');
 }
-module.exports.find_customers_active = (req,res,next) => {
-  User.find({status:true}, function(err, Users){
+module.exports.find_customers = (req,res,next) => {
+  const st = req.params.status;
+  let status = true;
+  if(st==="false") status = false;
+  //console.log(st,typeof st);
+  //console.log(status,typeof status);
+  User.find({status:status}, function(err, Users){
     if (err)
       return done(err);
 
@@ -112,25 +118,44 @@ module.exports.find_customers_active = (req,res,next) => {
       console.log(Users);
       res.render('admin/users', {
         user: req.user,
-        usersArray: Users
+        usersArray: Users,
+        stat: status
       });
     }
   });
 }
-module.exports.find_customers_inactive = (req,res,next) => {
-  User.find({status:false}, function(err, Users){
+
+
+module.exports.find_restaurant_admin = (req,res,next) => {
+  RestaurantAdmin.find({status:true},function (err,Admins){
     if (err)
       return done(err);
 
-    if (Users) {
-      console.log(Users);
-      res.render('admin/users-inactive', {
+    if (Admins) {
+      console.log(Admins);
+      res.render('admin/admin-restaurant', {
         user: req.user,
-        usersArray: Users
+        usersArray: Admins
       });
     }
   });
 }
+
+module.exports.find_suppliers = (req,res,next) => {
+  Supplier.find({status:true},function (err,Suppliers){
+    if (err)
+      return done(err);
+
+    if (Suppliers) {
+      console.log(Suppliers);
+      res.render('admin/suppliers', {
+        user: req.user,
+        usersArray: Suppliers
+      });
+    }
+  });
+}
+
 module.exports.delete_customers = (req,res,next) => {
   const query = {'_id': req.params.id};
   console.log(query);
