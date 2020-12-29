@@ -88,7 +88,7 @@ module.exports.admin_login_post = (req,res,next) => {
     failureRedirect: '/admin/login',
     failureFlash: true
   })(req, res, next);
-  const maxAge = 3 *24 *60 *60 ;0
+  const maxAge = 3 *24 *60 *60 ;
   const createToken = (id) => {
     return jwt.sign({id},'strasno',{
       expiresIn: maxAge

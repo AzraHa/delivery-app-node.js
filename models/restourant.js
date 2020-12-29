@@ -31,6 +31,6 @@ const RestaurantSchema = new mongoose.Schema({
   }
 });
 
-const RestaurantAdmin = mongoose.model('RestaurantAdmin', RestaurantAdminSchema);
+const RestaurantAdmin = mongoose.model('RestaurantAdmin', RestaurantSchema);
 
 module.exports = RestaurantAdmin;

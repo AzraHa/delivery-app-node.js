@@ -92,7 +92,8 @@ module.exports.registration_post = async (req,res) => {
 module.exports.login_post = (req,res,next) => {
   passport.authenticate('local', function (err, user) {
     req.logIn(user, function (err) { // <-- Log user in
-      return res.redirect('/');
+      res.locals.user = user;
+      return res.render('error');
     });
   })(req, res);
 
