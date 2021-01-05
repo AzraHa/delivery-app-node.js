@@ -8,7 +8,7 @@ router.get('/register',userController.registration_get);
 router.post('/register',userController.registration_post);
 router.get('/logout',userController.logout);
 router.get('/dashboard',userController.dashboard);
-
+router.get('/',userController.index);
 
 
 

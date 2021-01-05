@@ -189,6 +189,7 @@
                         if (results[0]) {
                             infowindow.setContent(results[0].formatted_address);
                             //console.log(results[0].formatted_address);
+                            x.value = results[0].formatted_address;
                             infowindow.open(map, Mar);
                         } else {
                             window.alert("No results found");
@@ -208,6 +209,7 @@
                         if (results[0]) {
                             infowindow.setContent(results[0].formatted_address);
                             //console.log(results[0].formatted_address);
+                            x.value = results[0].formatted_address;
                             infowindow.open(map, Mar);
                         } else {
                             window.alert("No results found");

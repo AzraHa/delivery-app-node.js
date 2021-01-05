@@ -4,8 +4,9 @@ const {ensureAuthenticated} = require('../config/auth');
 
 /* GET home page. */
 router.get('/',function (req,res,next){
-  res.render('index');
-})
+  res.render('index', {title: 'index'});
+});
+
 router.get('/map',function (req,res,next){
   res.render('map');
 })

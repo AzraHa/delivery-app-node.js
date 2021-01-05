@@ -1,71 +1,272 @@
-<div class="row mt-5">
-    <div class="col-md-6 m-auto">
-        <div class="card card-body">
-            <h1 class="text-center mb-3">
-                <i class="fas fa-user-plus"></i> Register
-            </h1>
-            <% include ./partials/messages %>
-            <form action="/users/register" method="POST">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input
-                            type="name"
-                            id="name"
-                            name="name"
-                            class="form-control"
-                            placeholder="Enter Name"
-                            value="<%= typeof name != 'undefined' ? name : '' %>"
-                    />
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            class="form-control"
-                            placeholder="Enter Email"
-                            value="<%= typeof email != 'undefined' ? email : '' %>"
-                    />
-                </div>
-                <div class="form-group">
-                    <label for="password2"> Address<label>
-                    <input
-                            type="text"
-                            id="address"
-                            name="address"
-                            class="form-control"
-                            placeholder="Address"
-                            value="<%= typeof address != 'undefined' ? address : '' %>"
-                    />
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            class="form-control"
-                            placeholder="Create Password"
-                            value="<%= typeof password != 'undefined' ? password : '' %>"
-                    />
-                </div>
-                <div class="form-group">
-                    <label for="password2">Confirm Password</label>
-                    <input
-                            type="password"
-                            id="password2"
-                            name="password2"
-                            class="form-control"
-                            placeholder="Confirm Password"
-                            value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
-                    />
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">
-                    Register
-                </button>
-            </form>
-            <p class="lead mt-4">Have An Account? <a href="/users/login">Login</a></p>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+
+<body>
+<div class="pocetak">
+    <!--Kod za navigation bar preuzet sa stranice https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_topnav -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Pricing</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Register</a>
+                </li>
+            </ul>
         </div>
+    </nav>
+    <div class="naslovna-login-register">
+        <div class="register-box">
+            <div class="card card-outline card-primary">
+                <div class="card-header text-center">
+                    <a href="" class="h1"><b>Register</b></a>
+                </div>
+                <div class="card-body">
+                    <p class="login-box-msg">Register a new membership</p>
+                <% include ./partials/messages %>
+                <form action="/users/register" method="POST">
+
+                    <div class="input-group mb-3">
+                        <label for="name" class="col-sm-2 col-form-label mr-2">Full name</label>
+                        <input type="name"
+                               id="name"
+                               name="name"
+                               class="form-control"
+                               placeholder="Full name"
+                               value="<%= typeof name != 'undefined' ? name : '' %>">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fa fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label mr-2">Address</label>
+                        <input type="text"
+                               id="address"
+                               name="address"
+                               class="form-control"
+                               placeholder="Address"
+                               value="<%= typeof address != 'undefined' ? address : '' %>">
+                        <div class=" input-group-append ">
+                            <div class="input-group-append" style="border: 1px solid #F9723D;">
+                                <div class="input-group-text">
+                                    <p class="fa fa-map-marker" id="dugme"></p>
+                                </div>
+                                <input id="submit" type="button" value="Search" style="color: #F9723D;" />
+                            </div>
+                        </div>
+                        <div class=" input-group mb-3 ">
+                            <label for="inputEmail3 " class="col-sm-2 col-form-label mr-2 "></label>
+                            <div id="googleMap" class="form-control " style="float: right; position: relative; overflow: hidden; width: 80%; margin: 5px; height: 200px; "></div>
+
+                        </div>
+                    </div>
+                    <div class="input-group mb-3 ">
+                        <label for="inputEmail3 " class="col-sm-2 col-form-label mr-2 ">Email</label>
+                        <input type="email"
+                               id="email"
+                               name="email"
+                               class="form-control " placeholder="Enter Email"
+                               value="<%= typeof email != 'undefined' ? email : '' %>">
+                        <div class="input-group-append ">
+                            <div class="input-group-text ">
+                                <span class="fa fa-envelope "></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3 ">
+                        <label for="inputEmail3 " class="col-sm-2 col-form-label mr-2 ">Password</label>
+                        <input type="password"
+                               id="password"
+                               name="password"
+                               class="form-control"
+                               placeholder="Password"
+                               value="<%= typeof password != 'undefined' ? password : '' %>">
+                        <div class="input-group-append ">
+                            <div class="input-group-text ">
+                                <span class="fa fa-lock "></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3 ">
+                        <label for="inputEmail3 " class="col-form-label mr-2 ">Retype password</label>
+                        <input type="password"
+                               id="password2"
+                               name="password2"
+                               class="form-control"
+                               placeholder="Retype password"
+                               value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
+                        <div class="input-group-append ">
+                            <div class="input-group-text ">
+                                <span class="fa fa-lock "></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-md"></div>
+                        <div class="col-6 ">
+                            <button type="submit " class="btn btn-primary btn-block ">Register</button>
+                        </div>
+                    </div>
+                </form>
+
+                    <p class="lead mt-4">
+                        Have Account? <a href="/users/login">Login</a>
+                    </p>
+
+
+            </div>
+            <!-- /.form-box -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.register-box -->
+    <div class="naslovna2 ">
+        <p></p>
     </div>
 </div>
+<!-- /.form-box -->
+</div>
+
+<script>
+    function myMap() {
+        var mapProp= {
+            center:new google.maps.LatLng(43.8575738,18.4098533),
+            zoom:14,
+        };
+        var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+
+        const geocoder = new google.maps.Geocoder();
+        const infowindow = new google.maps.InfoWindow();
+        var x = document.getElementById("address");
+
+        document.getElementById("dugme").addEventListener("click", () => {
+            getLocation();
+        });
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.value = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            const latlng = {
+                lat: position.coords.latitude,
+                lng:position.coords.longitude
+            };
+            geocoder.geocode({ location: latlng }, (results, status) => {
+                if (status === "OK") {
+                    if (results[0]) {
+                        x.value = results[0].formatted_address;
+                        placeMarker(latlng);
+                    } else {
+                        window.alert("No results found");
+                    }
+                } else {
+                    window.alert("Geocoder failed due to: " + status);
+                }
+            });
+
+        }
+        document.getElementById("submit").addEventListener("click", () => {
+            geocodeAddress(geocoder, map);
+        });
+        var Mar;
+
+        function placeMarker(location) {
+            if ( Mar ) {
+                Mar.setPosition(location);
+                geocoder.geocode({ location}, (results, status) => {
+                    if (status === "OK") {
+                        if (results[0]) {
+                            infowindow.setContent(results[0].formatted_address);
+                            //console.log(results[0].formatted_address);
+                            x.value = results[0].formatted_address;
+                            infowindow.open(map, Mar);
+                        } else {
+                            window.alert("No results found");
+                        }
+                    } else {
+                        window.alert("Geocoder failed due to: " + status);
+                    }
+                });
+            } else {
+                Mar = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+                Mar.setPosition(location);
+                geocoder.geocode({ location }, (results, status) => {
+                    if (status === "OK") {
+                        if (results[0]) {
+                            infowindow.setContent(results[0].formatted_address);
+                            //console.log(results[0].formatted_address);
+                            x.value = results[0].formatted_address;
+                            infowindow.open(map, Mar);
+                        } else {
+                            window.alert("No results found");
+                        }
+                    } else {
+                        window.alert("Geocoder failed due to: " + status);
+                    }
+                });
+            }
+        }
+        function geocodeAddress(geocoder, resultsMap) {
+            const address = document.getElementById("address").value;
+            geocoder.geocode({ address: address }, (results, status) => {
+                if (status === "OK") {
+                    resultsMap.setCenter(results[0].geometry.location);
+                    new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location,
+                    });
+                } else {
+                    alert("Geocode was not successful for the following reason: " + status);
+                }
+            });
+        }
+        google.maps.event.addListener(map, 'click', function(event) {
+            placeMarker(event.latLng);
+        });
+    }
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVWoPIcc1pz1z5p_Ja6_CD7Ed9MzWN_ko&callback=myMap"></script>
+
+</body>
+</html>
