@@ -4,7 +4,7 @@ const {ensureAuthenticated} = require('../config/auth');
 
 /* GET home page. */
 router.get('/',function (req,res,next){
-  res.render('index', {title: 'index'});
+  res.render('indeks', {title: 'index'});
 });
 
 router.get('/map',function (req,res,next){
@@ -16,7 +16,7 @@ router.get('/dashboard',ensureAuthenticated, function(req, res, next) {
     user: req.user
   })
 });
-router.get('/account', ensureAuthenticated, function(req, res){
-  res.render('account', { user: req.user });
+router.get('/naslovna', ensureAuthenticated, function(req, res){
+  res.render('index', { user: req.user });
 });
 module.exports = router;
