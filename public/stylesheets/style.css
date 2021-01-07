@@ -635,7 +635,10 @@ footer p {
   min-width: 100%
 }
 
-
+.row{
+  padding: 0px !important;
+  margin: 0px !important;
+}
 .owl-carousel .item {
   margin: 3px
 }
