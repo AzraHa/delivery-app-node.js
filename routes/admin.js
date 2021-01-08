@@ -43,5 +43,13 @@ router.get('/user',function (req,res,next){
   res.send(req.user);
 })
 
+router.get('/add-restaurant',function (req,res,next){
+  res.render('admin/add-restaurant',{user:req.user});
+});
+
+router.post('/add-restaurant',function (req,res,next){
+  res.render('admin/add-restaurant',{user:req.user});
+});
+
 
 module.exports = router;

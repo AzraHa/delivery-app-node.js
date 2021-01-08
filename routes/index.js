@@ -16,7 +16,7 @@ router.get('/dashboard',ensureAuthenticated, function(req, res, next) {
     user: req.user
   })
 });
-router.get('/naslovna', ensureAuthenticated, function(req, res){
+router.get('/naslovna',  function(req, res){
   res.render('index', { user: req.user });
 });
 module.exports = router;

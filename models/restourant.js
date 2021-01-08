@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
+const RestaurantAdmin = require('./RestaurantAdmin');
 
 const RestaurantSchema = new mongoose.Schema({
   name: {
@@ -15,7 +16,7 @@ const RestaurantSchema = new mongoose.Schema({
     required: true
   },
   admin:{
-
+    id: [{ type: mongoose.Schema.Types.ObjectId, ref: "RestaurantAdmin" }],
   },
   date: {
     type: Date,
@@ -31,6 +32,6 @@ const RestaurantSchema = new mongoose.Schema({
   }
 });
 
-const RestaurantAdmin = mongoose.model('RestaurantAdmin', RestaurantSchema);
+const Restaurant = mongoose.model('RestaurantAdmin', RestaurantSchema);
 
-module.exports = RestaurantAdmin;
+module.exports = Restaurant;
