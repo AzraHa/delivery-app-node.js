@@ -18,6 +18,10 @@ const RestaurantSchema = new mongoose.Schema({
   admin:{
     id: [{ type: mongoose.Schema.Types.ObjectId, ref: "RestaurantAdmin" }],
   },
+ img:{
+   data: Buffer,
+   contentType: String
+ },
   date: {
     type: Date,
     default: Date.now
@@ -32,6 +36,6 @@ const RestaurantSchema = new mongoose.Schema({
   }
 });
 
-const Restaurant = mongoose.model('RestaurantAdmin', RestaurantSchema);
+const Restaurant = mongoose.model('Restaurant', RestaurantSchema);
 
 module.exports = Restaurant;

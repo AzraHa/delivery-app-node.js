@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminControllers');
-
+const Restaurant = require('../models/restourant');
 /* GET home page. */
 router.get('/dashboard',function (req,res,next){
   res.render('admin/dashboard', {
@@ -48,8 +48,57 @@ router.get('/add-restaurant',function (req,res,next){
 });
 
 router.post('/add-restaurant',function (req,res,next){
-  res.render('admin/add-restaurant',{user:req.user});
+  const {name, email, address} = req.body;
+  const photo = req.file;
+  let errors = [];
+  const status = true;
+  Restaurant.findOne({ name: name,email:email }).then(resAdmin => {
+    if (resAdmin) {
+      errors.push({ msg: 'Restaurant already exists' });
+      res.render('admin/add-restaurant', {
+        errors,
+        name,
+        email,
+        address
+      });
+    } else {
+      const newRestaurant = new Restaurant({
+        name, email, address,status
+      });
+      /*bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newAdmin.password, salt, (err, hash) => {
+          if (err) throw err;
+          newAdmin.password = hash;
+          newAdmin
+            .save()
+            .then(user =>{
+              res.redirect('/admin/dashboard');
+            })
+            .catch(err => console.log(err));
+        });
+      });*/
+      console.log(newRestaurant);
+      newRestaurant
+        .save()
+        .then(user =>{
+          res.redirect('/admin/dashboard');
+        })
+    }
+  });
 });
 
+router.get('/restaurants',function (req,res,next){
+  Restaurant.find({status:true},function (err,Restaurant){
+    if (err)
+      return done(err);
 
+    if (Restaurant) {
+      console.log(Restaurant);
+      res.render('admin/restaurants', {
+        user: req.user,
+        RestaurantArray: Restaurant
+      });
+    }
+  });
+});
 module.exports = router;

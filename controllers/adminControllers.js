@@ -167,7 +167,7 @@ module.exports.delete_customers = (req,res,next) => {
   });
 }
 module.exports.add_restaurant_admin_get = (req,res,next) => {
-  res.render('admin/add-restaurant-admin');
+  res.render('admin/add-restaurant-admin',{user:req.user});
 }
 module.exports.add_restaurant_admin_post = (req,res,next) => {
   const {name, email, password, password2, restaurantName, addressRestaurant,typeRestaurant,address} = req.body;

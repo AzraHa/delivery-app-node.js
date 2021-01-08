@@ -30,7 +30,7 @@
                                 <h1><b>Add restaurant</b></h1>
                             </div>
                             <div class="card-body">
-                                <form action="" method="POST">
+                                <form action="/admin/add-restaurant" method="POST">
                                     <div class="input-group mb-3">
                                         <input type="text"
                                                id="name"
@@ -73,11 +73,18 @@
 
 
                                             </div>
-                                        <div class=" input-group mb-3 ">
+                                        <div class="input-group">
                                             <label for="inputEmail3 " class="col-sm-2 col-form-label mr-2 "></label>
                                             <div id="googleMap" class="form-control " style="float: right; position: relative; overflow: hidden; width: 80%; margin: 5px; height: 200px; "></div>
 
                                         </div>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="exampleInputPassword1" class="col-form-label mr-2">Picture</label>
+                                        <input type="file"
+                                               id="picture"
+                                               name="picture"
+                                               class="form-control">
                                     </div>
                                     <div class="row">
                                         <div class="col-md">

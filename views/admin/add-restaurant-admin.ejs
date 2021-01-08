@@ -12,16 +12,115 @@
 </head>
 
 <body>
-<h1>Dodaj restoran admin</h1>
-<form action="/admin/add-restaurant-admin" method="post">
-    <input type="text" placeholder="Ime restorana" name="restaurantName"><br>
-    <input type="text" placeholder="Adresa restorana" name="addressRestaurant"><br>
-    <input type="text" placeholder="Tip restorana" name="typeRestaurant"><br>
-    <input type="text" placeholder="Ime administratora" name="name"><br>
-    <input type="text" placeholder="Kontakt" name="address"><br>
-    <input type="text" placeholder="Email" name="email"><br>
-    <input type="text" placeholder="password" name="password"><br>
-    <input type="submit">
-</form>
-</body>
-</html>
+<main role="main">
+    <% include partials/navbar %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <%include partials/sidebar %>
+            <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
+                <div class="naslovna-login-register">
+                    <div class="login-box">
+                        <div class="card card-outline card-primary">
+                            <div class="card-header text-center">
+                                <h1><b>Add restaurant</b></h1>
+                            </div>
+                            <div class="card-body">
+                                <form action="/admin/add-restaurant-admin" method="post">
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               id="restaurantName"
+                                               name="restaurantName"
+                                               class="form-control"
+                                               placeholder="Restaurant Name">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fa fa-home"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               id="addressRestaurant"
+                                               name="addressRestaurant"
+                                               class="form-control"
+                                               placeholder="Restaurant Address">
+                                        <div class="input-group-append" >
+                                            <div class="input-group-text">
+                                                <span class="fa fa-map-marker"></span>
+                                            </div>
+                                            <div class="input-group-text">
+                                                <span class="fa fa-search"></span>
+                                            </div>
+                                        </div>
+                                        <div class=" input-group mb-3 ">
+                                            <label for="inputEmail3 " class="col-sm-2 col-form-label mr-2 "></label>
+                                            <div id="googleMap" class="form-control " style="float: right; position: relative; overflow: hidden; width: 80%; margin: 5px; height: 200px; "></div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               id="typeRestaurant"
+                                               name="typeRestaurant"
+                                               class="form-control"
+                                               placeholder="Enter Type">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fa fa-home"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               id="name"
+                                               name="name"
+                                               class="form-control"
+                                               placeholder="Administrator">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fa fa-home"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input type="email"
+                                               id="email"
+                                               name="email"
+                                               class="form-control"
+                                               placeholder="Administrator Email">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fa fa-mail"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input type="password"
+                                               id="password"
+                                               name="password"
+                                               class="form-control"
+                                               placeholder="Administrator Password">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fa fa-mail"></span>
+                                            </div>
+                                        </div>
+                                    </div><div class="row">
+                                        <div class="col-md">
+                                            <div class="col-md-8 icheck-primary">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 submit">
+                                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
