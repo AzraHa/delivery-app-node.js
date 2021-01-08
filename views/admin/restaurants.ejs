@@ -43,7 +43,7 @@
                                 <% if (typeof RestaurantArray !== 'undefined' && RestaurantArray.length > 0) {%>
                                 <%for (var i = 0; i < RestaurantArray.length; i++) { %>
                                     <% if(RestaurantArray[i].status === true) {%>
-
+                                        <td><img src="../<%= RestaurantArray[i].image%>" style="width: 30px;"></td>
                                         <td><%= RestaurantArray[i].name %></td>
 
                                         <td><%= RestaurantArray[i].address %></td>

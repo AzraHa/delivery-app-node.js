@@ -13,14 +13,37 @@ let storage = multer.diskStorage({
   }
 })
 const upload = multer({ storage: storage });
+const path = require('path');
 
+
+router.get('/:name', function (req, res, next) {
+  var options = {
+    root: path.join('./uploads'),
+    dotfiles: 'deny',
+    headers: {
+      'x-timestamp': Date.now(),
+      'x-sent': true
+    }
+  }
+
+  var fileName = 'photo-1610114734294.jpeg';
+  res.sendFile(fileName, options, function (err) {
+    if (err) {
+      next(err)
+    } else {
+      console.log('Sent:', fileName)
+    }
+  })
+});
 /* GET home page. */
 router.get('/',function (req,res,next){
   res.render('indeks', {title: 'index'});
 });
 router.post('/upload', upload.single('photo'), (req, res) => {
+  console.log(req.file.filename);
   if(req.file) {
     res.json(req.file);
+
   }
   else throw 'error';
 });

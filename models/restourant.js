@@ -18,9 +18,8 @@ const RestaurantSchema = new mongoose.Schema({
   admin:{
     id: [{ type: mongoose.Schema.Types.ObjectId, ref: "RestaurantAdmin" }],
   },
- img:{
-   data: Buffer,
-   contentType: String
+ image:{
+   type: String
  },
   date: {
     type: Date,

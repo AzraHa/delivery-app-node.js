@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminControllers');
 const Restaurant = require('../models/restourant');
+const upload = require('../controllers/uploadController');
+const path = require('path');
 /* GET home page. */
 router.get('/dashboard',function (req,res,next){
   res.render('admin/dashboard', {
@@ -47,9 +49,11 @@ router.get('/add-restaurant',function (req,res,next){
   res.render('admin/add-restaurant',{user:req.user});
 });
 
-router.post('/add-restaurant',function (req,res,next){
+router.post('/add-restaurant',upload.single('picture'),function (req,res,next){
+
   const {name, email, address} = req.body;
-  const photo = req.file;
+  const image = req.file.filename;
+  console.log('photo '+image);
   let errors = [];
   const status = true;
   Restaurant.findOne({ name: name,email:email }).then(resAdmin => {
@@ -63,7 +67,7 @@ router.post('/add-restaurant',function (req,res,next){
       });
     } else {
       const newRestaurant = new Restaurant({
-        name, email, address,status
+        name, email, address,email,image,status
       });
       /*bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newAdmin.password, salt, (err, hash) => {

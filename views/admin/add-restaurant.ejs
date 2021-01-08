@@ -30,7 +30,7 @@
                                 <h1><b>Add restaurant</b></h1>
                             </div>
                             <div class="card-body">
-                                <form action="/admin/add-restaurant" method="POST">
+                                <form action="/admin/add-restaurant" method="POST" enctype="multipart/form-data">
                                     <div class="input-group mb-3">
                                         <input type="text"
                                                id="name"
@@ -81,7 +81,7 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="exampleInputPassword1" class="col-form-label mr-2">Picture</label>
-                                        <input type="file"
+                                        <input type="file" accept="image/*"
                                                id="picture"
                                                name="picture"
                                                class="form-control">
