@@ -26,7 +26,7 @@ router.get('/:name', function (req, res, next) {
     }
   }
 
-  var fileName = 'photo-1610114734294.jpeg';
+  var fileName = req.params.name;
   res.sendFile(fileName, options, function (err) {
     if (err) {
       next(err)
