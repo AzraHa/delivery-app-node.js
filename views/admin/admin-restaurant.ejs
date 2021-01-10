@@ -29,28 +29,31 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
+                                <th>No: </th>
                                 <th>Name</th>
                                 <th>Restaurant</th>
                                 <th>Status</th>
+                                <th>Address</th>
                                 <th></th>
-
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <% if (typeof usersArray !== 'undefined' && usersArray.length > 0) {%>
                                 <%for (var i = 0; i < usersArray.length; i++) { %>
+                                <td><%= i+1 %></td>
                                     <% if(usersArray[i].status === true) {%>
 
                                         <td><%= usersArray[i].name %></td>
 
-                                        <td><%= usersArray[i].address %></td>
+                                        <td><%= usersArray[i].restaurant %></td>
 
                                         <% if(usersArray[i].status === true){%>
                                             <td>Active</td>
                                         <%} else {%>
                                             <td>X</td>
                                         <%}%>
+                                        <td><%= usersArray[i].address %></td>
                                         <td class="project-actions text-right">
                                             <a class="btn btn-primary btn-sm" href="/admin/dashboard/customers/active/<%= usersArray[i]._id%>">
                                                 <i class="fa fa-folder">

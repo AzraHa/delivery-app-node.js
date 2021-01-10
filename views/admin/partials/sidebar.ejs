@@ -1,29 +1,30 @@
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
     <div class="sidebar-sticky pt-3" style="border-top: 1px solid orange;">
         <ul class="nav flex-column">
 
             <li class="nav-item">
-                <a class="nav-link active" href="#">
+                <a class="nav-link" id="link" href="/admin/dashboard">
                     <i class="fa fa-home"></i> Dashboard
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/admins">
+                <a class="nav-link" id="link" href="/admin/admins">
                     <i class="fa fa-file"></i></span> Admini restorana
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/supliers">
+                <a class="nav-link" id="link" href="/admin/suppliers">
                     <i class="fa fa-shopping-cart"></i> Dostavljači
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/customers/true">
+                <a class="nav-link" id="link" href="/admin/customers/true">
                     <i class="fa fa-user"></i> Kupci
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/restaurants">
+                <a class="nav-link" id="link" href="/admin/restaurants">
                     <i class="fa fa-flag"></i> Restorani
                 </a>
             </li>
@@ -48,8 +49,18 @@
                     <i class="fa fa-file"></i> Dodaj admina restorana
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/add-suppliers">
+                    <i class="fa fa-file"></i> Dodaj dostavljaca
+                </a>
+            </li>
 
 
         </ul>
     </div>
 </nav>
+<script>
+    $(".nav-link").click(function() {  //use a class, since your ID gets mangled
+        $(this).addClass("active");      //add the class to the clicked element
+    });
+</script>

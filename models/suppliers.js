@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
+
 const SupplierSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -9,11 +10,7 @@ const SupplierSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  password: {
-    type: String,
-    required: true
-  },
-  address:{
+  s_address:{
     type: String,
     required: true
   },
