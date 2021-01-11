@@ -31,11 +31,12 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
+                                <th>No:</th>
+                                <th>Picture</th>
                                 <th>Name</th>
-                                <th>Restaurant</th>
+                                <th>Address</th>
                                 <th>Status</th>
                                 <th></th>
-
                             </tr>
                             </thead>
                             <tbody>
@@ -43,7 +44,8 @@
                                 <% if (typeof RestaurantArray !== 'undefined' && RestaurantArray.length > 0) {%>
                                 <%for (var i = 0; i < RestaurantArray.length; i++) { %>
                                     <% if(RestaurantArray[i].status === true) {%>
-                                        <td><img src="../<%= RestaurantArray[i].image%>" style="width: 30px;"></td>
+                                        <td><%= i+1 %></td>
+                                        <td><img src="../<%= RestaurantArray[i].image%>" style="width: 50px;"></td>
                                         <td><%= RestaurantArray[i].name %></td>
 
                                         <td><%= RestaurantArray[i].address %></td>

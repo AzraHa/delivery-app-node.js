@@ -4,6 +4,7 @@ const Admin = require('../models/Admin');
 const User = require('../models/User');
 const Supplier = require('../models/suppliers');
 const RestaurantAdmin = require('../models/RestaurantAdmin');
+const Restaurant = require('../models/restourant');
 const jwt = require('jsonwebtoken');
 const {ensureAuthenticatedAdmin} = require('../config/auth');
 const moment = require('moment'); // require
@@ -142,18 +143,26 @@ module.exports.find_restaurant_admin = (req,res,next) => {
 }
 
 module.exports.find_suppliers = (req,res,next) => {
-  Supplier.find({status:true},function (err,Suppliers){
-    if (err)
-      return done(err);
 
-    if (Suppliers) {
-      console.log(Suppliers);
+  Supplier.find({})//sve restorane sa suppliers
+    .populate('restaurant') // only works if we pushed refs to person.eventsAttended
+    .exec(function(err, person) {
+      if (err) console.log(err);
       res.render('admin/suppliers', {
         user: req.user,
-        usersArray: Suppliers
+        suppliersArray: person
       });
-    }
-  });
+    });
+  /*Restaurant
+    .findOne({ name: 'Baze' })
+    .populate('suppliers') // only works if we pushed refs to person.eventsAttended
+    .exec(function(err, person) {
+      if (err) console.log(err);
+      console.log("res"+person);
+    });*/
+  /*Restaurant.find ({ '_id': '5ffb541d3f81fb13e0591dea'}).populate ('suppliers').exec (function (err, surveys) {
+    return res.json (surveys);
+  });*/
 }
 
 module.exports.delete_customers = (req,res,next) => {

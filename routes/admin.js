@@ -4,9 +4,7 @@ const adminController = require('../controllers/adminControllers');
 const Restaurant = require('../models/restourant');
 const Supplier = require('../models/suppliers');
 const upload = require('../controllers/uploadController');
-const path = require('path');
-const mongoose = require("mongoose");
-const {ObjectId} = require("bson");
+
 /* GET home page. */
 router.get('/dashboard',function (req,res,next){
   res.render('admin/dashboard', {
@@ -122,15 +120,13 @@ router.get('/add-suppliers',function (req,res,next){
   });
 });
 router.post('/add-suppliers',function (req,res,next){
-  let errors = [];
   const {name, restaurantName,email,s_address} = req.body;
   const status = true;
-  console.log(restaurantName);
-  console.log(typeof new ObjectId(restaurantName));
   const comm = new Supplier({
         name:name,
         email:email,
         s_address:s_address,
+        restaurant:restaurantName,
         status:status
   });
   comm.save();
@@ -141,34 +137,10 @@ router.post('/add-suppliers',function (req,res,next){
       }
     }  },
     function (error, success) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log(success);
-      }
+      res.redirect('/admin/suppliers');
     });
 
-  res.send("nesto");
 });
-router.get('/suppliers',function (req,res,next){
-  res.render('suppliers');
-});
-router.get('/test',function(req,res,next){
-  const comm = new Supplier({
-    name : "novi komentar",
-    email : "100",status:true,
-    s_address: "adreds"
-  });
-  comm.save();
-  Restaurant.updateOne({ name: "Baze"}, { $push: { suppliers: comm } },
-    function (error, success) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log(success);
-      }
-    });
 
-  res.send("nesto");
-})
+
 module.exports = router;
