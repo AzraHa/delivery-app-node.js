@@ -142,5 +142,19 @@ router.post('/add-suppliers',function (req,res,next){
 
 });
 
+router.get('/suppliers/:id',function(req,res,next){
+  const supp_id = req.params.id;
+  Supplier.find({ _id: supp_id})//sve restorane sa suppliers
+    .populate('restaurant') // only works if we pushed refs to person.eventsAttended
+    .exec(function(err, supplier) {
+      console.log(supplier);
+      if (err) console.log(err);
+      res.render('admin/supplier', {
+        user: req.user,
+        supplier: supplier
+      });
+    });
+
+});
 
 module.exports = router;

@@ -656,3 +656,14 @@ footer p {
 .owl-carousel {
   margin-bottom: 15px
 }
+
+.btn-primary {
+  background-color: #F9723D !important;
+  border-color: #999999;
+}
+.btn-primary:hover{
+  color: #000 !important;
+  border-color: #999999;
+
+  background-color: #999999;
+}

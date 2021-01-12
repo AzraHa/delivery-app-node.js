@@ -147,6 +147,7 @@ module.exports.find_suppliers = (req,res,next) => {
   Supplier.find({})//sve restorane sa suppliers
     .populate('restaurant') // only works if we pushed refs to person.eventsAttended
     .exec(function(err, person) {
+      console.log(person);
       if (err) console.log(err);
       res.render('admin/suppliers', {
         user: req.user,
