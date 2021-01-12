@@ -132,8 +132,7 @@ router.post('/add-suppliers',function (req,res,next){
   comm.save();
   Restaurant.updateOne({ _id: restaurantName}, { $push: {
       suppliers: {
-        _id : comm._id,
-        "status" : comm.status
+        _id : comm._id
       }
     }  },
     function (error, success) {
@@ -149,12 +148,58 @@ router.get('/suppliers/:id',function(req,res,next){
     .exec(function(err, supplier) {
       console.log(supplier);
       if (err) console.log(err);
-      res.render('admin/supplier', {
-        user: req.user,
-        supplier: supplier
+      Restaurant.find({status:true},function (err,restaurant){
+        if (err)
+          return done(err);
+        if (restaurant) {
+          console.log(restaurant);
+          res.render('admin/supplier', {
+            user: req.user,
+            supplier: supplier,
+            restaurantArray:restaurant
+          });
+        }
       });
+
     });
+});
+router.post('/add-restaurant-suppliers',function(req,res,next){
+  const restaurantID = req.body.restaurantID;
+  const supplierID = req.body.supplierID;
+  //console.log(restaurantID,supplierID);
+  //console.log(typeof restaurantID,typeof supplierID);
+  /*Supplier.updateOne({ _id: supplierID}, {
+    $push: {
+        restaurant: {
+          _id :restaurantID
+        }}
+  });*/
+  Supplier.findOneAndUpdate({_id: supplierID}, { $push: {
+      restaurant: {
+        _id : restaurantID
+      }
+    }  }, {new: true}, (err, doc) => {
+    if (err) {
+      console.log("Something wrong when updating data!");
+    }
+
+    console.log(doc);
+  });
+  Restaurant.findOneAndUpdate({_id: restaurantID}, { $push: {
+      suppliers: {
+        _id : supplierID
+      },
+    }  }, {new: true}, (err, doc) => {
+    if (err) {
+      console.log("Something wrong when updating data!");
+    }
+
+    console.log(doc);
+  });
+  res.redirect('/admin/suppliers');
 
 });
-
+router.get('/restaurants/:id',function(req,res,next){
+  res.render('admin/restaurant');
+});
 module.exports = router;
