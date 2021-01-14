@@ -2,11 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/views/admin/restaurant.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/login.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/partials/navbar.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/partials/sidebar.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/admin/orders.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/admin/profile.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/passport.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/passport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/userController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/RestaurantAdmin.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/RestaurantAdmin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/restaurants.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurants.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/supplier.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/supplier.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/adminRestaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/adminRestaurant.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/partials/navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/partials/navbar.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/partials/sidebar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/partials/sidebar.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurant.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +55,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="13.14.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="13.13.38" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/views/AdminRestaurant" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -48,11 +63,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\USER\WebstormProjects\projekat\views\AdminRestaurant" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\models" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\public\images" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\public" />
-      <recent name="C:\Users\USER\WebstormProjects\projekat\config" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -104,6 +119,7 @@
       <workItem from="1610368493443" duration="11695000" />
       <workItem from="1610447761250" duration="6699000" />
       <workItem from="1610458698003" duration="6468000" />
+      <workItem from="1610611241903" duration="10710000" />
     </task>
     <servers />
   </component>
@@ -124,5 +140,16 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/controllers/adminControllers.js</url>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

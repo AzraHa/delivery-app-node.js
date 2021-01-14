@@ -95,7 +95,7 @@ module.exports.registration_post = async (req,res) => {
 
 //Login form
 module.exports.login_post = (req,res,next) => {
-  passport.authenticate('local', function (err, user) {
+  passport.authenticate('userLocal', function (err, user) {
     req.logIn(user, function (err) { // <-- Log user in
       /*res.locals.user = user;
       return res.render('error');*/

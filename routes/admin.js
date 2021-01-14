@@ -7,9 +7,17 @@ const upload = require('../controllers/uploadController');
 
 /* GET home page. */
 router.get('/dashboard',function (req,res,next){
-  res.render('admin/dashboard', {
-    user: req.user
-  })
+  /*Orders.find({}).select({"price"}).sort({"price" : -1}).limit(1).exec(function(err, doc){
+      let max_price = doc[0].price;
+    });*/
+  Supplier.find({}).sort({"modified" : -1}).limit(5).exec(function(err, doc){
+      let suppliers = doc;
+      res.render('admin/dashboard', {
+        user: req.user,
+        suppliers:suppliers
+      })
+    });
+
 });
 
 router.get('/login',adminController.admin_login_get);
@@ -200,6 +208,45 @@ router.post('/add-restaurant-suppliers',function(req,res,next){
 
 });
 router.get('/restaurants/:id',function(req,res,next){
-  res.render('admin/restaurant');
+  res.render('admin/restaurant',{user:req.user});
 });
+
+router.get('/orders',function (req,res,next){
+  res.render('admin/orders',{user:req.user});
+});
+router.get('/profile',function (req,res,next){
+  res.render('admin/profile',{user:req.user});
+});
+router.post('/profile',function (req,res,next){
+
+});
+
+router.get('/mail',function (req,res,next){
+  //nodemailer sa w3schools :)
+  var nodemailer = require('nodemailer');
+
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'nodeprojekat@gmail.com',
+      pass: 'node1234'
+    }
+  });
+
+  var mailOptions = {
+    from: 'azrahadzihajdarevic28@gmail.com',
+    to: 'azrychh@gmail.com',
+    subject: 'Sending Email using Node.js',
+    text: 'That was easy!'
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+});
+
 module.exports = router;

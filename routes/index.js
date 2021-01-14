@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {ensureAuthenticated} = require('../config/auth');
+//const {ensureAuthenticated} = require('../config/auth');
 var multer  = require('multer');
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -16,7 +16,7 @@ const upload = multer({ storage: storage });
 const path = require('path');
 
 
-router.get('/:name', function (req, res, next) {
+/*router.get('/:name', function (req, res, next) {
   var options = {
     root: path.join('./uploads'),
     dotfiles: 'deny',
@@ -52,7 +52,7 @@ router.get('/map',function (req,res,next){
   res.render('map');
 })
 /* GET home page. */
-router.get('/dashboard',ensureAuthenticated, function(req, res, next) {
+router.get('/dashboard', function(req, res, next) {
   res.render('dashboard', {
     user: req.user
   })
