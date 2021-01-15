@@ -1,23 +1,23 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
-
-const RestaurantAdminSchema = new mongoose.Schema({
+const FoodSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
   },
-  email: {
+  type: { type: mongoose.Schema.Types.ObjectId, ref: "FoodType" },
+  price: {
     type: String,
     required: true
   },
-  password: {
+  salePrice: {
+    type: String
+  },
+  picture :{
     type: String,
     required: true
   },
   restaurant: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" },
-  address:{
-    type: String,
-  },
   date: {
     type: Date,
     default: Date.now
@@ -32,6 +32,6 @@ const RestaurantAdminSchema = new mongoose.Schema({
   }
 });
 
-const RestaurantAdmin = mongoose.model('RestaurantAdmin', RestaurantAdminSchema);
+const Food = mongoose.model('Food', FoodSchema);
 
-module.exports = RestaurantAdmin;
+module.exports = Food;

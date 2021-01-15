@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+
+<body>
+<main role="main">
+    <% include partials/navbar %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <%include partials/sidebar %>
+
+            <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
+                <div class="naslovna-login-register">
+                    <div class="login-box">
+                        <div class="card card-outline card-primary">
+                            <div class="card-header text-center">
+                                <h1><b>Add food item</b></h1>
+                            </div>
+                            <div class="card-body">
+                                <form action="/adminRestaurant/add-food-item" method="POST" enctype="multipart/form-data">
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               id="name"
+                                               name="name"
+                                               class="form-control"
+                                               placeholder="Name">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fa fa-name"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <select id="type"  name="type" class="form-control select2" style="width: 100%;">
+                                            <option value="" disabled selected>FoodType</option>
+                                            <% if (typeof FoodTypeArray !== 'undefined' && FoodTypeArray.length > 0) {%>
+                                            <%for (var i = 0; i < FoodTypeArray.length; i++) { %>
+                                                <option  name ="restaurantName" value="<%= FoodTypeArray[i]._id%>"><%= FoodTypeArray[i].name %></option>
+                                            <%}%>
+                                            <%}%>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               id="price"
+                                               name="price"
+                                               class="form-control"
+                                               placeholder="Enter Price">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fa fa-home"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="exampleInputPassword1" class="col-form-label mr-2">Picture</label>
+                                        <input type="file" accept="image/*"
+                                               id="picture"
+                                               name="picture"
+                                               class="form-control">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <div class="col-md-8 icheck-primary">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 submit">
+                                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>

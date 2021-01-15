@@ -84,7 +84,7 @@ module.exports.admin_register_post = (req,res,next) => {
   }
 }
 module.exports.admin_login_post = (req,res,next) => {
-  passport.authenticate('local', {
+  passport.authenticate('administrator', {
     successRedirect: '/admin/dashboard',
     failureRedirect: '/admin/login',
     failureFlash: true
@@ -177,64 +177,42 @@ module.exports.delete_customers = (req,res,next) => {
   });
 }
 module.exports.add_restaurant_admin_get = (req,res,next) => {
-  res.render('admin/add-restaurant-admin',{user:req.user});
+  Restaurant.find({})
+    .exec(function(err, restaurant) {
+      console.log(restaurant);
+      if (err) console.log(err);
+      res.render('admin/add-restaurant-admin', {
+        user: req.user,
+        restaurantsArray: restaurant
+      });
+    });
 }
 module.exports.add_restaurant_admin_post = (req,res,next) => {
-  const {name, email, password, password2, restaurantName, addressRestaurant,typeRestaurant,address} = req.body;
-  let errors = [];
+
+  const {restaurantName, adminName, adminAddress, adminEmail, password} = req.body;
   const status = true;
-  /*if (!name || !email || !password || !password2 || !address) {
-    errors.push({msg: 'Please enter all fields'});
-  }
-
-  if (password !== password2) {
-    errors.push({msg: 'Passwords do not match'});
-  }
-
-  if (password.length < 6) {
-    errors.push({msg: 'Password must be at least 6 characters'});
-  }
-
-  if (errors.length > 0) {
-    res.render('register', {
-      errors,
-      name,
-      email,
-      password,
-      password2,
-      address
-    });
-  }else {
-*/
-  RestaurantAdmin.findOne({ email: email }).then(resAdmin => {
-    if (resAdmin) {
-      errors.push({ msg: 'Email already exists' });
-      res.render('register', {
-        errors,
-        name,
-        email,
-        password,
-        password2,
-        address
-      });
-    } else {
-      const newAdmin = new RestaurantAdmin({
-        name, email, password, restaurantName, addressRestaurant,typeRestaurant,address,status
-      });
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newAdmin.password, salt, (err, hash) => {
-          if (err) throw err;
-          newAdmin.password = hash;
-          newAdmin
-            .save()
-            .then(user =>{
-              res.redirect('/admin/dashboard');
-            })
-            .catch(err => console.log(err));
-        });
-      });
-      console.log(newAdmin);
-    }
+  const newAdmin = new RestaurantAdmin({
+    name: adminName,
+    email: adminEmail,
+    password: password,
+    restaurant : restaurantName,
+    address: adminAddress,
+    status: status
   });
-
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(newAdmin.password, salt, (err, hash) => {
+      if (err) throw err;
+      newAdmin.password = hash;
+    });
+  });
+  newAdmin.save();
+  Restaurant.updateOne({ _id: restaurantName}, {
+    $push: {
+        admin: {
+          _id : newAdmin._id
+        }
+    }},
+    function (error, success) {
+      res.redirect('/admin/dashboard');
+    });
 }

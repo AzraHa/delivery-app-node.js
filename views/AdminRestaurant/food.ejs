@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+
+<body>
+<main role="main">
+    <% include partials/navbar %>
+    <div class="container-fluid">
+        <div class="row">
+            <%include partials/sidebar %>
+            <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
+                <!-- TABLE: LATEST ORDERS -->
+                <div class="card">
+                    <div class="card-header border-transparent">
+                        <h3 class="card-title">Food</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Item</th>
+                                    <th>Status</th>
+                                    <th>Supplier</th>
+                                    <th>Restaurant</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% if (typeof foodArray !== 'undefined' && foodArray.length > 0) {%>
+                                <%for (var i = 0; i < foodArray.length; i++) { %>
+                                    <tr>
+                                        <td><a href="#"><%= foodArray[i].name%></a></td>
+                                        <td><a href="#"><%= foodArray[i].picture%></a></td>
+
+                                    </tr>
+                                <%}}%>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer clearfix">
+                        <a href="#" class="btn btn-sm btn-secondary float-right">View All Food</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

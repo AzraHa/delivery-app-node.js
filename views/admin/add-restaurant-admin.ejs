@@ -26,16 +26,26 @@
                     <div class="login-box">
                         <div class="card card-outline card-primary">
                             <div class="card-header text-center">
-                                <h1><b>Add restaurant</b></h1>
+                                <h1><b>Add restaurant admin</b></h1>
                             </div>
                             <div class="card-body">
                                 <form action="/admin/add-restaurant-admin" method="post">
                                     <div class="input-group mb-3">
+                                        <select id="restaurantName"  name="restaurantName" class="form-control select2" style="width: 100%;" placehp>
+                                            <option value="" disabled selected>Restaurant</option>
+                                            <% if (typeof restaurantsArray !== 'undefined' && restaurantsArray.length > 0) {%>
+                                            <%for (var i = 0; i < restaurantsArray.length; i++) { %>
+                                                <option  name ="restaurantName" value="<%= restaurantsArray[i]._id%>"><%= restaurantsArray[i].name %></option>
+                                            <%}%>
+                                            <%}%>
+                                        </select>
+                                    </div>
+                                    <div class="input-group mb-3">
                                         <input type="text"
-                                               id="restaurantName"
-                                               name="restaurantName"
+                                               id="name"
+                                               name="adminName"
                                                class="form-control"
-                                               placeholder="Restaurant Name">
+                                               placeholder="Admin Name">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fa fa-home"></span>
@@ -44,10 +54,10 @@
                                     </div>
                                     <div class="input-group mb-3">
                                         <input type="text"
-                                               id="addressRestaurant"
-                                               name="addressRestaurant"
+                                               id="address"
+                                               name="adminAddress"
                                                class="form-control"
-                                               placeholder="Restaurant Address">
+                                               placeholder="Admin Address">
                                         <div class="input-group-append" >
                                             <div class="input-group-text">
                                                 <span class="fa fa-map-marker"></span>
@@ -56,39 +66,16 @@
                                                 <span class="fa fa-search"></span>
                                             </div>
                                         </div>
-                                        <div class=" input-group mb-3 ">
+                                        <div class="input-group">
                                             <label for="inputEmail3 " class="col-sm-2 col-form-label mr-2 "></label>
                                             <div id="googleMap" class="form-control " style="float: right; position: relative; overflow: hidden; width: 80%; margin: 5px; height: 200px; "></div>
-                                        </div>
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <input type="text"
-                                               id="typeRestaurant"
-                                               name="typeRestaurant"
-                                               class="form-control"
-                                               placeholder="Enter Type">
-                                        <div class="input-group-append">
-                                            <div class="input-group-text">
-                                                <span class="fa fa-home"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <input type="text"
-                                               id="name"
-                                               name="name"
-                                               class="form-control"
-                                               placeholder="Administrator">
-                                        <div class="input-group-append">
-                                            <div class="input-group-text">
-                                                <span class="fa fa-home"></span>
-                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="input-group mb-3">
                                         <input type="email"
                                                id="email"
-                                               name="email"
+                                               name="adminEmail"
                                                class="form-control"
                                                placeholder="Administrator Email">
                                         <div class="input-group-append">
@@ -108,7 +95,8 @@
                                                 <span class="fa fa-mail"></span>
                                             </div>
                                         </div>
-                                    </div><div class="row">
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md">
                                             <div class="col-md-8 icheck-primary">
                                             </div>

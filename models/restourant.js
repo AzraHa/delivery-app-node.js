@@ -16,14 +16,12 @@ const RestaurantSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  admin:{
-    id: [{ type: mongoose.Schema.Types.ObjectId, ref: "RestaurantAdmin" }],
-  },
+  admin:[{ type: mongoose.Schema.Types.ObjectId, ref: "RestaurantAdmin" }],
   suppliers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Supplier" }],
-
   image:{
    type: String
  },
+  food: [{ type: mongoose.Schema.Types.ObjectId, ref: "Food"}],
   date: {
     type: Date,
     default: Date.now
