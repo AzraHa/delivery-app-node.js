@@ -28,8 +28,9 @@
                 </div>
                 <div class="card" style="border: 1px solid orange;">
                     <div class="card-body" style="border: 1px solid orange;">
+                        <% for(let i=0;i<restaurant.length;i++){ %>
                         <div class="card-header">
-                            <h3 class="card-title">Ime restorana</h3>
+                            <h3 class="card-title"><%= restaurant[i].name  %></h3>
                         </div>
                         <div class="card-body">
                             <div class="e-profile">
@@ -42,7 +43,7 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label>Address</label>
-                                                    <p class="form-control">Address </p>
+                                                    <p class="form-control"><%= restaurant[i].address %> </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -50,7 +51,7 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label>Email</label>
-                                                    <p class="form-control"> </p>
+                                                    <p class="form-control"><%= restaurant[i].email %> </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -58,33 +59,85 @@
                                 </div>
                             </div>
                         </div>
-                            <div class="card-header">
-                                <h3 class="card-title">Dostavljaci</h3>
-                            </div>
+                        <%}%>
+                       <div class="col-12 col-lg-6 ml-3">
+                           <div class="row">
+                               <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                   Edit restaurant
+                               </button>
+                               <div class="input-group collapse mt-3" id="collapseExample">
+                                   <div class="form-group">
+                                       <form action="" method="post">
+                                           <label><%=restaurant[0].name%></label>
+                                           <input  class="form-control" type="name"
+                                                  id="name"
+                                                  name="name"
+                                                  class="form-control"
+                                                  placeholder="Restaurant name">
+                                           <input type="email"
+                                                  id="email"
+                                                  name="email"
+                                                  class="form-control"
+                                                  placeholder="Restaurant email">
+                                           <input type="text"
+                                                  id="type"
+                                                  name="type"
+                                                  class="form-control"
+                                                  placeholder="Restaurant type">
+                                           <select id="restaurantStatus" name="restaurantStatus" class="form-control select2" style="width: 100%;">
+                                               <option value="" disabled selected>Status</option>
+                                               <option  name="restaurantID" value="true">Enabled</option>
+                                               <option  name="restaurantID" value="false">Disabled</option>
+                                           </select>
+                                           <input type="submit" class="btn btn-primary">
+                                       </form>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                    </div>
+                    <div class="card-body" style="border: 1px solid orange;">
+                        <div class="card-header">
+                            <h3 class="card-title">Dostavljači</h3>
+                        </div>
+                        <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>No:</th>
-                                    <th>Picture</th>
                                     <th>Name</th>
+                                    <th>Email</th>
                                     <th>Address</th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <% for(let j=0;j<supplier.length;j++){%>
+                                    <tr>
+                                        <td><%=j+1%></td>
+                                        <td><%= supplier[j].name%></td>
+                                        <td><%= supplier[j].email%></td>
+                                        <td><%= supplier[j].s_address%></td>
+                                        <td><%= supplier[j].status%></td>
+                                        <td class="project-actions text-right">
+                                            <a class="btn btn-primary btn-sm" href="/admin/suppliers/<%= supplier[j]._id%>">
+                                                <i class="fa fa-folder">
+                                                </i>
+                                                View
+                                            </a>
 
-                                </tr>
+                                        </td>
+                                    </tr>
+                                <%}%>
                                 </tbody>
 
                             </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
     </div>
 </main>
 </body>

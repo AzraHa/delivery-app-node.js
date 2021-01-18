@@ -128,18 +128,16 @@ module.exports.find_customers = (req,res,next) => {
 
 
 module.exports.find_restaurant_admin = (req,res,next) => {
-  RestaurantAdmin.find({status:true},function (err,Admins){
-    if (err)
-      return done(err);
-
-    if (Admins) {
-      console.log(Admins);
-      res.render('admin/admin-restaurant', {
-        user: req.user,
-        usersArray: Admins
+  RestaurantAdmin.find({status:true})
+      .populate('restaurant')
+      .exec(function(err, resAdmin) {
+        console.log(resAdmin);
+        if (err) console.log(err);
+        res.render('admin/admin-restaurant', {
+          user: req.user,
+          suppliersArray: resAdmin
+        });
       });
-    }
-  });
 }
 
 module.exports.find_suppliers = (req,res,next) => {

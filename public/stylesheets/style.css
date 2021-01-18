@@ -155,17 +155,16 @@ a.h1:hover {
 
 .col-6 .btn-primary,
 .col-4 .btn-primary {
-  color: #F9723D;
-  background-color: #fff;
-  border-color: #386721;
-}
-
-.col-6 .btn-primary:hover,
-.col-4 .btn-primary:hover {
-  color: #FFF;
   background-color: #F9723D;
   border-color: #386721;
 }
+.col-6 .btn-primary:hover,
+.col-4 .btn-primary:hover{
+  background-color: #fff;
+  border-color: #F9723D;
+  color:#F9723D;
+}
+
 
 .terms {
   color: #F9723D;
@@ -657,13 +656,3 @@ footer p {
   margin-bottom: 15px
 }
 
-.btn-primary {
-  background-color: #F9723D !important;
-  border-color: #999999;
-}
-.btn-primary:hover{
-  color: #000 !important;
-  border-color: #999999;
-
-  background-color: #999999;
-}

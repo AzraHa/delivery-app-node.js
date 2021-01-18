@@ -2,30 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/models/Food.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/FoodType.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/add-food-item.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/add-meni.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/add-restaurant-admin.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/add-sale.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/add-suppliers.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/admin.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/customers.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/food.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/order-confirm.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/orders.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/sale.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/suppliers.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/admin/RestaurantAdmin.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/passport.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/passport.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/adminControllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/adminControllers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/RestaurantAdmin.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/RestaurantAdmin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/restourant.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/restourant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/adminRestaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/adminRestaurant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/partials/navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/partials/navbar.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/partials/sidebar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/partials/sidebar.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/add-restaurant-admin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/add-restaurant-admin.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/indeks.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/indeks.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/stylesheets/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/admin-restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/admin-restaurant.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurant.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,9 +42,9 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="13.14.0" />
-    <property name="javascript.nodejs.core.library.typings.version" value="13.13.38" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/views/AdminRestaurant" />
+    <property name="javascript.nodejs.core.library.configured.version" value="14.15.1" />
+    <property name="javascript.nodejs.core.library.typings.version" value="14.14.21" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -125,6 +110,8 @@
       <workItem from="1610458698003" duration="6468000" />
       <workItem from="1610611241903" duration="11399000" />
       <workItem from="1610710216401" duration="6067000" />
+      <workItem from="1610906309727" duration="207000" />
+      <workItem from="1610964851767" duration="8097000" />
     </task>
     <servers />
   </component>
@@ -145,15 +132,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/controllers/adminControllers.js</url>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

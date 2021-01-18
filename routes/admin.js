@@ -4,6 +4,7 @@ const adminController = require('../controllers/adminControllers');
 const Restaurant = require('../models/restourant');
 const Supplier = require('../models/suppliers');
 const upload = require('../controllers/uploadController');
+const RestaurantAdmin = require("../models/RestaurantAdmin");
 
 /* GET home page. */
 router.get('/dashboard',function (req,res,next){
@@ -48,6 +49,20 @@ router.get('/dashboard/customers/active/:id',function (req,res,next) {
 });
 
 router.get('/admins',adminController.find_restaurant_admin);
+router.get('/admins/:id',function (req,res,next){
+  const adminID = req.params.id;
+  RestaurantAdmin.find({_id:adminID},function(err, resAdmin) {
+        console.log(resAdmin);
+        if (err) console.log(err);
+        Restaurant.find({status:true},function (err,restaurant){
+          res.render('admin/RestaurantAdmin', {
+            user: req.user,
+            resAdminArray: resAdmin,
+            restaurant:restaurant
+          });
+        });
+      });
+});
 router.get('/suppliers',adminController.find_suppliers);
 
 router.get('/user',function (req,res,next){
@@ -78,18 +93,6 @@ router.post('/add-restaurant',upload.single('picture'),function (req,res,next){
       const newRestaurant = new Restaurant({
         name, email, address,email,image,status
       });
-      /*bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newAdmin.password, salt, (err, hash) => {
-          if (err) throw err;
-          newAdmin.password = hash;
-          newAdmin
-            .save()
-            .then(user =>{
-              res.redirect('/admin/dashboard');
-            })
-            .catch(err => console.log(err));
-        });
-      });*/
       console.log(newRestaurant);
       newRestaurant
         .save()
@@ -208,7 +211,25 @@ router.post('/add-restaurant-suppliers',function(req,res,next){
 
 });
 router.get('/restaurants/:id',function(req,res,next){
-  res.render('admin/restaurant',{user:req.user});
+  const rest_id = req.params.id;
+  Restaurant.find({ _id: rest_id})
+      .populate('suppliers')
+      .exec(function(err, rest) {
+        console.log(rest);
+        if (err) console.log(err);
+        Supplier.find({status:true,restaurant:rest_id},function (err,supplier){
+          if (err)
+            return done(err);
+          if (supplier) {
+            console.log(supplier);
+            res.render('admin/restaurant', {
+              user: req.user,
+              supplier: supplier,
+              restaurant:rest
+            });
+          }
+        });
+      });
 });
 
 router.get('/orders',function (req,res,next){
