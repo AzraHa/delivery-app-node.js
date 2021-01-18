@@ -655,4 +655,12 @@ footer p {
 .owl-carousel {
   margin-bottom: 15px
 }
-
+ul.li {
+  list-style-type: none;
+}
+.card-header {
+  background-color: rgba(0,0,0,0.1) !important;
+}
+a:hover{
+  text-decoration: none;
+}

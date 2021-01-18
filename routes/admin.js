@@ -57,6 +57,13 @@ router.get('/customers/active/:id',function (req,res,next) {
 
 router.get('/admins',adminController.find_restaurant_admin);
 
+router.get('/suppliers/delete/:id',function(req,res,next){
+    Supplier.findByIdAndRemove(req.params.id, function (err, post) {
+      if (err) return next(err);
+
+    });
+    res.redirect('/admin/suppliers');
+});
 router.get('/admins/:id',function (req,res,next){
   const adminID = req.params.id;
   RestaurantAdmin.find({_id:adminID})
@@ -167,12 +174,12 @@ router.get('/add-suppliers',function (req,res,next){
   });
 });
 router.post('/add-suppliers',function (req,res,next){
-  const {name, restaurantName,email,s_address} = req.body;
+  const {name, restaurantName,email,address} = req.body;
   const status = true;
   const comm = new Supplier({
         name:name,
         email:email,
-        s_address:s_address,
+        s_address:address,
         restaurant:restaurantName,
         status:status
   });
@@ -210,18 +217,49 @@ router.get('/suppliers/:id',function(req,res,next){
 
     });
 });
+router.post('/suppliers/:id',function(req,res,next){
+  const {restaurantID,email,address} = req.body;
+  const supplierID = req.params.id;
+  const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+  console.log(restaurantID,email,address,supplierID,modified);
+  if(typeof restaurantID === 'undefined') {
+    Supplier.findOneAndUpdate({_id: supplierID}, {
+      modified: modified,
+      email: email,
+      s_address: address
+    }, {new: true}, (err, doc) => {
+      if (err) {
+        console.log("Something wrong when updating data! " + err);
+      }
+      //console.log(doc);
+      res.redirect('/admin/suppliers');
+    });
+  }else{
+    Supplier.findOneAndUpdate({_id: supplierID}, {
+      $push: {
+        restaurant: {
+          _id: restaurantID
+        },
+      },
+      modified: modified,
+      email: email,
+      s_address: address
+    }, {new: true}, (err, doc) => {
+      if (err) {
+        console.log("Something wrong when updating data! " + err);
+      }
+      //console.log(doc);
+      res.redirect('/admin/suppliers');
+    });
+  }
+});
 router.post('/add-restaurant-suppliers',function(req,res,next){
   const restaurantID = req.body.restaurantID;
   const supplierID = req.body.supplierID;
-  //console.log(restaurantID,supplierID);
-  //console.log(typeof restaurantID,typeof supplierID);
-  /*Supplier.updateOne({ _id: supplierID}, {
+  const supplierEmail = req.body.email;
+  const supplierAddress = req.body.address;
+  Supplier.findOneAndUpdate({_id: supplierID}, { email:supplierEmail,s_address:supplierAddress,
     $push: {
-        restaurant: {
-          _id :restaurantID
-        }}
-  });*/
-  Supplier.findOneAndUpdate({_id: supplierID}, { $push: {
       restaurant: {
         _id : restaurantID
       }
@@ -229,7 +267,6 @@ router.post('/add-restaurant-suppliers',function(req,res,next){
     if (err) {
       console.log("Something wrong when updating data!");
     }
-
     console.log(doc);
   });
   Restaurant.findOneAndUpdate({_id: restaurantID}, { $push: {
@@ -240,7 +277,6 @@ router.post('/add-restaurant-suppliers',function(req,res,next){
     if (err) {
       console.log("Something wrong when updating data!");
     }
-
     console.log(doc);
   });
   res.redirect('/admin/suppliers');

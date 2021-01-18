@@ -48,9 +48,11 @@
                                         <td><%= suppliersArray[i].name %></td>
                                         <td><%= suppliersArray[i].email %></td>
                                         <td>
-                                        <% for(let j=0;j<suppliersArray[i].restaurant.length;j++){%>
-                                            <%= suppliersArray[i].restaurant[j].name %>
-                                            <%}%>
+                                            <ul class="list-group">
+                                                <%for(let j=0;j<suppliersArray[i].restaurant.length;j++){%>
+                                                    <a href="#"><li class="list-group-item"><%= suppliersArray[i].restaurant[j].name %></li></a>
+                                                <%}%>
+                                            </ul>
                                         </td>
                                         <td><%= suppliersArray[i].s_address %></td>
                                         <td><%= suppliersArray[i].modified %></td>
@@ -65,12 +67,12 @@
                                                 </i>
                                                 View
                                             </a>
-
-                                            <a class="btn btn-danger btn-sm" href="/admin/delete-suppliers/<%= suppliersArray[i]._id%>">
-                                                <i class="fa fa-trash">
+                                            <a class="btn btn-primary btn-sm" href="/admin/suppliers/delete/<%= suppliersArray[i]._id%>">
+                                                <i class="fa fa-folder">
                                                 </i>
                                                 Delete
                                             </a>
+
                                         </td>
                                     <% } %>
                             </tr>

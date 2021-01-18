@@ -187,14 +187,14 @@ module.exports.add_restaurant_admin_get = (req,res,next) => {
 }
 module.exports.add_restaurant_admin_post = (req,res,next) => {
 
-  const {restaurantName, adminName, adminAddress, adminEmail, password} = req.body;
+  const {restaurantName, adminName, address, adminEmail, password} = req.body;
   const status = true;
   const newAdmin = new RestaurantAdmin({
     name: adminName,
     email: adminEmail,
     password: password,
     restaurant : restaurantName,
-    address: adminAddress,
+    address: address,
     status: status
   });
   bcrypt.genSalt(10, (err, salt) => {

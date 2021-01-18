@@ -1,8 +1,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
     <div class="sidebar-sticky pt-3" style="border-top: 1px solid orange;">
         <ul class="nav flex-column">
-
             <li class="nav-item">
                 <a class="nav-link" id="link" href="/admin/dashboard">
                     <i class="fa fa-home"></i> Dashboard
@@ -10,7 +10,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="link" href="/admin/admins">
-                    <i class="fa fa-file"></i></span> Admini restorana
+                    <i class="fa fa-user"></i></span> Admini restorana
                 </a>
             </li>
             <li class="nav-item">
@@ -25,47 +25,34 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="link" href="/admin/restaurants">
-                    <i class="fa fa-flag"></i> Restorani
+                    <i class="fa fa-utensils"></i> Restorani
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="link" href="/admin/orders">
-                    <i class="fa fa-flag"></i> Narudzbe
+                    <i class="fa fa-shopping-cart"></i> Narudzbe
                 </a>
             </li>
-
-
         </ul>
-
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>Saved reports</span>
-            <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-                <span data-feather="plus-circle"></span>
-            </a>
+            <span>ADD ... </span>
         </h6>
         <ul class="nav flex-column mb-2">
             <li class="nav-item">
                 <a class="nav-link" href="/admin/add-restaurant">
-                    <i class="fa fa-file"></i> Dodaj restoran
+                    <i class="fa fa-plus"></i> Dodaj restoran
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/admin/add-restaurant-admin">
-                    <i class="fa fa-file"></i> Dodaj admina restorana
+                    <i class="fa fa-plus"></i> Dodaj admina restorana
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/admin/add-suppliers">
-                    <i class="fa fa-file"></i> Dodaj dostavljaca
+                    <i class="fa fa-plus"></i> Dodaj dostavljaca
                 </a>
             </li>
-
-
         </ul>
     </div>
 </nav>
-<script>
-    $(".nav-link").click(function() {  //use a class, since your ID gets mangled
-        $(this).addClass("active");      //add the class to the clicked element
-    });
-</script>

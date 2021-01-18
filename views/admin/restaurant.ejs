@@ -73,19 +73,22 @@
                                                   id="name"
                                                   name="name"
                                                   class="form-control"
+                                                   value="<%=restaurant[0].name%>"
                                                   placeholder="Restaurant name">
                                            <input type="email"
                                                   id="email"
                                                   name="email"
                                                   class="form-control"
+                                                  value="<%=restaurant[0].email%>"
                                                   placeholder="Restaurant email">
                                            <input type="text"
                                                   id="type"
                                                   name="type"
                                                   class="form-control"
+                                                  value="<%=restaurant[0].type%>"
                                                   placeholder="Restaurant type">
                                            <select id="restaurantStatus" name="restaurantStatus" class="form-control select2" style="width: 100%;">
-                                               <option value="" disabled selected>Status</option>
+                                               <option value="<%=restaurant[0].status%>" disabled selected>Status</option>
                                                <option  name="restaurantID" value="true">Enabled</option>
                                                <option  name="restaurantID" value="false">Disabled</option>
                                            </select>

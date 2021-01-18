@@ -78,28 +78,64 @@
                                             <div class="col-12 col-lg-6 ml-3">
                                                 <div class="row">
                                                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                                        Add restaurant
+                                                        Edit supplier
                                                     </button>
                                                     <div class="input-group collapse mt-3" id="collapseExample">
                                                         <div class="form-group">
-                                                            <form action="/admin/add-restaurant-suppliers" method="post">
-                                                                <label>Restaurant</label>
-                                                                <select id="restaurantName" name="restaurantID" class="form-control select2" style="width: 100%;" placehp>
-                                                                    <option value="" disabled selected>Restaurant</option>
+                                                            <form action="/admin/suppliers/<%=supplier[0]._id%>" method="post">
+                                                                <label>Add Restaurant</label>
+                                                                <select name="restaurantID" class="form-control select2" style="width: 100%;">
+                                                                    <option name="restaurantID" value="<%= supplier[0].restaurant[0]._id %>" disabled selected>Restaurant</option>
                                                                     <% if (typeof restaurantArray !== 'undefined' && restaurantArray.length > 0) {%>
-                                                                        <%for (var j = 0; j < restaurantArray.length; j++) { %>
-                                                                            <option  name="restaurantID" value="<%= restaurantArray[j]._id%>"><%= restaurantArray[j].name %></option>
-                                                                        <%}%>
+                                                                    <%for (var j = 0; j < restaurantArray.length; j++) { %>
+                                                                        <option  name="restaurantID" value="<%= restaurantArray[j]._id%>"><%= restaurantArray[j].name %></option>
+                                                                    <%}%>
                                                                     <%}%>
                                                                 </select>
-                                                                <input type="text" name="supplierID" value="<%= supplier[i]._id%>" hidden>
+                                                                <div class="input-group mb-3 mt-3">
+                                                                    <input type="email"
+                                                                           id="email"
+                                                                           name="email"
+                                                                           class="form-control"
+                                                                           value="<%= supplier[0].email%>"
+                                                                           placeholder="Enter Email">
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">
+                                                                            <span class="fa fa-envelope"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="input-group mb-3">
+                                                                    <input type="text"
+                                                                           id="address"
+                                                                           name="address"
+                                                                           class="form-control"
+                                                                           placeholder="Address"
+                                                                           value="<%= supplier[0].s_address%>">
+                                                                    <div class="input-group-append" >
+                                                                        <div class="input-group-text">
+                                                                            <span class="fa fa-map-marker" id="dugme"></span>
+                                                                        </div>
+                                                                        <div class="input-group-text">
+                                                                            <span class="fa fa-search" id="submit"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="input-group">
+                                                                        <label for="inputEmail3 " class="col-sm-2 col-form-label mr-2 "></label>
+                                                                        <div id="googleMap" class="form-control " style="position: relative; overflow: hidden; width: 100%; margin: 5px; height: 200px; "></div>
+
+                                                                    </div>
+                                                                </div>
+
                                                                 <div class="col mt-2">
                                                                     <input class="btn btn-primary" type="submit">
                                                                 </div>
                                                             </form>
                                                         </div>
                                                     </div>
+
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -113,5 +149,117 @@
         </div>
     </div>
 </main>
+
+<script>
+    function myMap() {
+        var mapProp= {
+            center:new google.maps.LatLng(43.8575738,18.4098533),
+            zoom:14,
+        };
+        var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+
+        const geocoder = new google.maps.Geocoder();
+        const infowindow = new google.maps.InfoWindow();
+        var x = document.getElementById("address");
+
+        document.getElementById("dugme").addEventListener("click", () => {
+            getLocation();
+        });
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.value = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            const latlng = {
+                lat: position.coords.latitude,
+                lng:position.coords.longitude
+            };
+            geocoder.geocode({ location: latlng }, (results, status) => {
+                if (status === "OK") {
+                    if (results[0]) {
+                        x.value = results[0].formatted_address;
+                        placeMarker(latlng);
+                    } else {
+                        window.alert("No results found");
+                    }
+                } else {
+                    window.alert("Geocoder failed due to: " + status);
+                }
+            });
+
+        }
+        document.getElementById("submit").addEventListener("click", () => {
+            geocodeAddress(geocoder, map);
+        });
+        var Mar;
+
+        function placeMarker(location) {
+            if ( Mar ) {
+                Mar.setPosition(location);
+                geocoder.geocode({ location}, (results, status) => {
+                    if (status === "OK") {
+                        if (results[0]) {
+                            infowindow.setContent(results[0].formatted_address);
+                            //console.log(results[0].formatted_address);
+                            x.value = results[0].formatted_address;
+                            infowindow.open(map, Mar);
+                        } else {
+                            window.alert("No results found");
+                        }
+                    } else {
+                        window.alert("Geocoder failed due to: " + status);
+                    }
+                });
+            } else {
+                Mar = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+                Mar.setPosition(location);
+                geocoder.geocode({ location }, (results, status) => {
+                    if (status === "OK") {
+                        if (results[0]) {
+                            infowindow.setContent(results[0].formatted_address);
+                            //console.log(results[0].formatted_address);
+                            x.value = results[0].formatted_address;
+                            infowindow.open(map, Mar);
+                        } else {
+                            window.alert("No results found");
+                        }
+                    } else {
+                        window.alert("Geocoder failed due to: " + status);
+                    }
+                });
+            }
+        }
+        function geocodeAddress(geocoder, resultsMap) {
+            const address = document.getElementById("address").value;
+            geocoder.geocode({ address: address }, (results, status) => {
+                if (status === "OK") {
+                    resultsMap.setCenter(results[0].geometry.location);
+                    new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location,
+                    });
+                } else {
+                    alert("Geocode was not successful for the following reason: " + status);
+                }
+            });
+        }
+        google.maps.event.addListener(map, 'click', function(event) {
+            placeMarker(event.latLng);
+        });
+    }
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVWoPIcc1pz1z5p_Ja6_CD7Ed9MzWN_ko&callback=myMap"></script>
+
 </body>
 </html>
+
