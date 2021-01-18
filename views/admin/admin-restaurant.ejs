@@ -41,34 +41,29 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <% if (typeof suppliersArray !== 'undefined' && suppliersArray.length > 0) {%>
-                                <%for (var i = 0; i < suppliersArray.length; i++) { %>
-                                    <% if(suppliersArray[i].status === true) {%>
+                                <% if (typeof resAdminArray !== 'undefined' && resAdminArray.length > 0) {%>
+                                <%for (var i = 0; i < resAdminArray.length; i++) { %>
+                                    <% if(resAdminArray[i].status === true) {%>
                                         <td><%= i+1 %> </td>
-                                        <td><%= suppliersArray[i].name %></td>
-                                        <td><%= suppliersArray[i].email %></td>
+                                        <td><%= resAdminArray[i].name %></td>
+                                        <td><%= resAdminArray[i].email %></td>
                                         <td>
-                                            <%= suppliersArray[i].restaurant.name %>
+                                            <%= resAdminArray[i].restaurant.name %>
                                         </td>
-                                        <td><%= suppliersArray[i].address %></td>
-                                        <td><%= suppliersArray[i].modified %></td>
-                                        <% if(suppliersArray[i].status === true){%>
+                                        <td><%= resAdminArray[i].address %></td>
+                                        <td><%= resAdminArray[i].modified %></td>
+                                        <% if(resAdminArray[i].status === true){%>
                                             <td>Active</td>
                                         <%} else {%>
                                             <td>X</td>
                                         <%}%>
                                         <td class="project-actions text-right">
-                                            <a class="btn btn-primary btn-sm" href="/admin/admins/<%= suppliersArray[i]._id%>">
+                                            <a class="btn btn-primary btn-sm" href="/admin/admins/<%= resAdminArray[i]._id%>">
                                                 <i class="fa fa-folder">
                                                 </i>
                                                 View
                                             </a>
 
-                                            <a class="btn btn-danger btn-sm" href="#">
-                                                <i class="fa fa-trash">
-                                                </i>
-                                                Delete
-                                            </a>
                                         </td>
                                     <% } %>
                             </tr>

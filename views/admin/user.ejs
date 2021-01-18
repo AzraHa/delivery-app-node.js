@@ -29,8 +29,8 @@
                 <div class="card" style="border: 1px solid orange;">
                     <div class="card-body" style="border: 1px solid orange;">
                         <div class="card-header">
-                            <% for(let i=0;i<resAdminArray.length;i++){%>
-                                <h3 class="card-title">Admin: <%= resAdminArray[i].name %></h3>
+                            <% for(let i=0;i<userArray.length;i++){%>
+                                <h3 class="card-title">Customer</h3>
                         </div>
                         <div class="card-body">
                             <div class="e-profile">
@@ -42,7 +42,7 @@
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <label>Name</label>
-                                                            <p class="form-control" ><%= resAdminArray[i].name%></p>
+                                                            <p class="form-control" ><%= userArray[i].name%></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -50,7 +50,7 @@
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <label>Email</label>
-                                                            <p class="form-control"> <%= resAdminArray[i].email%></p>
+                                                            <p class="form-control"> <%= userArray[i].email%></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -58,15 +58,17 @@
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <label>Address</label>
-                                                            <p class="form-control"><%= resAdminArray[i].address%></p>
+                                                            <p class="form-control"><%= userArray[i].address%></p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="form-group">
-                                                            <label>Restaurant</label>
-                                                            <p class="form-control"><%= resAdminArray[i].restaurant.name%></p>
+                                                            <label>Status</label>
+                                                            <%if(userArray[i].status === true){ %>
+                                                                <p class="form-control">Active</p>
+                                                            <%}%>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -76,42 +78,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12 col-lg-6 ml-3">
-                                <div class="row">
-                                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                       Update Admin
-                                    </button>
-                                    <div class="input-group collapse mt-3" id="collapseExample">
-                                        <div class="form-group">
-
-                                            <form action="/admin/admins/<%=resAdminArray[0]._id%>" method="post">
-                                                <label><%=resAdminArray[0].name%></label>
-                                                <select id="restaurantName"  name="restaurantName" class="form-control select2" style="width: 100%;" placehp>
-                                                    <option name ="restaurantName" value="<%= resAdminArray[0].restaurant._id %>" disabled selected>Restaurant</option>
-                                                    <% if (typeof restaurant !== 'undefined' && restaurant.length > 0) {%>
-                                                    <%for (var j = 0; j < restaurant.length; j++) { %>
-                                                        <option  name ="restaurantName" value="<%= restaurant[j]._id%>"><%= restaurant[j].name %></option>
-                                                    <%}%>
-                                                    <%}%>
-                                                </select>
-                                                <select id="adminStatus" name="adminStatus" class="form-control select2" style="width: 100%;">
-                                                    <option value="<%= resAdminArray[i].status%>" disabled selected>Status</option>
-                                                    <option  name="adminStatus" value="true">Enabled</option>
-                                                    <option  name="adminStatus" value="false">Disabled</option>
-                                                </select>
-                                                <input type="text" name="restaurantID" value="<%= restaurant[i]._id%>" hidden>
-
-                                                <div class="col mt-2">
-                                                    <input class="btn btn-primary" type="submit">
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                            <%}%>
+                        <%}%>
                     </div>
                 </div>
             </div>
@@ -120,4 +87,3 @@
 </main>
 </body>
 </html>
-

@@ -5,6 +5,8 @@ const Restaurant = require('../models/restourant');
 const Supplier = require('../models/suppliers');
 const upload = require('../controllers/uploadController');
 const RestaurantAdmin = require("../models/RestaurantAdmin");
+const moment = require('moment');
+const User = require("../models/User"); // require
 
 /* GET home page. */
 router.get('/dashboard',function (req,res,next){
@@ -41,27 +43,61 @@ router.get('/add-restaurant-admin',adminController.add_restaurant_admin_get);
 
 router.post('/add-restaurant-admin',adminController.add_restaurant_admin_post);
 
-router.get('/dashboard/customers/active/:id',function (req,res,next) {
-  User.find({_id: req.params.id,status:true}, function(err, docs){
+router.get('/customers/active/:id',function (req,res,next) {
+  User.find({_id: req.params.id,status:true}, function(err, user){
     if(err) res.json(err);
-    else    res.json( {user: docs[0]._id});
+    else{
+      res.render('admin/user', {
+        user: req.user,
+        userArray: user,
+      });
+    }
   });
 });
 
 router.get('/admins',adminController.find_restaurant_admin);
+
 router.get('/admins/:id',function (req,res,next){
   const adminID = req.params.id;
-  RestaurantAdmin.find({_id:adminID},function(err, resAdmin) {
+  RestaurantAdmin.find({_id:adminID})
+      .populate('restaurant')
+      .exec(function(err, resAdmin) {
         console.log(resAdmin);
         if (err) console.log(err);
-        Restaurant.find({status:true},function (err,restaurant){
+        Restaurant.find({status: true}, function (err, restaurant) {
           res.render('admin/RestaurantAdmin', {
             user: req.user,
             resAdminArray: resAdmin,
-            restaurant:restaurant
+            restaurant: restaurant
           });
         });
       });
+});
+router.post('/admins/:id',function (req,res,next){
+  const AdminID = req.params.id;
+  const restaurantName = req.body.restaurantName;
+  const adminStatus = req.body.adminStatus;
+  const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+  console.log(AdminID,restaurantName,adminStatus,modified);
+  if (typeof restaurantName !== 'undefined' && typeof adminStatus !== 'undefined'){
+    RestaurantAdmin.updateOne({ _id: AdminID},  { status: adminStatus ,restaurant:restaurantName,modified:modified },
+        function (error, success) {
+          res.redirect('/admin/admins');
+        });
+  }
+  if (typeof restaurantName !== 'undefined' && typeof adminStatus === 'undefined'){
+    RestaurantAdmin.updateOne({ _id: AdminID},  { restaurant:restaurantName,modified:modified },
+        function (error, success) {
+          res.redirect('/admin/admins');
+        });
+  }
+  if (typeof restaurantName === 'undefined' && typeof adminStatus !== 'undefined'){
+    RestaurantAdmin.updateOne({ _id: AdminID},  { status:adminStatus,modified:modified },
+        function (error, success) {
+          res.redirect('/admin/admins');
+        });
+  }
+
 });
 router.get('/suppliers',adminController.find_suppliers);
 

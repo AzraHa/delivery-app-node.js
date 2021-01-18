@@ -135,7 +135,7 @@ module.exports.find_restaurant_admin = (req,res,next) => {
         if (err) console.log(err);
         res.render('admin/admin-restaurant', {
           user: req.user,
-          suppliersArray: resAdmin
+          resAdminArray: resAdmin
         });
       });
 }
