@@ -34,29 +34,24 @@
                                     <h1><b><%= food[i].name%></b></h1>
                                 </div>
                                 <div class="card-body">
-                                    <form action="" method="post">
+                                    <form action="/adminRestaurant/food/edit/<%= food[i]._id%>" method="post">
                                         <div class="input-group mb-3">
                                             <img src="../<%= food[i].picture%>">
                                         </div>
                                         <div class="input-group mb-3">
                                             <input type="text"
                                                    id="name"
-                                                   name="foodName"
+                                                   name="name"
                                                    class="form-control"
                                                    placeholder="Name"
                                                    value="<%= food[i].name%>">
-                                            <div class="input-group-append">
-                                                <div class="input-group-text">
-                                                    <span class="fa fa-home"></span>
-                                                </div>
-                                            </div>
                                         </div>
                                         <div class="input-group mb-3">
                                             <select id="type"  name="type" class="form-control select2" style="width: 100%;">
-                                                <option value="<%= food[i].type.name%>"><%= food[i].type.name%></option>
+                                                <option name="type" value="<%= food[i].type._id%>"><%= food[i].type.name%></option>
                                                 <% if (typeof FoodTypeArray !== 'undefined' && FoodTypeArray.length > 0) {%>
                                                 <%for (var j = 0; j < FoodTypeArray.length; j++) { %>
-                                                    <option  name ="restaurantName" value="<%= FoodTypeArray[j]._id%>"><%= FoodTypeArray[j].name %></option>
+                                                    <option  name ="type" value="<%= FoodTypeArray[j]._id%>"><%= FoodTypeArray[j].name %></option>
                                                 <%}%>
                                                 <%}%>
                                             </select>
@@ -68,11 +63,14 @@
                                                    class="form-control"
                                                    placeholder="Price"
                                                    value="<%= food[i].price%>">
-                                            <div class="input-group-append">
-                                                <div class="input-group-text">
-                                                    <span class="fa fa-envelope"></span>
-                                                </div>
-                                            </div>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <select id="status"  name="status" class="form-control select2" style="width: 100%;">
+                                                <% if (food[i].status === true) {%>
+                                                    <option name="status" value="<%= true %>>">Active</option>
+                                                    <option  name ="status" value="<%=false%>">Inactive</option>
+                                                <%}%>
+                                            </select>
                                         </div>
 
                                         <div class="row">

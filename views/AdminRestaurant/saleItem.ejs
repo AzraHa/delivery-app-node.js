@@ -34,18 +34,18 @@
                                     <h1><b><%= sale[i].name%></b></h1>
                                 </div>
                                 <div class="card-body">
-                                    <form action="" method="post">
+                                    <form action="/adminRestaurant/sale/edit/<%= sale[i]._id%>" method="post">
                                         <div class="input-group mb-3">
                                             <input type="text"
                                                    id="name"
-                                                   name="adminName"
+                                                   name="name"
                                                    class="form-control"
                                                    placeholder="Name"
                                                    value="<%= sale[i].name%>">
                                         </div>
                                         <div class="input-group mb-3">
                                             <select id="type"  name="type" class="form-control select2" style="width: 100%;">
-                                                <option value="<%= sale[i].type.name%>"><%= sale[i].type.name%></option>
+                                                <option value="<%= sale[i].type._id%>"><%= sale[i].type.name%></option>
                                                 <% if (typeof FoodTypeArray !== 'undefined' && FoodTypeArray.length > 0) {%>
                                                 <%for (var j = 0; j < FoodTypeArray.length; j++) { %>
                                                     <option  name ="restaurantName" value="<%= FoodTypeArray[j]._id%>"><%= FoodTypeArray[j].name %></option>

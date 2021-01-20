@@ -10,11 +10,13 @@ const Restaurant = require("../models/Restaurant");
 const Supplier = require("../models/Supplier");
 const RestaurantAdmin = require("../models/RestaurantAdmin");
 const Sale = require("../models/Sale");
+const moment = require('moment');
 
 router.get('/',function (req,res,next){
   res.render('AdminRestaurant/login',{user:req.user});
 });
 router.get('/dashboard',function (req,res,next){
+
   res.render('AdminRestaurant/dashboard',{user:req.user});
 });
 
@@ -51,6 +53,49 @@ router.get('/admin/:id',function(req,res,next){
   })
 });
 
+router.post('/admin/edit/:id',function(req,res,next){
+  const adminID = req.params.id;
+  const restaurant = req.user.restaurant;
+  const adminName = req.body.adminName;
+  const address = req.body.address;
+  const adminEmail = req.body.adminEmail;
+  const status = req.body.status;
+  const password = req.body.password;
+  const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+
+  if (password === ""){
+    RestaurantAdmin.updateOne({ _id: adminID},  {
+          status: status ,
+          restaurant:restaurant,
+          modified:modified,
+          name:adminName,
+          email:adminEmail,
+          address:address,
+        },
+        function (error, success) {
+          res.redirect('/adminRestaurant/admin');
+        });
+  }else{
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(password, salt, (err, hash) => {
+        if (err) throw err;
+        RestaurantAdmin.updateOne({ _id: adminID},  {
+              status: status ,
+              password : hash,
+              restaurant:restaurant,
+              modified:modified,
+              name:adminName,
+              email:adminEmail,
+              address:address,
+            },
+            function (error, success) {
+              res.redirect('/adminRestaurant/admin');
+            });
+      });
+    });
+  }
+});
+
 router.get('/food',function (req,res,next){
   Food.find({})//sve restorane sa suppliers
       .populate('type') // only works if we pushed refs to person.eventsAttended
@@ -75,6 +120,22 @@ router.get('/food/:id',function(req,res,next){
     })
 
   });
+});
+router.post('/food/edit/:id',function (req,res,next){
+  const foodID = req.params.id;
+  const {name,type,price,status} = req.body;
+  console.log(name,type,price);
+  const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+  Food.updateOne({ _id: foodID},  {
+        status: status,
+        modified:modified,
+        name:name,
+        type:type,
+        price:price
+      },
+      function (error, success) {
+        res.redirect('/adminRestaurant/food');
+      });
 });
 
 
@@ -202,7 +263,43 @@ router.get('/suppliers/:id',function (req,res,next){
       supplier: supplier
     })
   })
-})
+});
+router.post('/suppliers/edit/:id',function (req,res,next){
+  const supplierID = req.params.id;
+  const {name,address,email,status,password} = req.body;
+  const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+  console.log("PODACI: "+name+address+email+status+password);
+  if (password === ""){
+    Supplier.updateOne({ _id: supplierID},  {
+          status: status ,
+          modified:modified,
+          name:name,
+          email:email,
+          s_address:address
+        },
+        function (error, success) {
+          res.redirect('/adminRestaurant/suppliers');
+        });
+  }else{
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(password, salt, (err, hash) => {
+        if (err) throw err;
+        Supplier.updateOne({ _id: supplierID},  {
+              status: status ,
+              password : hash,
+              modified:modified,
+              name:name,
+              email:email,
+              s_address:address
+            },
+            function (error, success) {
+              res.redirect('/adminRestaurant/suppliers');
+            });
+      });
+    });
+  }
+
+});
 router.get('/add-supplier',function (req,res,next){
   res.render('AdminRestaurant/add-suppliers',{user:req.user});
 });
@@ -251,7 +348,7 @@ router.post('/add-sale',upload.single('picture'),function (req,res,next){
     name:name,
     type:type,
     description:desc,
-    price:price,
+    salePrice:price,
     date_from:date_from,
     date_to:date_to,
     picture:picture,
@@ -282,6 +379,24 @@ router.get('/sale/:id',function (req,res,next){
       });
     });
   });
+});
+
+router.post('/sale/edit/:id',function (req,res,next){
+  const saleID = req.params.id;
+  const {name,type,date_from,date_to,price,status} = req.body;
+  console.log(name,type,date_from,date_to,price,status);
+  const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+  Sale.updateOne({ _id: saleID},  {
+        name:name,
+        type:type,
+        date_from:date_from,
+        date_to:date_to,
+        salePrice:price,
+        status:status
+      },
+      function (error, success) {
+        res.redirect('/adminRestaurant/sale');
+      });
 });
 
 
