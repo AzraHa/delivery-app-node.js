@@ -22,6 +22,7 @@ const SaleSchema = new mongoose.Schema({
     },
     restaurant: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" },
     food: { type: mongoose.Schema.Types.ObjectId, ref: "Food" },
+    type: { type: mongoose.Schema.Types.ObjectId, ref: "FoodType" },
     date: {
         type: Date,
         default: Date.now
@@ -36,6 +37,6 @@ const SaleSchema = new mongoose.Schema({
     }
 });
 
-const Sale = mongoose.model('Food', SaleSchema);
+const Sale = mongoose.model('Sale', SaleSchema);
 
 module.exports = Sale;

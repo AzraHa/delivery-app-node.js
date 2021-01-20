@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <!-- Fontawesome-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Fontawesome-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+<body>
+<main role="main">
+    <% include partials/navbar %>
+    <div class="container-fluid">
+        <div class="row">
+            <%include partials/sidebar %>
+            <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
+                <div class="naslovna-login-register">
+                    <div class="login-box">
+                        <% for(let i=0;i<admin.length;i++){%>
+                        <div class="card card-outline card-primary">
+                            <div class="card-header text-center">
+                                <h1><b><%= admin[i].name%></b></h1>
+                            </div>
+                            <div class="card-body">
+                                <form action="" method="post">
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               id="name"
+                                               name="adminName"
+                                               class="form-control"
+                                               placeholder="Admin Name"
+                                                value="<%= admin[i].name%>">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fa fa-home"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               id="address"
+                                               name="address"
+                                               class="form-control"
+                                               placeholder="Address"
+                                               value="<%= admin[i].address %>">
+                                        <div class="input-group-append" >
+                                            <div class="input-group-text">
+                                                <span class="fa fa-map-marker" id="dugme"></span>
+                                            </div>
+                                            <div class="input-group-text">
+                                                <span class="fa fa-search" id="submit"></span>
+                                            </div>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="inputEmail3 " class="col-sm-2 col-form-label mr-2 "></label>
+                                            <div id="googleMap" class="form-control " style="position: relative; overflow: hidden; width: 100%; margin: 5px; height: 200px; "></div>
+
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input type="email"
+                                               id="email"
+                                               name="adminEmail"
+                                               class="form-control"
+                                               placeholder="Administrator Email"
+                                                value="<%= admin[i].email%>">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fa fa-envelope"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               id="status"
+                                               name="status"
+                                               class="form-control"
+                                               placeholder="Administrator Status"
+                                               value="<%= admin[i].status%>">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fa fa-envelope"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input type="password"
+                                               id="password"
+                                               name="password"
+                                               class="form-control"
+                                               placeholder="Change Administrator Password">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fa fa-unlock-alt"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <div class="col-md-8 icheck-primary">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 submit">
+                                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                        <%}%>
+                    </div>
+
+                </div>

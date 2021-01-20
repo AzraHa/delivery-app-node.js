@@ -51,6 +51,19 @@
                                         <td><%= foodArray[i].status%></td>
                                         <td><%= foodArray[i].price%></td>
                                         <td><%= foodArray[i].type.name%></td>
+                                        <td class="project-actions text-right">
+                                            <a class="btn btn-primary btn-sm" href="/adminRestaurant/food/<%= foodArray[i]._id%>">
+                                                <i class="fa fa-folder">
+                                                </i>
+                                                View
+                                            </a>
+                                            <a class="btn btn-primary btn-sm" href="/adminRestaurant/food/delete/<%= foodArray[i]._id%>">
+                                                <i class="fa fa-folder">
+                                                </i>
+                                                Delete
+                                            </a>
+
+                                        </td>
                                     </tr>
                                 <%}}%>
                                 </tbody>

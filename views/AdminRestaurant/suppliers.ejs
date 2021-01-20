@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- Custom styles for this template -->
     <link href="/stylesheets/style.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
     <!-- Fontawesome-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
@@ -20,57 +18,65 @@
         <div class="row">
             <%include partials/sidebar %>
             <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3">
                     <h1 class="h2">Dashboard</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group mr-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                            <span data-feather="calendar"></span>
+                            This week
+                        </button>
+                    </div>
                 </div>
                 <!-- TABLE: LATEST ORDERS -->
                 <div class="card">
-                    <div class="card-header border-transparent">
-                        <h3 class="card-title">Latest Orders</h3>
+                    <div class="card-header">
+                        <h3 class="card-title">Suppliers</h3>
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
                             <table class="table m-0">
                                 <thead>
                                 <tr>
-                                    <th>Order ID</th>
-                                    <th>Item</th>
+                                    <th>No :</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Adress</th>
+                                    <th>Last modified</th>
                                     <th>Status</th>
-                                    <th>Supplier</th>
-                                    <th>Restaurant</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                    <td>Call of Duty IV</td>
-                                    <td><span class="badge badge-success">Shipped</span></td>
-                                    <td>
-                                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                    <td>Call of Duty IV</td>
-                                    <td><span class="badge badge-success">Shipped</span></td>
-                                    <td>
-                                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                    <td>Call of Duty IV</td>
-                                    <td><span class="badge badge-success">Shipped</span></td>
-                                    <td>
-                                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                    </td>
-                                </tr>
+                                <% if (typeof suppliers !== 'undefined' && suppliers.length >= 0) {%>
+                                <%for (var i = 0; i < suppliers.length; i++) { %>
+                                    <tr>
+                                        <td><%= i+1 %> </td>
+                                        <td><%= suppliers[i].name %></td>
+                                        <td><%= suppliers[i].email %></td>
+                                        <td><%= suppliers[i].s_address %></td>
+                                        <td><%= suppliers[i].modified %></td>
+                                        <td class="project-actions text-right">
+                                            <a class="btn btn-primary btn-sm" href="/adminRestaurant/suppliers/<%= suppliers[i]._id%>">
+                                                <i class="fa fa-folder">
+                                                </i>
+                                                View
+                                            </a>
+                                            <a class="btn btn-primary btn-sm" href="/adminRestaurant/suppliers/delete/<%= suppliers[i]._id%>">
+                                                <i class="fa fa-folder">
+                                                </i>
+                                                Delete
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                <%}%>
+                                <% } %>
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div class="card-footer clearfix">
-                        <a href="/admin/orders" class="btn btn-sm btn-secondary float-right">View All Orders</a>
                     </div>
                 </div>
             </div>

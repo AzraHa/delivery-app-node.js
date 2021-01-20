@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- Custom styles for this template -->
     <link href="/stylesheets/style.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
     <!-- Fontawesome-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
@@ -16,66 +14,102 @@
 <body>
 <main role="main">
     <% include partials/navbar %>
+
     <div class="container-fluid">
         <div class="row">
             <%include partials/sidebar %>
+
             <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
                     <h1 class="h2">Dashboard</h1>
                 </div>
-                <!-- TABLE: LATEST ORDERS -->
-                <div class="card">
-                    <div class="card-header border-transparent">
-                        <h3 class="card-title">Latest Orders</h3>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table m-0">
-                                <thead>
-                                <tr>
-                                    <th>Order ID</th>
-                                    <th>Item</th>
-                                    <th>Status</th>
-                                    <th>Supplier</th>
-                                    <th>Restaurant</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                    <td>Call of Duty IV</td>
-                                    <td><span class="badge badge-success">Shipped</span></td>
-                                    <td>
-                                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                    <td>Call of Duty IV</td>
-                                    <td><span class="badge badge-success">Shipped</span></td>
-                                    <td>
-                                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                    <td>Call of Duty IV</td>
-                                    <td><span class="badge badge-success">Shipped</span></td>
-                                    <td>
-                                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                <div class="naslovna-login-register">
+                    <div class="login-box">
+                        <div class="card card-outline card-primary">
+                            <div class="card-header text-center">
+                                <h1><b>Add sale</b></h1>
+                            </div>
+                            <div class="card-body">
+                                <form action="/adminRestaurant/add-sale" method="POST" enctype="multipart/form-data">
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               id="name"
+                                               name="name"
+                                               class="form-control"
+                                               placeholder="Name">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fa fa-name"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <select id="type"  name="type" class="form-control select2" style="width: 100%;">
+                                            <option value="" disabled selected>FoodType</option>
+                                            <% if (typeof FoodTypeArray !== 'undefined' && FoodTypeArray.length > 0) {%>
+                                            <%for (var i = 0; i < FoodTypeArray.length; i++) { %>
+                                                <option  name ="restaurantName" value="<%= FoodTypeArray[i]._id%>"><%= FoodTypeArray[i].name %></option>
+                                            <%}%>
+                                            <%}%>
+                                        </select>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               id="desc"
+                                               name="desc"
+                                               class="form-control"
+                                               placeholder="Description">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               id="price"
+                                               name="price"
+                                               class="form-control"
+                                               placeholder="Enter Price">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input type="date"
+                                               id="date"
+                                               name="date_from"
+                                               class="form-control"
+                                               value="2018-07-22"
+                                               min="" max="2018-12-31">
+
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input type="date"
+                                               id="date"
+                                               name="date_to"
+                                               class="form-control"
+                                               value="2018-07-22"
+                                               min="2018-01-01" max="2018-12-31">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="exampleInputPassword1" class="col-form-label mr-2">Picture</label>
+                                        <input type="file" accept="image/*"
+                                               id="picture"
+                                               name="picture"
+                                               class="form-control">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <div class="col-md-8 icheck-primary">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 submit">
+                                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
                         </div>
                     </div>
-                    <div class="card-footer clearfix">
-                        <a href="/admin/orders" class="btn btn-sm btn-secondary float-right">View All Orders</a>
-                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</main>
-</body>
-</html>
+                <script>
+                    $(function(){
+                        $('[type="date"].min-today').prop('min', function(){
+                            return new Date().toJSON().split('T')[0];
+                        });
+                    });
+                </script>
