@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminControllers');
-const Restaurant = require('../models/restourant');
-const Supplier = require('../models/suppliers');
+const Restaurant = require('../models/Restaurant');
+const Supplier = require('../models/Supplier');
 const upload = require('../controllers/uploadController');
 const RestaurantAdmin = require("../models/RestaurantAdmin");
 const moment = require('moment');
 const User = require("../models/User"); // require
-
+const FoodType = require('../models/FoodType');
 /* GET home page. */
 router.get('/dashboard',function (req,res,next){
   /*Orders.find({}).select({"price"}).sort({"price" : -1}).limit(1).exec(function(err, doc){
@@ -340,6 +340,21 @@ router.get('/mail',function (req,res,next){
       console.log('Email sent: ' + info.response);
     }
   });
+});
+
+router.get('/add-food-type',function (req,res,next){
+  res.render('admin/add-food-type',{user:req.user});
+});
+router.post('/add-food-type',function (req,res,next){
+  const name = req.body.name;
+  const status = true;
+  const comm = new FoodType({
+    name:name,
+    status:status
+  });
+  comm.save();
+  console.log(comm);
+  res.redirect('/admin/dashboard');
 });
 
 module.exports = router;

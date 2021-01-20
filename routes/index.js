@@ -15,8 +15,8 @@ let storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 const path = require('path');
 
-
-router.get('/:name', function (req, res, next) {
+/*Bez ovoga ne rade slike ?! */
+/*router.get('/:name', function (req, res, next) {
   var options = {
     root: path.join('./uploads'),
     dotfiles: 'deny',

@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
+
 const FoodTypeSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
   },
+  restaurant: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }],
   date: {
     type: Date,
     default: Date.now

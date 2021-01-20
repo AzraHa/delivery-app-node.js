@@ -6,6 +6,10 @@ const FoodSchema = new mongoose.Schema({
     required: true
   },
   type: { type: mongoose.Schema.Types.ObjectId, ref: "FoodType" },
+  description:{
+    type:String,
+    required:true
+  },
   price: {
     type: String,
     required: true
@@ -18,6 +22,10 @@ const FoodSchema = new mongoose.Schema({
     required: true
   },
   restaurant: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" },
+  meni:{
+    type:Boolean,
+    required:true
+  },
   date: {
     type: Date,
     default: Date.now

@@ -2,9 +2,9 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const Admin = require('../models/Admin');
 const User = require('../models/User');
-const Supplier = require('../models/suppliers');
+const Supplier = require('../models/Supplier');
 const RestaurantAdmin = require('../models/RestaurantAdmin');
-const Restaurant = require('../models/restourant');
+const Restaurant = require('../models/Restaurant');
 const jwt = require('jsonwebtoken');
 const {ensureAuthenticatedAdmin} = require('../config/auth');
 const moment = require('moment'); // require
@@ -201,9 +201,9 @@ module.exports.add_restaurant_admin_post = (req,res,next) => {
     bcrypt.hash(newAdmin.password, salt, (err, hash) => {
       if (err) throw err;
       newAdmin.password = hash;
+      newAdmin.save();
     });
   });
-  newAdmin.save();
   Restaurant.updateOne({ _id: restaurantName}, {
     $push: {
         admin: {

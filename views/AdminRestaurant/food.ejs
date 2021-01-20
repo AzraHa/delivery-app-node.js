@@ -33,29 +33,31 @@
                             <table class="table m-0">
                                 <thead>
                                 <tr>
-                                    <th>Order ID</th>
+                                    <th>ID</th>
                                     <th>Item</th>
+                                    <th>Picture</th>
                                     <th>Status</th>
-                                    <th>Supplier</th>
-                                    <th>Restaurant</th>
+                                    <th>Price</th>
+                                    <th>Type</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <% if (typeof foodArray !== 'undefined' && foodArray.length > 0) {%>
                                 <%for (var i = 0; i < foodArray.length; i++) { %>
                                     <tr>
+                                        <td><%= i+1 %></td>
                                         <td><a href="#"><%= foodArray[i].name%></a></td>
-                                        <td><a href="#"><%= foodArray[i].picture%></a></td>
-
+                                        <td><img src="../<%= foodArray[i].picture%>"></td>
+                                        <td><%= foodArray[i].status%></td>
+                                        <td><%= foodArray[i].price%></td>
+                                        <td><%= foodArray[i].type.name%></td>
                                     </tr>
                                 <%}}%>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="card-footer clearfix">
-                        <a href="#" class="btn btn-sm btn-secondary float-right">View All Food</a>
-                    </div>
+
                 </div>
             </div>
         </div>

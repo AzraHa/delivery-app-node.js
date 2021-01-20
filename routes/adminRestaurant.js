@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const Food = require('../models/Food');
 const upload = require('../controllers/uploadController');
+const FoodType = require('../models/FoodType');
 
 router.get('/',function (req,res,next){
   res.render('AdminRestaurant/login',{user:req.user});
@@ -21,43 +22,84 @@ router.post('/login',function(req,res,next){
   })(req, res, next);
 });
 router.get('/logout',function (req,res,next){
-
+  res.cookie('jwt','',{maxAge: 1 });
+  req.logout();
+  req.flash('success_msg', 'You are logged out');
+  res.redirect('/');
 });
 router.get('/admin',function (req,res,next){
 res.render('AdminRestaurant/admin',{user:req.user});
 });
 
 router.get('/add-food-item',function (req,res,next){
-  res.render('AdminRestaurant/add-food-item',{user:req.user});
+
+  FoodType.find({},function (err,foodtype){
+    if(err) console.log(err);
+    else{
+      res.render('AdminRestaurant/add-food-item',{
+        user:req.user,
+        FoodTypeArray:foodtype
+      });
+    }
+  })
 });
 router.post('/add-food-item',upload.single('picture'),function (req,res,next){
   const {name,type,price} = req.body;
   const picture = req.file.filename;
   const status = true;
-
+  const meni = false;
+  const description = req.body.desc;
   const newFoodItem = new Food(
     {
-        name, type, price,picture,status
+        name, type, price,picture,status,meni,description
         }
     );
     newFoodItem.save().then(user =>
     {
-          res.redirect('/adminRestaurant/food');
+      res.redirect('/adminRestaurant/food');
     });
 });
+
 router.get('/add-restaurant-admin',function (req,res,next){
   res.render('AdminRestaurant/add-restaurant-admin',{user:req.user});
 });
 router.get('/add-meni',function (req,res,next){
-  res.render('AdminRestaurant/add-meni',{user:req.user});
+  FoodType.find({},function (err,foodtype){
+    if(err) console.log(err);
+    else{
+      res.render('AdminRestaurant/add-meni',{
+        user:req.user,
+        FoodTypeArray:foodtype
+      });
+    }
+  })
 });
+
+router.post('/add-meni',upload.single('picture'),function (req,res,next){
+  const {name,type,price} = req.body;
+  const picture = req.file.filename;
+  const status = true;
+  const meni = true;
+  const description = req.body.desc;
+  console.log(name,type,picture,status,meni,description);
+  const newFoodItem = new Food(
+      {
+        name, type, price,picture,status,meni,description
+      }
+  );
+  newFoodItem.save().then(user =>
+  {
+    res.redirect('/adminRestaurant/food');
+  });
+});
+
 router.get('/customers',function (req,res,next){
   res.render('AdminRestaurant/customers',{user:req.user});
 
 });
 router.get('/food',function (req,res,next){
   Food.find({})//sve restorane sa suppliers
-    .populate('restaurant') // only works if we pushed refs to person.eventsAttended
+    .populate('type') // only works if we pushed refs to person.eventsAttended
     .exec(function(err, food) {
       console.log(food);
       if (err) console.log(err);
