@@ -53,6 +53,22 @@ router.get('/admin/:id',function(req,res,next){
   })
 });
 
+router.get('/administrator',function(req,res,next){
+  RestaurantAdmin.find({_id: req.user._id}).populate('restaurant').exec(function (err,admin){
+    res.render('adminRestaurant/administrator',{
+      user:req.user,
+      admin: admin
+    })
+  });
+});
+
+router.post('/administrator/:id',function(req,res,next){
+  const adminID = req.params.id;
+  const restaurant = req.user.restaurant;
+
+
+});
+
 router.post('/admin/edit/:id',function(req,res,next){
   const adminID = req.params.id;
   const restaurant = req.user.restaurant;
@@ -96,6 +112,7 @@ router.post('/admin/edit/:id',function(req,res,next){
   }
 });
 
+
 router.get('/food',function (req,res,next){
   Food.find({})//sve restorane sa suppliers
       .populate('type') // only works if we pushed refs to person.eventsAttended
@@ -138,6 +155,13 @@ router.post('/food/edit/:id',function (req,res,next){
       });
 });
 
+router.delete('/food/delete/:id',function (req,res,next){
+  Food.deleteOne({ _id: req.params.id }, function (err) {
+    if (err) return err;
+    else res.sendStatus(200);
+  });
+});
+
 
 router.get('/add-food-item',function (req,res,next){
   FoodType.find({},function (err,foodtype){
@@ -152,13 +176,14 @@ router.get('/add-food-item',function (req,res,next){
 });
 router.post('/add-food-item',upload.single('picture'),function (req,res,next){
   const {name,type,price} = req.body;
+  const restaurant = req.user.restaurant;
   const picture = req.file.filename;
   const status = true;
   const meni = false;
   const description = req.body.desc;
   const newFoodItem = new Food(
     {
-        name, type, price,picture,status,meni,description
+        name, type, price,picture,status,meni,description,restaurant
         }
     );
     newFoodItem.save().then(user =>
@@ -180,13 +205,14 @@ router.get('/add-meni',function (req,res,next){
 router.post('/add-meni',upload.single('picture'),function (req,res,next){
   const {name,type,price} = req.body;
   const picture = req.file.filename;
+  const restaurant = req.user.restaurant;
   const status = true;
   const meni = true;
   const description = req.body.desc;
   console.log(name,type,picture,status,meni,description);
   const newFoodItem = new Food(
       {
-        name, type, price,picture,status,meni,description
+        name, type, price,picture,status,meni,description,restaurant
       }
   );
   newFoodItem.save().then(user =>
@@ -300,6 +326,16 @@ router.post('/suppliers/edit/:id',function (req,res,next){
   }
 
 });
+
+
+router.delete('/suppliers/delete/:id',function (req,res,next){
+  Supplier.deleteOne({ _id: req.params.id }, function (err) {
+    if (err) return err;
+    else res.sendStatus(200);
+  });
+});
+
+
 router.get('/add-supplier',function (req,res,next){
   res.render('AdminRestaurant/add-suppliers',{user:req.user});
 });
@@ -397,6 +433,12 @@ router.post('/sale/edit/:id',function (req,res,next){
       function (error, success) {
         res.redirect('/adminRestaurant/sale');
       });
+});
+router.delete('/sale/delete/:id',function (req,res,next){
+  Sale.deleteOne({ _id: req.params.id }, function (err) {
+    if (err) return err;
+    else res.sendStatus(200);
+  });
 });
 
 

@@ -44,7 +44,7 @@
                                 <tbody>
                                 <% if (typeof foodArray !== 'undefined' && foodArray.length > 0) {%>
                                 <%for (var i = 0; i < foodArray.length; i++) { %>
-                                    <tr>
+                                    <tr id="<%= foodArray[i]._id %>">
                                         <td><%= i+1 %></td>
                                         <td><a href="#"><%= foodArray[i].name%></a></td>
                                         <td><img src="../<%= foodArray[i].picture%>"></td>
@@ -57,7 +57,7 @@
                                                 </i>
                                                 View
                                             </a>
-                                            <a class="btn btn-primary btn-sm" href="/adminRestaurant/food/delete/<%= foodArray[i]._id%>">
+                                            <a class="btn btn-primary btn-sm" href="#" onclick="deleteFood('<%= foodArray[i]._id%>');">
                                                 <i class="fa fa-folder">
                                                 </i>
                                                 Delete
@@ -76,5 +76,16 @@
         </div>
     </div>
 </main>
+<script>
+    function deleteFood(id){
+        $.ajax({
+            url:"/adminRestaurant/food/delete/" + id,
+            method: "DELETE",
+            success: function(result){
+                $('#'+id+'').remove();
+            }
+        });
+    }
+</script>
 </body>
 </html>

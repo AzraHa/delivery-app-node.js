@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- Custom styles for this template -->
     <link href="/stylesheets/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Fontawesome-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
@@ -52,7 +53,7 @@
                                 <tbody>
                                 <% if (typeof suppliers !== 'undefined' && suppliers.length >= 0) {%>
                                 <%for (var i = 0; i < suppliers.length; i++) { %>
-                                    <tr>
+                                    <tr id="<%=suppliers[i]._id%>">
                                         <td><%= i+1 %> </td>
                                         <td><%= suppliers[i].name %></td>
                                         <td><%= suppliers[i].email %></td>
@@ -64,7 +65,7 @@
                                                 </i>
                                                 View
                                             </a>
-                                            <a class="btn btn-primary btn-sm" href="/adminRestaurant/suppliers/delete/<%= suppliers[i]._id%>">
+                                            <a class="btn btn-primary btn-sm" href="#" onclick="deleteSupplier('<%= suppliers[i]._id%>');">
                                                 <i class="fa fa-folder">
                                                 </i>
                                                 Delete
@@ -83,5 +84,16 @@
         </div>
     </div>
 </main>
+<script>
+    function deleteSupplier(id){
+        $.ajax({
+            url:"/adminRestaurant/suppliers/delete/" + id,
+            method: "DELETE",
+            success: function(result){
+                $('#'+id+'').remove();
+            }
+        });
+    }
+</script>
 </body>
 </html>

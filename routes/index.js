@@ -51,12 +51,6 @@ router.post('/upload', upload.single('photo'), (req, res) => {
 router.get('/map',function (req,res,next){
   res.render('map');
 })
-/* GET home page. */
-router.get('/dashboard', function(req, res, next) {
-  res.render('dashboard', {
-    user: req.user
-  })
-});
 router.get('/naslovna',  function(req, res){
   res.render('index', { user: req.user });
 });

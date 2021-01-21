@@ -52,29 +52,16 @@
                                 <tbody>
 
                                     <% if (typeof restAdmin !== 'undefined' && restAdmin.length >= 0) {%>
-                                    <%for (var i = 0; i < restAdmin.length; i++) { %>
-                                    <tr>
-                                        <td><%= i+1 %> </td>
-                                        <td><%= restAdmin[i].name %></td>
-                                        <td><%= restAdmin[i].email %></td>
-                                        <td><%= restAdmin[i].address %></td>
-                                        <td><%= restAdmin[i].modified %></td>
-                                        <td><%= restAdmin[i].restaurant.name%></td>
-                                        <td class="project-actions text-right">
-                                            <a class="btn btn-primary btn-sm" href="/adminRestaurant/admin/<%= restAdmin[i]._id%>">
-                                                <i class="fa fa-folder">
-                                                </i>
-                                                View
-                                            </a>
-                                            <a class="btn btn-primary btn-sm" href="/adminRestaurant/admin/delete/<%= restAdmin[i]._id%>">
-                                                <i class="fa fa-folder">
-                                                </i>
-                                                Delete
-                                            </a>
-
-                                        </td>
-                                    </tr>
-                                    <%}%>
+                                        <%for (var i = 0; i < restAdmin.length; i++) { %>
+                                        <tr>
+                                            <td><%= i+1 %> </td>
+                                            <td><%= restAdmin[i].name %></td>
+                                            <td><%= restAdmin[i].email %></td>
+                                            <td><%= restAdmin[i].address %></td>
+                                            <td><%= restAdmin[i].modified %></td>
+                                            <td><%= restAdmin[i].restaurant.name%></td>
+                                        </tr>
+                                        <%}%>
                                     <% } %>
                                 </tbody>
                             </table>

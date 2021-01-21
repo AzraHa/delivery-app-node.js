@@ -99,7 +99,7 @@ module.exports.login_post = (req,res,next) => {
     req.logIn(user, function (err) { // <-- Log user in
       /*res.locals.user = user;
       return res.render('error');*/
-      return res.redirect('/dashboard');
+      return res.redirect('/users/dashboard');
     });
   })(req, res);
 

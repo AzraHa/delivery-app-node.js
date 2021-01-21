@@ -44,7 +44,7 @@
                                 <tbody>
                                 <% if (typeof sale !== 'undefined' && sale.length > 0) {%>
                                 <%for (var i = 0; i < sale.length; i++) { %>
-                                    <tr>
+                                    <tr id="<%= sale[i]._id%>">
                                         <td><%= i+1 %></td>
                                         <td><a href="#"><%= sale[i].name%></a></td>
                                         <td><img src="../<%= sale[i].picture%>"></td>
@@ -57,7 +57,7 @@
                                                 </i>
                                                 View
                                             </a>
-                                            <a class="btn btn-primary btn-sm" href="/adminRestaurant/sale/delete/<%= sale[i]._id%>">
+                                            <a class="btn btn-primary btn-sm" href="#" onclick="deleteSale('<%= sale[i]._id%>');">
                                                 <i class="fa fa-folder">
                                                 </i>
                                                 Delete
@@ -76,5 +76,16 @@
         </div>
     </div>
 </main>
+<script>
+    function deleteSale(id){
+        $.ajax({
+            url:"/adminRestaurant/sale/delete/" + id,
+            method: "DELETE",
+            success: function(result){
+                $('#'+id+'').remove();
+            }
+        });
+    }
+</script>
 </body>
 </html>
