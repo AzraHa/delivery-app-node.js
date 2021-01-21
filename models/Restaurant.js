@@ -12,6 +12,9 @@ const RestaurantSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+    koordinate:{
+      type:String
+    },
   email: {
     type: String,
     required: true
@@ -19,8 +22,9 @@ const RestaurantSchema = new mongoose.Schema({
   admin:[{ type: mongoose.Schema.Types.ObjectId, ref: "RestaurantAdmin" }],
   suppliers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Supplier" }],
   image:{
-   type: String
- },
+    type: String
+  },
+
   food: [{ type: mongoose.Schema.Types.ObjectId, ref: "Food"}],
   date: {
     type: Date,

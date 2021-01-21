@@ -16,20 +16,13 @@ router.get('/dashboard',function(req,res,next){
     Food.find({}).populate('restaurant').sort({"modified" : -1}).limit(6).exec(function(err,food){
         FoodType.find().exec(function (err,foodtype){
             Restaurant.find({},function (err,restaurant){
-                const restoran = [];
-                const adresa = [];
-                for(let i = 0; i<restaurant.length;i++){
-                    restoran.push(restaurant[i].name);
-                    adresa.push(restaurant[i].address)
-                }
-                console.log(restoran,adresa)
+                console.log(typeof JSON.stringify(restaurant));
                 res.render('dashboard',{
                     user:req.user,
                     food:food,
                     foodtype:foodtype,
                     restaurant:restaurant,
-                    restoran:restoran,
-                    adresa:adresa
+                    restoran:JSON.stringify(restaurant)
                 });
             })
         })

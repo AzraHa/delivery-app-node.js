@@ -114,9 +114,6 @@
             <div class="card card-outline card-primary">
                 <div class="card-header text-center">
                     <h1><b>Addresses</b></h1>
-                    <input type="hidden" id="restorani" value="<%= restoran %>">
-                    <input type="hidden" id="adresa" value="<%= adresa %>">
-
                 </div>
                 <div class="card-body">
                     <div class="input-group mb-3">
@@ -132,10 +129,10 @@
 </div>
 <script >
 
-    var restorani = document.getElementById("restorani").value;
-    var adrese = document.getElementById("adresa").value;
+    var viewMarkers = <%-JSON.stringify(restaurant)%>;
+    console.log(typeof viewMarkers);
+    const adresa = viewMarkers[0].koordinate;
 
-    console.log(restorani,adrese);
 
     function myMap() {
         var mapProp= {
@@ -144,24 +141,48 @@
         };
         var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 
-        const geocoder = new google.maps.Geocoder();
+        var geocoder = new google.maps.Geocoder();
         const infowindow = new google.maps.InfoWindow();
 
-        let labelIndex = 0;
+        var Mar;
 
-        function addMarker(location, map) {
-            new google.maps.Marker({
-                position: location,
-                label: labelIndex++,
-                map: map,
-            });
-            infowindow.setContent(results[0].formatted_address);
+        function sviRestoraniMarkeri(){
+            for(let i=0;i<2;i++) {
+                var latlong = viewMarkers[i].koordinate.split(',');
+                var latitude = parseFloat(latlong[0]);
+                var longitude = parseFloat(latlong[1]);
+                addMarker({lat: latitude, lng: longitude}, map);
+
+            }
         }
+        function addMarker(location, map) {
+            Mar = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+            Mar.setPosition(location);
+            geocoder.geocode({ location }, (results, status) => {
+                if (status === "OK") {
+                    if (results[0]) {
+                        infowindow.setContent(results[0].formatted_address);
+                        console.log(results[0].formatted_address);
+                        infowindow.open(map, Mar);
+                    } else {
+                        window.alert("No results found");
+                    }
+                } else {
+                    window.alert("Geocoder failed due to: " + status);
+                }
+            });
+
+        }
+
         google.maps.event.addListener(map, "click", (event) => {
-            addMarker(event.latLng, map);
+            sviRestoraniMarkeri();
         });
+
         function geocodeAddress(geocoder, resultsMap) {
-            const address = document.getElementById("address").value;
+            const address = 'Muhameda Hadzijahica 32';
             geocoder.geocode({ address: address }, (results, status) => {
                 if (status === "OK") {
                     resultsMap.setCenter(results[0].geometry.location);
@@ -175,6 +196,9 @@
             });
         }
     }
+
+
+
 
 </script>
 
