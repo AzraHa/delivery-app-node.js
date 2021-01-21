@@ -664,3 +664,24 @@ ul.li {
 a:hover{
   text-decoration: none;
 }
+
+.restorani{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.restoran{
+  width: 50%;
+  margin:5px;
+  padding: 5px;
+}
+@media (max-width: 768px) {
+  .restorani{
+    flex-direction: column;
+  }
+  .restoran{
+    width: 90%;
+  }
+
+}

@@ -120,3 +120,4 @@ passport.authenticate('jwt',{session: false}),function (req,res,next){
     res.render('dashboard');
   }
 }
+
