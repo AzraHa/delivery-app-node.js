@@ -83,6 +83,7 @@ module.exports.admin_register_post = (req,res,next) => {
     });
   }
 }
+
 module.exports.admin_login_post = (req,res,next) => {
   passport.authenticate('administrator', {
     successRedirect: '/admin/dashboard',

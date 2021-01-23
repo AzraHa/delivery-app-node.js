@@ -8,6 +8,8 @@ const RestaurantAdmin = require("../models/RestaurantAdmin");
 const moment = require('moment');
 const User = require("../models/User"); // require
 const FoodType = require('../models/FoodType');
+const passport = require('passport');
+const jwt = require("jsonwebtoken");
 /* GET home page. */
 router.get('/dashboard',function (req,res,next){
   /*Orders.find({}).select({"price"}).sort({"price" : -1}).limit(1).exec(function(err, doc){
@@ -25,7 +27,23 @@ router.get('/dashboard',function (req,res,next){
 
 router.get('/login',adminController.admin_login_get);
 
-router.post('/login',adminController.admin_login_post);
+const maxAge = 3 *24 *60 *60 ;
+const createToken = (id) => {
+  return jwt.sign({id},'strasno',{
+    expiresIn: maxAge
+  });
+}
+router.post('/login',
+    passport.authenticate('administrator',{
+      failureRedirect: '/admin/login',
+      failureFlash: true
+    }),
+    function(req, res) {
+      // If this function gets called, authentication was successful.
+      // `req.user` contains the authenticated user.
+      res.cookie('jwt', createToken(req.user._id), { httpOnly: true, maxAge: 5555 * 1000 });
+      res.redirect('/admin/dashboard');
+    });
 
 router.get('/register',adminController.admin_register_get);
 
