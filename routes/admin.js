@@ -10,7 +10,10 @@ const User = require("../models/User"); // require
 const FoodType = require('../models/FoodType');
 const passport = require('passport');
 const jwt = require("jsonwebtoken");
-/* GET home page. */
+/* Linkovi za mape
+* https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform#maps_places_autocomplete_addressform-javascript
+* https://developers.google.com/maps/documentation/javascript/examples/directions-travel-modes
+* https://developers.google.com/maps/documentation/javascript/examples/directions-complex*/
 router.get('/dashboard',function (req,res,next){
   /*Orders.find({}).select({"price"}).sort({"price" : -1}).limit(1).exec(function(err, doc){
       let max_price = doc[0].price;
