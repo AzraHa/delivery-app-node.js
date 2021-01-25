@@ -1,5 +1,4 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top"style="border-bottom: 1px solid orange;">
-
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -9,12 +8,28 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#"><%= user.name %></a>
             </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Jela</a>
+                <div class="dropdown-menu" style="border: 1px solid orange;">
+                    <%for(let k=0;k<foodtype.length;k++){%>
+                        <a class="dropdown-item"href="#"> <%= foodtype[k].name%> </a>
+                    <%}%>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Restorani/Gradovi</a>
+                <div class="dropdown-menu" style="border: 1px solid orange;">
+                    <%for(let k=0;k<restaurant.length;k++){%>
+                        <a class="dropdown-item"href="#"> <%= restaurant[k].name%> </a>
+                    <%}%>
+                </div>
+            </li>
 
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fa" id="kosara" style="font-size:24px">&#xf07a;</i>
-                    <span class='badge badge-warning' id='lblCartCount'></span></a>
+                    <span class='badge badge-warning' id='lblCartCount'><%= order %></span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/users/logout"><i class="fa fa-user"></i></a>
@@ -28,3 +43,8 @@
 
     </div>
 </nav>
+
+<script>
+    $('.dropdown-toggle').dropdown();
+</script>
+

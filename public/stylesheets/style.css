@@ -705,3 +705,6 @@ a:hover{
   vertical-align: top;
   margin-left: -10px;
 }
+ul li{
+  color: #F9723D !important;
+}
