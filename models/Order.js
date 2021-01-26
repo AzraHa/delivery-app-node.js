@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
   customer:[{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  quantity:{type:Number,required:true},
   restaurant: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }],
   food:[{ type: mongoose.Schema.Types.ObjectId, ref: "Food" }],
   status:{type:Boolean,required:true},

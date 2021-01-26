@@ -17,15 +17,17 @@ router.get('/dashboard',function(req,res,next){
     Food.find({}).populate('restaurant').sort({"modified" : -1}).limit(6).exec(function(err,food){
         FoodType.find().exec(function (err,foodtype){
             Restaurant.find({},function (err,restaurant){
-                Order.find({'customer':req.user._id,status:true},function (err,order)
+                Order.find({'customer':req.user._id,status:true}).populate('food').populate('restaurant').exec(function (err,order)
                 {
+                    console.log("ORDER-LEN"+order.length+" ORD#ER "+order)
                     res.render('dashboard',{
                         user:req.user,
                         food:food,
                         foodtype:foodtype,
                         restaurant:restaurant,
                         restoran:JSON.stringify(restaurant),
-                        order:order.length
+                        order_len:order.length,
+                        order:order
                     });
                 });
 
@@ -48,6 +50,22 @@ router.post('/add-order/:id/restaurant/:restaurantID',function (req,res,next){
         status:true
     });
     order.save();
+});
+
+router.get('/restaurant/:id',function (req,res,next){
+   Restaurant.find({_id:req.params.id},function (err,restaurant){
+       const restID = restaurant[0]._id;
+       Food.find({restaurant:restID}).populate('restaurant').exec(function (err,food){
+           Sale.find({restaurant:restID}).populate('food').exec(function (err,sale){
+               res.render('restaurant',{
+                   restaurant:restaurant,
+                   user:req.user,
+                   food:food,
+                   sale:sale
+               })
+           })
+       })
+   })
 });
 
 module.exports = router;
