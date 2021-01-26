@@ -11,6 +11,7 @@ const Supplier = require("../models/Supplier");
 const RestaurantAdmin = require("../models/RestaurantAdmin");
 const Sale = require("../models/Sale");
 const moment = require('moment');
+const Order = require("../models/Order");
 
 router.get('/',function (req,res,next){
   res.render('AdminRestaurant/login',{user:req.user});
@@ -263,7 +264,12 @@ router.get('/customers',function (req,res,next){
   });
 });
 router.get('/orders',function (req,res,next){
-  res.render('AdminRestaurant/orders',{user:req.user});
+  Order.find().populate('restaurant').populate('user').populate('food').exec(function (err,orders){
+    res.render('AdminRestaurant/orders',{
+      user:req.user,
+      orders:orders
+    });
+  })
 });
 router.get('/order-confirm',function (req,res,next){
   res.render('AdminRestaurant/order-confirm',{user:req.user});
