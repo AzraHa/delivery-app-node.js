@@ -44,60 +44,64 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Your order</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <!-- Table row -->
-                <div class="row">
-                    <div class="col-xs-12 table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>Qty</th>
-                                <th>Product</th>
-                                <th>Description</th>
-                                <th>Restaurant</th>
-                                <th>Subtotal</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <% let total=Number(0);%>
-                            <%for(let s=0;s<order.length;s++){%>
+            <% if (typeof order !== 'undefined' && order.length > 0) {%>
+                <form action="/users/send-order/<%= order[0]._id %>" method="post">
+                    <%}%>
+                <div class="modal-body">
+                    <!-- Table row -->
+                    <div class="row">
+                        <div class="col-xs-12 table-responsive">
+                            <table class="table table-striped">
+                                <thead>
                                 <tr>
-                                    <td><%= order[s].quantity %></td>
-                                    <td><%= order[s].food[0].name %></td>
-                                    <td><%= order[s].food[0].description %></td>
-                                    <td><%= order[s].restaurant[0].name %></td>
-                                    <td><%= order[s].food[0].price %></td>
-                                    <%total+=Number(order[s].food[0].price)%>
+                                    <th>Qty</th>
+                                    <th>Product</th>
+                                    <th>Description</th>
+                                    <th>Restaurant</th>
+                                    <th>Subtotal</th>
                                 </tr>
-                            <%}%>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                <% let total=Number(0);%>
+                                <%for(let s=0;s<order.length;s++){%>
+                                <%total+=Number(order[s].food[0].price)%>
+                                    <tr id="stavka">
+                                        <td name="kolicina"><%= order[s].quantity %></td>
+                                        <td name="naziv"><%= order[s].food[0].name %></td>
+                                        <td><%= order[s].food[0].description %></td>
+                                        <td><%= order[s].restaurant[0].name %></td>
+                                        <td class="text-center"><%= order[s].food[0].price %></td>
+                                    </tr>
+                                <%}%>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                    <!-- /.col -->
+                    <div class="col-xs-6">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <th>Total:</th>
+                                    <td class="text-right"><%= total %></td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                     <!-- /.col -->
                 </div>
-                <!-- /.row -->
-                <!-- /.col -->
-                <div class="col-xs-6">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <tr>
-                                <th>Total:</th>
-                                <td><%= total %></td>
-                            </tr>
-                        </table>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Send</button>
                 </div>
-                <!-- /.col -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            </form>
         </div>
     </div>
 </div>

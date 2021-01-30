@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Order.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Order.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/adminRestaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/adminRestaurant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/orders.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/orders.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Food.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Food.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/partials/navigation.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/partials/navigation.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,8 +39,8 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="14.15.1" />
-    <property name="javascript.nodejs.core.library.typings.version" value="14.14.21" />
+    <property name="javascript.nodejs.core.library.configured.version" value="13.14.0" />
+    <property name="javascript.nodejs.core.library.typings.version" value="13.13.40" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -126,6 +128,8 @@
       <workItem from="1611581793167" duration="6945000" />
       <workItem from="1611659160984" duration="7350000" />
       <workItem from="1611671496103" duration="805000" />
+      <workItem from="1611821934743" duration="1231000" />
+      <workItem from="1612006307424" duration="6215000" />
     </task>
     <servers />
   </component>
@@ -152,13 +156,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/routes/adminRestaurant.js</url>
-          <line>56</line>
+          <line>278</line>
           <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/routes/adminRestaurant.js</url>
-          <line>141</line>
-          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

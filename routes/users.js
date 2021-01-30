@@ -6,7 +6,7 @@ const FoodType = require('../models/FoodType');
 const Sale = require('../models/Sale');
 const Restaurant = require("../models/Restaurant");
 const Order = require("../models/Order");
-
+const User = require("../models/User");
 
 router.get('/login',userController.login_get);
 router.post('/login',userController.login_post);
@@ -19,7 +19,7 @@ router.get('/dashboard',function(req,res,next){
             Restaurant.find({},function (err,restaurant){
                 Order.find({'customer':req.user._id,status:true}).populate('food').populate('restaurant').exec(function (err,order)
                 {
-                    console.log("ORDER-LEN"+order.length+" ORD#ER "+order)
+                    //console.log("ORDER-LEN"+order.length+" ORD#ER "+order)
                     res.render('dashboard',{
                         user:req.user,
                         food:food,
@@ -39,17 +39,24 @@ router.get('/order/:id',function (req,res,next){
 
 });
 
-router.post('/add-order/:id/restaurant/:restaurantID',function (req,res,next){
-    const foodID = req.params.id;
+router.post('/add-order/:foodID/restaurant/:restaurantID/:orderID',function (req,res,next){
+    const foodID = req.params.foodID;
     const userID = req.user._id;
     const restaurantID = req.params.restaurantID;
+    const quantity = 1;
+    const orderID = req.params.orderID;
+    //console.log("ORDER ID "+orderID);
     const order = new Order({
+        quantity:quantity,
         customer:userID,
         restaurant:restaurantID,
         food:foodID,
         status:true
     });
     order.save();
+    User.updateOne({ _id: req.user._id},  {
+        orders: order._id
+      });
 });
 
 router.get('/restaurant/:id',function (req,res,next){
@@ -66,6 +73,9 @@ router.get('/restaurant/:id',function (req,res,next){
            })
        })
    })
+});
+router.post('/send-order/:order',function(req,res,next){
+  console.log(req.params.order);
 });
 
 module.exports = router;
