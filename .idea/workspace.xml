@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/TotalOrder.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Food.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Food.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/dashboard.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/partials/navigation.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/partials/navigation.ejs" afterDir="false" />
@@ -130,6 +129,8 @@
       <workItem from="1611671496103" duration="805000" />
       <workItem from="1611821934743" duration="1231000" />
       <workItem from="1612006307424" duration="6215000" />
+      <workItem from="1612012914194" duration="4851000" />
+      <workItem from="1612018467166" duration="1753000" />
     </task>
     <servers />
   </component>

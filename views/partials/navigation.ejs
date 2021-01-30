@@ -50,8 +50,10 @@
                 </button>
             </div>
             <% if (typeof order !== 'undefined' && order.length > 0) {%>
-                <form action="/users/send-order/<%= order[0]._id %>" method="post">
+                <form action="/users/send-order/" method="post">
                     <%}%>
+                    <% var orders = order%>
+                    <input type="hidden" value="<%=orders%>" name="ovo">
                 <div class="modal-body">
                     <!-- Table row -->
                     <div class="row">
@@ -70,7 +72,8 @@
                                 <% let total=Number(0);%>
                                 <%for(let s=0;s<order.length;s++){%>
                                 <%total+=Number(order[s].food[0].price)%>
-                                    <tr id="stavka">
+                                <input type="hidden" name="ovo" value="<%=order%>">
+                                    <tr>
                                         <td name="kolicina"><%= order[s].quantity %></td>
                                         <td name="naziv"><%= order[s].food[0].name %></td>
                                         <td><%= order[s].food[0].description %></td>

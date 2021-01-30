@@ -7,6 +7,7 @@ const Sale = require('../models/Sale');
 const Restaurant = require("../models/Restaurant");
 const Order = require("../models/Order");
 const User = require("../models/User");
+const TotalOrder = require("../models/TotalOrder");
 
 router.get('/login',userController.login_get);
 router.post('/login',userController.login_post);
@@ -39,24 +40,33 @@ router.get('/order/:id',function (req,res,next){
 
 });
 
-router.post('/add-order/:foodID/restaurant/:restaurantID/:orderID',function (req,res,next){
+router.post('/add-order/:foodID/restaurant/:restaurantID',function (req,res,next){
     const foodID = req.params.foodID;
     const userID = req.user._id;
     const restaurantID = req.params.restaurantID;
     const quantity = 1;
-    const orderID = req.params.orderID;
-    //console.log("ORDER ID "+orderID);
     const order = new Order({
-        quantity:quantity,
-        customer:userID,
-        restaurant:restaurantID,
-        food:foodID,
-        status:true
+      quantity:quantity,
+      customer:userID,
+      restaurant:restaurantID,
+      food:foodID,
+      status:true
     });
     order.save();
     User.updateOne({ _id: req.user._id},  {
-        orders: order._id
-      });
+      $push: {
+        orders:order._id
+      }
+    });
+    TotalOrder.findOneAndUpdate( { customer : userID}, {
+      customer:userID,
+      restaurant:restaurantID,
+      status:true,
+      $push: {
+        orders:order._id,
+      }},{ upsert : true },function(err, doc) {
+      if (err) throw err;
+    });
 });
 
 router.get('/restaurant/:id',function (req,res,next){
@@ -74,8 +84,8 @@ router.get('/restaurant/:id',function (req,res,next){
        })
    })
 });
-router.post('/send-order/:order',function(req,res,next){
-  console.log(req.params.order);
+router.post('/send-order',function(req,res,next){
+
 });
 
 module.exports = router;

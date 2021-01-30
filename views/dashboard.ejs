@@ -84,7 +84,7 @@
                             <p class="card-text"><%= food[i].description %></p>
                             <p class="card-text"><%= food[i].price %> KM</p>
                             <hr><p class="card-text"><%= food[i].restaurant.name %></p>
-                            <a href="#" onclick="addToCart('<%= food[i]._id%>','<%= food[i].restaurant._id%>','<%=order[0]._id%>');" class="btn btn-primary">Add to cart</a>
+                            <a href="#" onclick="addToCart('<%= food[i]._id%>','<%= food[i].restaurant._id%>');" class="btn btn-primary">Add to cart</a>
                         </div>
                     </div>
                 <%}%>
@@ -184,10 +184,10 @@
     $( "#kosara" ).click(function() {
         $('#lblCartCount').html(155);
     });*/
-    function addToCart(id,restaurantID,orderID){
+    function addToCart(id,restaurantID){
         document.location.reload(true);
         $.ajax({
-            url:"/users/add-order/"+id+"/restaurant/"+restaurantID+"/"+orderID,
+            url:"/users/add-order/"+id+"/restaurant/"+restaurantID,
             method: "POST",
             success: function(result){
             }
