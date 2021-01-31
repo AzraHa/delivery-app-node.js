@@ -18,7 +18,7 @@ router.get('/dashboard',function(req,res,next){
     Food.find({}).populate('restaurant').sort({"modified" : -1}).limit(6).exec(function(err,food){
         FoodType.find().exec(function (err,foodtype){
             Restaurant.find({},function (err,restaurant){
-                Order.find({'customer':req.user._id,status:true}).populate('food').populate('restaurant').exec(function (err,order)
+                Order.find({'customer':req.user._id,status:1}).populate('food').populate('restaurant').exec(function (err,order)
                 {
                     //console.log("ORDER-LEN"+order.length+" ORD#ER "+order)
                     res.render('dashboard',{
@@ -50,7 +50,7 @@ router.post('/add-order/:foodID/restaurant/:restaurantID',function (req,res,next
       customer:userID,
       restaurant:restaurantID,
       food:foodID,
-      status:true
+      status:1
     });
     order.save();
     User.updateOne({ _id: req.user._id},  {
@@ -58,10 +58,9 @@ router.post('/add-order/:foodID/restaurant/:restaurantID',function (req,res,next
         orders:order._id
       }
     });
-    TotalOrder.findOneAndUpdate( { customer : userID}, {
+    TotalOrder.findOneAndUpdate( { customer : userID,status:1}, {
       customer:userID,
       restaurant:restaurantID,
-      status:true,
       $push: {
         orders:order._id,
       }},{ upsert : true },function(err, doc) {
@@ -85,7 +84,17 @@ router.get('/restaurant/:id',function (req,res,next){
    })
 });
 router.post('/send-order',function(req,res,next){
-
+  TotalOrder.findOneAndUpdate( { customer : req.user._id,status:1}, {
+    status:2,
+   },{},function(err, doc) {
+    if (err) throw err;
+    //else {console.log(doc);}
+  });
+  Order.update( { status : 1,customer:req.user._id}, {"$set":{"status": 2,"address":req.body.address}},{multi: true},function(err, doc) {
+    if (err) throw err;
+    else {//console.log(doc);
+      res.redirect("/users/dashboard");}
+  })
 });
 
 module.exports = router;

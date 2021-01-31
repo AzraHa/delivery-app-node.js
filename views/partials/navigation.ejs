@@ -52,8 +52,6 @@
             <% if (typeof order !== 'undefined' && order.length > 0) {%>
                 <form action="/users/send-order/" method="post">
                     <%}%>
-                    <% var orders = order%>
-                    <input type="hidden" value="<%=orders%>" name="ovo">
                 <div class="modal-body">
                     <!-- Table row -->
                     <div class="row">
@@ -101,8 +99,37 @@
                     <!-- /.col -->
                 </div>
                 <div class="modal-footer">
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                            <div class="input-group mb-3">
+                                <input type="text"
+                                       id="address"
+                                       name="address"
+                                       class="form-control"
+                                       placeholder="Address">
+                                <div class="input-group-append" >
+                                    <div class="input-group-text">
+                                        <span class="fa fa-map-marker" id="dugme"></span>
+                                    </div>
+                                    <div class="input-group-text">
+                                        <span class="fa fa-search" id="submit"></span>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label for="inputEmail3 " class="col-sm-2 col-form-label mr-2 "></label>
+                                    <div id="googleMap" class="form-control " style="position: relative; overflow: hidden; width: 100%; margin: 5px; height: 200px; "></div>
+
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" >Send</button>
+                        </div>
+                    </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Send</button>
+                    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        >>
+                    </a>
+
                 </div>
             </form>
         </div>

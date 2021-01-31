@@ -7,7 +7,8 @@ const orderSchema = new mongoose.Schema({
   restaurant: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }],
   supplier: [{ type: mongoose.Schema.Types.ObjectId, ref: "Supplier" }],
   food:[{ type: mongoose.Schema.Types.ObjectId, ref: "Food" }],
-  status:{type:Boolean,required:true},
+  status:{type:Number,required:true},
+  address:{type:String,required:true},
   date: {type: Date, default: Date.now}
 });
 

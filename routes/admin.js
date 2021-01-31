@@ -10,6 +10,8 @@ const User = require("../models/User"); // require
 const FoodType = require('../models/FoodType');
 const passport = require('passport');
 const jwt = require("jsonwebtoken");
+const Order = require("../models/Order");
+const TotalOrder = require("../models/TotalOrder");
 /* Linkovi za mape
 * https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform#maps_places_autocomplete_addressform-javascript
 * https://developers.google.com/maps/documentation/javascript/examples/directions-travel-modes
@@ -139,7 +141,7 @@ router.get('/add-restaurant',function (req,res,next){
 
 router.post('/add-restaurant',upload.single('picture'),function (req,res,next){
 
-  const {name, email, address} = req.body;
+  const {name, email, address,koordinate} = req.body;
   const image = req.file.filename;
   console.log('photo '+image);
   let errors = [];
@@ -155,7 +157,7 @@ router.post('/add-restaurant',upload.single('picture'),function (req,res,next){
       });
     } else {
       const newRestaurant = new Restaurant({
-        name, email, address,email,image,status
+        name, email, address,email,image,status,koordinate
       });
       console.log(newRestaurant);
       newRestaurant
@@ -326,7 +328,13 @@ router.get('/restaurants/:id',function(req,res,next){
 });
 
 router.get('/orders',function (req,res,next){
-  res.render('admin/orders',{user:req.user});
+  TotalOrder.find().populate('restaurant').exec(function(err,order){
+    console.log(order);
+    res.render('admin/orders',{
+      user:req.user,
+      order:order
+    });
+  });
 });
 router.get('/profile',function (req,res,next){
   res.render('admin/profile',{user:req.user});

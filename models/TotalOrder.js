@@ -5,7 +5,7 @@ const TotalOrderSchema = new mongoose.Schema({
   customer:{type:mongoose.Schema.Types.ObjectId,ref: "User"},
   restaurant: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }],
   supplier: [{ type: mongoose.Schema.Types.ObjectId, ref: "Supplier" }],
-  status:{type:Boolean,required:true},
+  status:{type:Number,required:true},
   date: {type: Date, default: Date.now}
 });
 
