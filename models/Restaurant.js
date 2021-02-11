@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
-const RestaurantAdmin = require('./RestaurantAdmin');
-const Schema = require("mongoose");
 
 const RestaurantSchema = new mongoose.Schema({
   name: {

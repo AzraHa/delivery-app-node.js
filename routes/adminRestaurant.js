@@ -12,13 +12,21 @@ const RestaurantAdmin = require("../models/RestaurantAdmin");
 const Sale = require("../models/Sale");
 const moment = require('moment');
 const Order = require("../models/Order");
+const TotalOrder = require("../models/TotalOrder");
 
 router.get('/',function (req,res,next){
   res.render('AdminRestaurant/login',{user:req.user});
 });
 router.get('/dashboard',function (req,res,next){
-
-  res.render('AdminRestaurant/dashboard',{user:req.user});
+  TotalOrder.find({'restaurant':req.user.restaurant})
+    .populate('customer')
+    .exec(function (err, doc) {
+      console.log(req.user);
+      res.render('AdminRestaurant/dashboard',{
+        user:req.user,
+        order: doc
+      });
+    });
 });
 
 router.get('/login',function (req,res,next){

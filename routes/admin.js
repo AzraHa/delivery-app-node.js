@@ -16,20 +16,27 @@ const TotalOrder = require("../models/TotalOrder");
 * https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform#maps_places_autocomplete_addressform-javascript
 * https://developers.google.com/maps/documentation/javascript/examples/directions-travel-modes
 * https://developers.google.com/maps/documentation/javascript/examples/directions-complex*/
-router.get('/dashboard',function (req,res,next){
+router.get('/dashboard',function (req,res,next) {
   /*Orders.find({}).select({"price"}).sort({"price" : -1}).limit(1).exec(function(err, doc){
       let max_price = doc[0].price;
     });*/
-  Supplier.find({}).sort({"modified" : -1}).limit(5).exec(function(err, doc){
-      let suppliers = doc;
-      res.render('admin/dashboard', {
-        user: req.user,
-        suppliers:suppliers
-      })
+  TotalOrder.find({})//sve restorane sa suppliers
+    .populate('restaurant').populate('customer')
+    .exec(function (err, doc) {
+      Supplier.find({})//sve restorane sa suppliers
+        .populate('restaurant').populate('customer')
+        .exec(function (err, supplier) {
+          Restaurant.find({status: true}, function (err, Restaurant) {
+            res.render('admin/dashboard', {
+              user: req.user,
+              order: doc,
+              suppliersArray: supplier,
+              RestaurantArray: Restaurant
+            });
+          });
+        });
     });
-
 });
-
 router.get('/login',adminController.admin_login_get);
 
 const maxAge = 3 *24 *60 *60 ;
@@ -327,15 +334,18 @@ router.get('/restaurants/:id',function(req,res,next){
       });
 });
 
-router.get('/orders',function (req,res,next){
-  TotalOrder.find().populate('restaurant').exec(function(err,order){
-    console.log(order);
-    res.render('admin/orders',{
-      user:req.user,
-      order:order
-    });
-  });
+router.get('/orders',function (req,res,next) {
+  TotalOrder.find({})//sve restorane sa suppliers
+    .populate('restaurant').populate('customer')
+    .exec(function (err, doc) {
+      console.log(doc);
+      res.render('admin/orders', {
+        user: req.user,
+        order: doc
+      });
+    })
 });
+
 router.get('/profile',function (req,res,next){
   res.render('admin/profile',{user:req.user});
 });

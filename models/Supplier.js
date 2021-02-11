@@ -15,8 +15,7 @@ const SupplierSchema = new mongoose.Schema({
     required: true
   },
   password:{
-    type: String,
-    required:true
+    type: String
   },
   restaurant: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }],
   date: {

@@ -33,23 +33,28 @@
                                 <thead>
                                 <tr>
                                     <th>No:</th>
-                                    <th>Item</th>
+                                    <th>Order ID</th>
                                     <th>Status</th>
                                     <th>Supplier</th>
                                     <th>Restaurant</th>
+                                    <th>Customer</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <% if (typeof order !== 'undefined' && order.length > 0) {%>
-                                    <%for(let i=0;i<order.length;i++){%>
-                                        <tr>
-                                            <td><%= i+1%></td>
-                                            <td><%=order[i]._id %></td>
-                                            <td><span class="badge badge-success"><%= order[i].status %></span></td>
-                                            <td><%= order[i].supplier %></td>
-                                            <td><%= order[i].restaurant.name %></td>
-                                        </tr>
-                                    <%}%>
+                                <%for(let i=0;i<order.length;i++){%>
+                                    <tr>
+                                        <td><%= i+1 %></td>
+                                        <td><a href="#"><%=order[i]._id %></a></td>
+                                        <td><span class="badge badge-success"><%= order[i].status %></span></td>
+                                        <td><%= order[i].supplier %></td>
+                                        <%for(let j=0;j<order[i].restaurant.length;j++){%>
+                                            <td><a href="#"><li class="list-group-item"><%= order[i].restaurant[j].name %></li></a> </td>
+                                        <%}%>
+                                        <td><%= order[i].customer.name %></td>
+                                        <td></td>
+                                    </tr>
+                                <%}%>
                                 <%}%>
                                 </tbody>
                             </table>

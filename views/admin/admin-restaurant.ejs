@@ -34,7 +34,6 @@
                                 <th>Email</th>
                                 <th>Restaurant</th>
                                 <th>Address</th>
-                                <th>Modified</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>
@@ -47,11 +46,8 @@
                                         <td><%= i+1 %> </td>
                                         <td><%= resAdminArray[i].name %></td>
                                         <td><%= resAdminArray[i].email %></td>
-                                        <td>
-                                            <%= resAdminArray[i].restaurant.name %>
-                                        </td>
+                                        <td><%= resAdminArray[i].restaurant.name %></td>
                                         <td><%= resAdminArray[i].address %></td>
-                                        <td><%= resAdminArray[i].modified %></td>
                                         <% if(resAdminArray[i].status === true){%>
                                             <td>Active</td>
                                         <%} else {%>
@@ -63,7 +59,6 @@
                                                 </i>
                                                 View
                                             </a>
-
                                         </td>
                                     <% } %>
                             </tr>
