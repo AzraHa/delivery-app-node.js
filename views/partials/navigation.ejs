@@ -68,16 +68,18 @@
                                 </thead>
                                 <tbody>
                                 <% let total=Number(0);%>
-                                <%for(let s=0;s<order.length;s++){%>
-                                <%total+=Number(order[s].food[0].price)%>
-                                <input type="hidden" name="ovo" value="<%=order%>">
-                                    <tr>
-                                        <td name="kolicina"><%= order[s].quantity %></td>
-                                        <td name="naziv"><%= order[s].food[0].name %></td>
-                                        <td><%= order[s].food[0].description %></td>
-                                        <td><%= order[s].restaurant[0].name %></td>
-                                        <td class="text-center"><%= order[s].food[0].price %></td>
-                                    </tr>
+                                <% if(typeof order !== "undefined" && order.length >0 ){%>
+                                    <%for(let s=0;s<order.length;s++){%>
+                                    <%total+=Number(order[s].food[0].price)%>
+                                    <input type="hidden" name="ovo" value="<%=order%>">
+                                        <tr>
+                                            <td name="kolicina"><%= order[s].quantity %></td>
+                                            <td name="naziv"><%= order[s].food[0].name %></td>
+                                            <td><%= order[s].food[0].description %></td>
+                                            <td></td>
+                                            <td class="text-center"><%= order[s].food[0].price %></td>
+                                        </tr>
+                                    <%}%>
                                 <%}%>
                                 </tbody>
                             </table>

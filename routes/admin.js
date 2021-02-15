@@ -12,6 +12,7 @@ const passport = require('passport');
 const jwt = require("jsonwebtoken");
 const Order = require("../models/Order");
 const TotalOrder = require("../models/TotalOrder");
+const Food = require("../models/Food");
 /* Linkovi za mape
 * https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform#maps_places_autocomplete_addressform-javascript
 * https://developers.google.com/maps/documentation/javascript/examples/directions-travel-modes
@@ -141,6 +142,68 @@ router.get('/suppliers',adminController.find_suppliers);
 router.get('/user',function (req,res,next){
   res.send(req.user);
 })
+router.get('/food',function (req,res,next){
+  Food.find({},function(err,food){
+    res.render('admin/food',{
+      user:req.user,
+      food:food
+    })
+  });
+});
+router.get('/food/:id',function (req,res,next){
+  Food.find({_id:req.params.id}).populate('type').populate('restaurant').exec(function(err,food){
+    FoodType.find({},function(err,FoodTypeArray){
+      Restaurant.find({},function(err,restaurants){
+        res.render('admin/foodedit',{
+          user:req.user,
+          food:food,
+          FoodTypeArray:FoodTypeArray,
+          restaurants:restaurants
+        })
+      })
+    })
+  });
+});
+router.post('/food/:id',upload.single('picture'),function (req,res,next) {
+  const {name, type, price, restaurant, picture} = req.body;
+  //const image = req.file.filename;
+  const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+  console.log("name: " + name + " type: " + type + " price: " + price + " restaurant: " + restaurant + " picture " );
+  if (!req.file) {
+    Food.updateOne({_id: req.params.id},
+      {
+        name: name,
+        type: type,
+        price: price,
+        restaurant: restaurant,
+        modified: modified,
+      },
+      function (error, success) {
+        res.redirect('/admin/food');
+      });
+  }else{
+    Food.updateOne({_id: req.params.id},
+      {
+        name: name,
+        type: type,
+        price: price,
+        restaurant: restaurant,
+        modified: modified,
+        picture:req.file.filename
+      },
+      function (error, success) {
+        res.redirect('/admin/food');
+      });
+  }
+
+});
+
+router.delete('/food/delete/:id',function(req,res,next){
+   Food.deleteOne({ _id: req.params.id }, function (err) {
+      if (err) return err;
+      else res.sendStatus(200);
+    });
+});
 
 router.get('/add-restaurant',function (req,res,next){
   res.render('admin/add-restaurant',{user:req.user});

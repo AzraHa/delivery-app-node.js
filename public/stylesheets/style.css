@@ -708,3 +708,26 @@ a:hover{
 ul li{
   color: #F9723D !important;
 }
+.container {
+  max-width: 90vw;
+  display: flex;
+}
+.container input{
+  border:1px solid #F9723D;
+  margin-bottom: 20px;
+}
+.container__image {
+   margin: 20px 30px 0 0;
+   width: 200px;
+   object-fit: contain;
+   align-self: flex-start;
+ }
+.container__text {
+   flex: 1 1 auto;
+ }
+.container__text label{
+  color:#F9723D;
+}
+.container__text select{
+  border:1px solid #F9723D;
+}

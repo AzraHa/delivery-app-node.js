@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+
+<body>
+<main role="main">
+    <% include partials/navbar %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <%include partials/sidebar %>
+            <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
+                <div class="card" style="border: 1px solid orange;background-color: rgba(245, 245, 245, 0.2); ">
+                        <div class="card-body">
+                            <h3>Food</h3>
+                            <div class="card-group">
+                                <%for(let i=0;i < food.length;i++){%>
+                                    <div class="card" style="width: 20rem;margin:5px;" id="<%= food[i]._id %>">
+                                        <img class="card-img-top" src="../images/sabburito-mexico-grill.jpg " style="width:100%;"alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><%= food[i].name %></h5>
+                                            <p class="card-text"><%= food[i].description %></p>
+                                            <p class="card-text"><%= food[i].price %> KM</p>
+                                            <hr><p class="card-text"><%= food[i].restaurant.name %></p>
+                                            <p class="project-actions text-left">
+                                                <a class="btn btn-primary btn-sm" href="/admin/food/<%= food[i]._id%>">
+                                                    <i class="fa fa-folder">
+                                                    </i>
+                                                    Edit
+                                                </a>
+                                                <a class="btn btn-primary btn-sm" onclick="deleteFood('<%= food[i]._id%>');">
+                                                    <i class="fa fa-folder">
+                                                    </i>
+                                                    Delete
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                <%}%>
+                            </div>
+                        </div>
+
+                    </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    function deleteFood(id){
+        $.ajax({
+            url:"/admin/food/delete/" + id,
+            method: "DELETE",
+            success: function(result){
+                $('#'+id+'').remove();
+            }
+        });
+    }
+</script>
+</body>
+</html>
