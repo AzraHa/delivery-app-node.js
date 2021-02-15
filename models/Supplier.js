@@ -14,6 +14,10 @@ const SupplierSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  koordinate:{
+    type:String,
+    required:true
+  },
   password:{
     type: String
   },

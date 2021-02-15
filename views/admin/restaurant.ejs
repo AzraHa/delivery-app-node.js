@@ -27,121 +27,274 @@
                     <h1 class="h2">Dashboard</h1>
                 </div>
                 <div class="card" style="border: 1px solid orange;">
-                    <div class="card-body" style="border: 1px solid orange;">
+                    <div class="card-body" style="border-top: 1px solid orange;">
                         <% for(let i=0;i<restaurant.length;i++){ %>
                         <div class="card-header">
                             <h3 class="card-title"><%= restaurant[i].name  %></h3>
                         </div>
-                        <div class="card-body">
-                            <div class="e-profile">
-                                <div class="tab-content pt-3">
-                                    <div class="tab-pane active">
-                                        <div class="input-group">
-                                            <div id="googleMap" class="form-control " style=" position: relative; overflow: hidden; width: 100%; margin: 5px; height: 400px;"></div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label>Address</label>
-                                                    <p class="form-control"><%= restaurant[i].address %> </p>
+                            <div class="card-body">
+                                <div class="e-profile">
+                                    <div class="tab-content pt-3">
+                                        <div class="tab-pane active">
+                                            <form action="/admin/restaurants/<%=restaurant[0]._id%>" method="post">
+                                                <div class="container">
+                                                    <div class="container__image">
+                                                        <div id="googleMap" class="form-control " style=" position: relative; overflow: hidden; width: 100%; margin: 5px; height: 400px;"></div>
+                                                    </div>
+                                                    <div class="container__text">
+                                                        <label>Name</label>
+                                                        <p class="form-control" style="border:1px solid #F9723D;color:#495057;"><%= restaurant[i].name%></p>
+                                                        <label>Address</label>
+                                                        <div class="input-group mb-3">
+                                                            <input type="text"
+                                                                   id="address"
+                                                                   name="address"
+                                                                   class="form-control"
+                                                                   placeholder="Address"
+                                                                   value="<%= restaurant[i].address %>">
+                                                            <div class="input-group-append" >
+                                                                <div class="input-group-text">
+                                                                    <span class="fa fa-map-marker" id="dugme"></span>
+                                                                </div>
+                                                                <div class="input-group-text">
+                                                                    <span class="fa fa-search" id="submit"></span>
+                                                                </div>
+                                                                <input type="hidden" id="koordinate" name="koordinate" value="<%= restaurant[i].koordinate%>">
+                                                            </div>
+
+                                                        </div>
+                                                        <label>Email</label>
+                                                        <input type="email"
+                                                               id="email"
+                                                               name="email"
+                                                               class="form-control"
+                                                               value="<%= restaurant[i].email%>">
+                                                        <label>Type</label>
+                                                        <input type="text"
+                                                               id="type"
+                                                               name="type"
+                                                               class="form-control"
+                                                               value="<%= restaurant[i].type %>">
+                                                        <p class="project-actions text-right">
+                                                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                                Suppliers
+                                                            </button>
+                                                            <button type="submit" class="btn btn-success">Submit</button>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label>Email</label>
-                                                    <p class="form-control"><%= restaurant[i].email %> </p>
-                                                </div>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <%}%>
-                       <div class="col-12 col-lg-6 ml-3">
-                           <div class="row">
-                               <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                   Edit restaurant
-                               </button>
-                               <div class="input-group collapse mt-3" id="collapseExample">
-                                   <div class="form-group">
-                                       <form action="" method="post">
-                                           <label><%=restaurant[0].name%></label>
-                                           <input  class="form-control" type="name"
-                                                  id="name"
-                                                  name="name"
-                                                  class="form-control"
-                                                   value="<%=restaurant[0].name%>"
-                                                  placeholder="Restaurant name">
-                                           <input type="email"
-                                                  id="email"
-                                                  name="email"
-                                                  class="form-control"
-                                                  value="<%=restaurant[0].email%>"
-                                                  placeholder="Restaurant email">
-                                           <input type="text"
-                                                  id="type"
-                                                  name="type"
-                                                  class="form-control"
-                                                  value="<%=restaurant[0].type%>"
-                                                  placeholder="Restaurant type">
-                                           <select id="restaurantStatus" name="restaurantStatus" class="form-control select2" style="width: 100%;">
-                                               <option value="<%=restaurant[0].status%>" disabled selected>Status</option>
-                                               <option  name="restaurantID" value="true">Enabled</option>
-                                               <option  name="restaurantID" value="false">Disabled</option>
-                                           </select>
-                                           <input type="submit" class="btn btn-primary">
-                                       </form>
-                                   </div>
-                               </div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="card-body" style="border: 1px solid orange;">
-                        <div class="card-header">
-                            <h3 class="card-title">Dostavljači</h3>
-                        </div>
-                        <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>No:</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Address</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <% for(let j=0;j<supplier.length;j++){%>
-                                    <tr>
-                                        <td><%=j+1%></td>
-                                        <td><%= supplier[j].name%></td>
-                                        <td><%= supplier[j].email%></td>
-                                        <td><%= supplier[j].s_address%></td>
-                                        <td><%= supplier[j].status%></td>
-                                        <td class="project-actions text-right">
-                                            <a class="btn btn-primary btn-sm" href="/admin/suppliers/<%= supplier[j]._id%>">
-                                                <i class="fa fa-folder">
-                                                </i>
-                                                View
-                                            </a>
-
-                                        </td>
-                                    </tr>
-                                <%}%>
-                                </tbody>
-
-                            </table>
-                        </div>
+                            <div class="collapse mt-3" id="collapseExample">
+                                <div class="card" >
+                                    <div class="card-header">
+                                        <h3 class="card-title">Suppliers</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                    <th>Address</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <% if (typeof supplier !== 'undefined' && supplier.length > 0) {%>
+                                                <%for (var j = 0; j <supplier.length; j++) { %>
+                                                    <tr>
+                                                    <% if(supplier[i].status === true) {%>
+                                                        <td><a href="/admin/suppliers/<%=supplier[i]._id%>"> <%= supplier[i].name %></a></td>
+                                                        <td><%= supplier[i].email %></td>
+                                                        <td><%= supplier[i].s_address %></td>
+                                                        <% if(supplier[i].status === true){%>
+                                                            <td>Active</td>
+                                                        <%} else {%>
+                                                            <td>X</td>
+                                                        <%}%>
+                                                    <% } %>
+                                                    </tr>
+                                                <%}%>
+                                            <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <%}%>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
+
+<script>
+    const adresa = document.getElementById("koordinate").value;
+    //console.log(adresa,typeof adresa);
+    const adres = adresa.replace("(","").replace(")","");
+    const nova = adres.split(",");
+    var latitude = parseFloat(nova[0]);
+    var longitude = parseFloat(nova[1]);
+    var addd = document.getElementById("address").value;
+    //console.log(latitude,longitude);
+    const adrese =[];
+    adrese.push([latitude,longitude,addd]);
+
+    function myMap() {
+        var mapProp= {
+            center:new google.maps.LatLng(latitude,longitude),
+            zoom:18,
+        };
+        var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+        const geocoder = new google.maps.Geocoder();
+        var x = document.getElementById("address");
+        var y = document.getElementById("koordinate");
+        for (i = 0; i < adrese.length; i++) {
+            var icon = '';
+            if (adrese[i][0].length !== '' && adrese[i][1].length !== '') {
+
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(adrese[i][0], adrese[i][1]),
+                    map: map,
+                    title: "adresa"+i,
+                });
+
+                var contentString = adrese[i][2];
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    maxWidth: 160
+                });
+                infowindow.open(map, marker);
+
+                // Event that closes the Info Window with a click on the map
+                google.maps.event.addListener(map, 'click', (function(infowindow) {
+                    return function() {
+                        infowindow.close();
+                    }
+                })(infowindow));
+
+                google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                    return function() {
+                        var contentString = adrese[i][2];
+                        infowindow.setContent(contentString);
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+
+            }
+        }
+
+        document.getElementById("dugme").addEventListener("click", () => {
+            getLocation();
+        });
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.value = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            const latlng = {
+                lat: position.coords.latitude,
+                lng:position.coords.longitude
+            };
+            y.value = '('+latlng.lat+','+latlng.lng+')';
+            console.log(y);
+
+            geocoder.geocode({ location: latlng }, (results, status) => {
+                if (status === "OK") {
+                    if (results[0]) {
+                        x.value = results[0].formatted_address;
+                        placeMarker(latlng);
+                    } else {
+                        window.alert("No results found");
+                    }
+                } else {
+                    window.alert("Geocoder failed due to: " + status);
+                }
+            });
+
+        }
+        document.getElementById("submit").addEventListener("click", () => {
+            geocodeAddress(geocoder, map);
+        });
+        var Mar;
+
+        function placeMarker(location) {
+            if ( Mar ) {
+                Mar.setPosition(location);
+                geocoder.geocode({ location}, (results, status) => {
+                    if (status === "OK") {
+                        if (results[0]) {
+                            infowindow.setContent(results[0].formatted_address);
+                            //console.log(results[0].formatted_address);
+                            x.value = results[0].formatted_address;
+                            infowindow.open(map, Mar);
+                        } else {
+                            window.alert("No results found");
+                        }
+                    } else {
+                        window.alert("Geocoder failed due to: " + status);
+                    }
+                });
+            } else {
+                Mar = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+                Mar.setPosition(location);
+                geocoder.geocode({ location }, (results, status) => {
+                    if (status === "OK") {
+                        if (results[0]) {
+                            infowindow.setContent(results[0].formatted_address);
+                            //console.log(results[0].formatted_address);
+                            x.value = results[0].formatted_address;
+                            infowindow.open(map, Mar);
+                        } else {
+                            window.alert("No results found");
+                        }
+                    } else {
+                        window.alert("Geocoder failed due to: " + status);
+                    }
+                });
+            }
+        }
+        function geocodeAddress(geocoder, resultsMap) {
+            const address = document.getElementById("address").value;
+            geocoder.geocode({ address: address }, (results, status) => {
+                if (status === "OK") {
+                    resultsMap.setCenter(results[0].geometry.location);
+                    y.value = results[0].geometry.location;
+                    console.log(y);
+                    new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location,
+                    });
+                } else {
+                    alert("Geocode was not successful for the following reason: " + status);
+                }
+            });
+        }
+        google.maps.event.addListener(map, 'click', function(event) {
+            placeMarker(event.latLng);
+            y.value = event.latLng;
+            console.log(y)
+        });
+
+
+
+    }
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVWoPIcc1pz1z5p_Ja6_CD7Ed9MzWN_ko&callback=myMap"></script>
 </body>
 </html>
+

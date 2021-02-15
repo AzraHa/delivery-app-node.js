@@ -18,6 +18,10 @@ const RestaurantAdminSchema = new mongoose.Schema({
   address:{
     type: String,
   },
+  koordinate:{
+    type:String,
+    required:true
+  },
   date: {
     type: Date,
     default: Date.now

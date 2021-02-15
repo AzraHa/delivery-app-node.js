@@ -188,7 +188,7 @@ module.exports.add_restaurant_admin_get = (req,res,next) => {
 }
 module.exports.add_restaurant_admin_post = (req,res,next) => {
 
-  const {restaurantName, adminName, address, adminEmail, password} = req.body;
+  const {restaurantName, adminName, address, koordinate , adminEmail, password} = req.body;
   const status = true;
   const newAdmin = new RestaurantAdmin({
     name: adminName,
@@ -196,6 +196,7 @@ module.exports.add_restaurant_admin_post = (req,res,next) => {
     password: password,
     restaurant : restaurantName,
     address: address,
+    koordinate:koordinate,
     status: status
   });
   bcrypt.genSalt(10, (err, salt) => {

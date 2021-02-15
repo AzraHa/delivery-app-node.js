@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+<body>
+<main role="main">
+    <% include partials/navbar %>
+    <div class="container-fluid">
+        <div class="row">
+            <%include partials/sidebar %>
+            <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                    <h1 class="h2">Orders</h1>
+                </div>
+                <!-- TABLE: LATEST ORDERS -->
+                <div class="card">
+                    <div class="card-header border-transparent">
+                        <h3 class="card-title">Restaurant Type</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                <tr>
+                                    <th>No:</th>
+                                    <th>ID</th>
+                                    <th>Type</th>
+                                    <th>Modified</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% if (typeof rType !== 'undefined' && rType.length > 0) {%>
+                                <%for(let i=0;i<rType.length;i++){%>
+                                    <tr id="<%= rType[i]._id %>">
+                                        <td><%= i+1 %></td>
+                                        <td><%=rType[i]._id %></td>
+                                        <td><%= rType[i].name %></td>
+                                        <td><%= rType[i].modified %></td>
+                                        <% if(rType[i].status === true){%>
+                                            <td>Active</td>
+                                        <%} else {%>
+                                            <td>X</td>
+                                        <%}%>
+                                        <td class="project-actions text-right">
+                                            <a class="btn btn-danger btn-sm" href="#" onclick="deleteRestaurantType('<%= rType[i]._id%>')";>
+                                                <i class="fa fa-trash"></i>Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <%}%>
+                                <%}%>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    function deleteRestaurantType(id){
+        $.ajax({
+            url:"/admin/restaurantType/" + id,
+            method: "DELETE",
+            success: function(result){
+                $('#'+id+'').remove();
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -35,7 +35,8 @@ const RestaurantSchema = new mongoose.Schema({
   modified:{
     type:String,
     default: moment(new Date).format("MM/DD/YYYY, h:mm:ss a")
-  }
+  },
+  type:[{ type: mongoose.Schema.Types.ObjectId, ref: "RestaurantType"}],
 });
 
 const Restaurant = mongoose.model('Restaurant', RestaurantSchema);
