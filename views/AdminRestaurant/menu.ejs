@@ -26,7 +26,7 @@
                 <!-- TABLE: LATEST ORDERS -->
                 <div class="card">
                     <div class="card-header border-transparent">
-                        <h3 class="card-title">Food</h3>
+                        <h3 class="card-title">Menu</h3>
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
@@ -42,22 +42,22 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <% if (typeof foodArray !== 'undefined' && foodArray.length > 0) {%>
-                                <%for (var i = 0; i < foodArray.length; i++) { %>
-                                    <tr id="<%= foodArray[i]._id %>">
+                                <% if (typeof menu !== 'undefined' && menu.length > 0) {%>
+                                <%for (var i = 0; i < menu.length; i++) { %>
+                                    <tr id="<%= menu[i]._id %>">
                                         <td><%= i+1 %></td>
-                                        <td><a href="#"><%= foodArray[i].name%></a></td>
-                                        <td><img src="../images/<%= foodArray[i].picture%>" style="width: 50px;"></td>
-                                        <td><%= foodArray[i].status%></td>
-                                        <td><%= foodArray[i].price%></td>
-                                        <td><%= foodArray[i].type.name%></td>
+                                        <td><a href="#"><%= menu[i].name%></a></td>
+                                        <td><img src="../images/<%= menu[i].picture%>" style="width: 50px;"></td>
+                                        <td><%= menu[i].status%></td>
+                                        <td><%= menu[i].price%></td>
+                                        <td><%= menu[i].type.name%></td>
                                         <td class="project-actions text-right">
-                                            <a class="btn btn-primary btn-sm" href="/adminRestaurant/food/<%= foodArray[i]._id%>">
+                                            <a class="btn btn-primary btn-sm" href="/adminRestaurant/food/<%= menu[i]._id%>">
                                                 <i class="fa fa-folder">
                                                 </i>
                                                 View
                                             </a>
-                                            <a class="btn btn-primary btn-sm" href="#" onclick="deleteFood('<%= foodArray[i]._id%>');">
+                                            <a class="btn btn-primary btn-sm" href="#" onclick="deleteFood('<%= menu[i]._id%>');">
                                                 <i class="fa fa-folder">
                                                 </i>
                                                 Delete
@@ -79,7 +79,7 @@
 <script>
     function deleteFood(id){
         $.ajax({
-            url:"/adminRestaurant/food/delete/" + id,
+            url:"/adminRestaurant/menu/delete/" + id,
             method: "DELETE",
             success: function(result){
                 $('#'+id+'').remove();

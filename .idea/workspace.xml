@@ -2,31 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/images/picture-1613481331507.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/picture-1613481474715.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/picture-1613481480879.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482244062.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482301000.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482349250.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482395799.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482515898.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482558501.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482593328.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482704406.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482739714.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/admin/order.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/menu.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/uploadController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/uploadController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/admin-restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/admin-restaurant.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/dashboard.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/orders.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/orders.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/partials/navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/partials/navbar.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/partials/sidebar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/partials/sidebar.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/profile.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/profile.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurant.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/restaurants.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurants.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/adminRestaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/adminRestaurant.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/add-restaurant-admin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/add-restaurant-admin.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/add-suppliers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/add-suppliers.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/food.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/food.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/foodItem.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/foodItem.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/partials/sidebar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/partials/sidebar.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/sale.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/sale.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/saleItem.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/saleItem.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/supplier.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/supplier.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/supplier.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/supplier.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +44,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_MARK_IGNORED_FILES_AS_EXCLUDED" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -63,7 +52,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="13.14.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="13.13.40" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/views/admin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/views/AdminRestaurant" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -71,8 +60,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\USER\WebstormProjects\projekat\views\admin" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views\AdminRestaurant" />
+      <recent name="C:\Users\USER\WebstormProjects\projekat\views\admin" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\models" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\public\images" />
@@ -166,6 +155,8 @@
       <workItem from="1613376654288" duration="25663000" />
       <workItem from="1613459709770" duration="5804000" />
       <workItem from="1613477618419" duration="6116000" />
+      <workItem from="1613485375198" duration="64000" />
+      <workItem from="1613485474190" duration="4486000" />
     </task>
     <servers />
   </component>
@@ -186,16 +177,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/routes/adminRestaurant.js</url>
-          <line>286</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

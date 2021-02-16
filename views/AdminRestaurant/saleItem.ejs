@@ -34,70 +34,69 @@
                                     <h1><b><%= sale[i].name%></b></h1>
                                 </div>
                                 <div class="card-body">
-                                    <form action="/adminRestaurant/sale/edit/<%= sale[i]._id%>" method="post">
-                                        <div class="input-group mb-3">
-                                            <input type="text"
-                                                   id="name"
-                                                   name="name"
-                                                   class="form-control"
-                                                   placeholder="Name"
-                                                   value="<%= sale[i].name%>">
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <select id="type"  name="type" class="form-control select2" style="width: 100%;">
-                                                <option value="<%= sale[i].type._id%>"><%= sale[i].type.name%></option>
-                                                <% if (typeof FoodTypeArray !== 'undefined' && FoodTypeArray.length > 0) {%>
-                                                <%for (var j = 0; j < FoodTypeArray.length; j++) { %>
-                                                    <option  name ="restaurantName" value="<%= FoodTypeArray[j]._id%>"><%= FoodTypeArray[j].name %></option>
-                                                <%}%>
-                                                <%}%>
-                                            </select>
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <input type="date"
-                                                   id="date_from"
-                                                   name="date_from"
-                                                   class="form-control"
-                                                   placeholder="Date From"
-                                                   value="<%= sale[i].date_from %>">
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <input type="date"
-                                                   id="date_to"
-                                                   name="date_to"
-                                                   class="form-control"
-                                                   placeholder="Date Tom"
-                                                   value="<%= sale[i].date_to %>">
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <img src="../<%= sale[i].picture %>" >
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <input type="text"
+                                    <form action="/adminRestaurant/sale/edit/<%= sale[i]._id%>" method="post" enctype="multipart/form-data">
+                                        <p>Modified : <%= sale[i].modified %> </p>
+                                        <div class="container">
+                                            <div class="container__image">
+                                                <input type="image" class="container__image"
+                                                       src="../../images/<%= sale[i].picture%>"
+                                                       id="picture"
+                                                       name="img">
+                                                <input type="file" accept="image/*" class="container__image"
+                                                       id="picture"
+                                                       name="picture">
+                                            </div>
+                                            <div class="container__text">
+                                                <label>Name</label>
+                                                <input type="text"
+                                                       id="name"
+                                                       name="name"
+                                                       class="form-control"
+                                                       placeholder="Name"
+                                                       value="<%= sale[i].name %>">
+                                                    <label>Type</label>
+                                                    <select id="type"  name="type" class="form-control select2" style="width: 100%;">
+                                                    <option name="type" value="<%= sale[i].type._id%>"><%= sale[i].type.name%></option>
+                                                    <% if (typeof FoodTypeArray !== 'undefined' && FoodTypeArray.length > 0) {%>
+                                                    <%for (var j = 0; j < FoodTypeArray.length; j++) { %>
+                                                        <option  name ="type" value="<%= FoodTypeArray[j]._id%>"><%= FoodTypeArray[j].name %></option>
+                                                    <%}%>
+                                                    <%}%>
+                                                    </select>
+                                                    <label>Date From</label>
+                                                    <input type="date"
+                                                           id="date_from"
+                                                           name="date_from"
+                                                           class="form-control"
+                                                           placeholder="Date From"
+                                                           value="<%= sale[i].date_from %>">
+
+                                                    <label>Date To</label>
+                                                    <input type="date"
+                                                       id="date_to"
+                                                       name="date_to"
+                                                       class="form-control"
+                                                       placeholder="Date Tom"
+                                                       value="<%= sale[i].date_to %>">
+                                                <label>Price</label>
+                                                <input type="text"
                                                    id="price"
                                                    name="price"
                                                    class="form-control"
                                                    placeholder="Price"
                                                    value="<%= sale[i].salePrice%>">
-                                        </div>
-                                        <div class="input-group mb-3">
+                                                <label>Status</label>
                                             <input type="text"
                                                    id="status"
                                                    name="status"
                                                    class="form-control"
                                                    placeholder=Status"
                                                    value="<%= sale[i].status%>">
-                                        </div>
 
-                                        <div class="row">
-                                            <div class="col-md">
-                                                <div class="col-md-8 icheck-primary">
-                                                </div>
-                                            </div>
-                                            <div class="col-6 submit">
-                                                <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                                            </div>
-                                        </div>
+                                                <p class="project-actions text-right">
+                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                </p>
+
                                     </form>
 
                                 </div>

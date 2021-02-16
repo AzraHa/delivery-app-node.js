@@ -147,21 +147,34 @@ router.get('/food/:id',function(req,res,next){
 
   });
 });
-router.post('/food/edit/:id',function (req,res,next){
+router.post('/food/edit/:id',upload.single('picture'),function (req,res,next){
   const foodID = req.params.id;
-  const {name,type,price,status} = req.body;
-  console.log(name,type,price);
+  const {name,description,type,price} = req.body;
   const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
-  Food.updateOne({ _id: foodID},  {
-        status: status,
-        modified:modified,
-        name:name,
-        type:type,
-        price:price
+  if (!req.file) {
+    Food.updateOne({_id: foodID}, {
+        modified: modified,
+        type: type,
+        name: name,
+        description: description,
+        price: price,
       },
       function (error, success) {
         res.redirect('/adminRestaurant/food');
       });
+  }else{
+    Food.updateOne({_id: foodID}, {
+        modified: modified,
+        type: type,
+        name: name,
+        description: description,
+        price: price,
+        picture:req.file.filename,
+      },
+      function (error, success) {
+        res.redirect('/adminRestaurant/food');
+      });
+  }
 });
 
 router.delete('/food/delete/:id',function (req,res,next){
@@ -236,14 +249,15 @@ router.get('/add-restaurant-admin',function (req,res,next){
 });
 router.post('/add-restaurant-admin',function (req,res,next){
   const restaurant = req.user.restaurant;
-  const {adminName,adminEmail,password,address} = req.body;
+  const {adminName,adminEmail,password,address,koordinate} = req.body;
   const status = true;
   const newAdmin = new RestaurantAdmin({
     name: adminName,
     email: adminEmail,
     restaurant : restaurant,
     address: address,
-    status: status
+    status: status,
+    koordinate:koordinate
   });
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(password, salt, (err, hash) => {
@@ -354,14 +368,15 @@ router.get('/add-supplier',function (req,res,next){
   res.render('AdminRestaurant/add-suppliers',{user:req.user});
 });
 router.post('/add-supplier',function (req,res,next){
-  const {name,email,address,password} = req.body;
+  const {name,email,address,password,koordinate} = req.body;
   const status = true;
   const newSupplier = new Supplier({
     name:name,
     email:email,
     s_address:address,
     restaurant:req.user.restaurant,
-    status:status
+    status:status,
+    koordinate:koordinate
   });
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(password, salt, (err, hash) => {
@@ -431,25 +446,57 @@ router.get('/sale/:id',function (req,res,next){
   });
 });
 
-router.post('/sale/edit/:id',function (req,res,next){
+router.post('/sale/edit/:id',upload.single('picture'),function (req,res,next){
   const saleID = req.params.id;
   const {name,type,date_from,date_to,price,status} = req.body;
-  console.log(name,type,date_from,date_to,price,status);
+  //console.log(name,type,date_from,date_to,price,status);
   const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
-  Sale.updateOne({ _id: saleID},  {
+  if(!req.file)
+  {
+    Sale.updateOne({ _id: saleID},  {
         name:name,
         type:type,
         date_from:date_from,
         date_to:date_to,
         salePrice:price,
-        status:status
+        status:status,
+        modified:modified
       },
       function (error, success) {
         res.redirect('/adminRestaurant/sale');
       });
+  }else{
+    Sale.updateOne({ _id: saleID},  {
+        name:name,
+        type:type,
+        date_from:date_from,
+        date_to:date_to,
+        salePrice:price,
+        status:status,
+        modified:modified,
+        picture: req.file.filename
+      },
+      function (error, success) {
+        res.redirect('/adminRestaurant/sale');
+      });
+  }
 });
 router.delete('/sale/delete/:id',function (req,res,next){
   Sale.deleteOne({ _id: req.params.id }, function (err) {
+    if (err) return err;
+    else res.sendStatus(200);
+  });
+});
+router.get('/menu',function(req,res,next){
+  Food.find({meni:true},function(err,menu){
+    res.render('adminRestaurant/menu',{
+      user:req.user,
+      menu:menu
+    })
+  })
+});
+router.delete('/menu/delete/:id',function (req,res,next){
+  Food.deleteOne({ _id: req.params.id }, function (err) {
     if (err) return err;
     else res.sendStatus(200);
   });

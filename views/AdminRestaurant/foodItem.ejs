@@ -26,67 +26,74 @@
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
                     <h1 class="h2">Dashboard</h1>
                 </div>
-                <div class="naslovna-login-register">
-                    <div class="login-box">
-                        <% for(let i=0;i<food.length;i++){%>
-                            <div class="card card-outline card-primary">
-                                <div class="card-header text-center">
-                                    <h1><b><%= food[i].name%></b></h1>
-                                </div>
-                                <div class="card-body">
-                                    <form action="/adminRestaurant/food/edit/<%= food[i]._id%>" method="post">
-                                        <div class="input-group mb-3">
-                                            <img src="../<%= food[i].picture%>">
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <input type="text"
-                                                   id="name"
-                                                   name="name"
-                                                   class="form-control"
-                                                   placeholder="Name"
-                                                   value="<%= food[i].name%>">
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <select id="type"  name="type" class="form-control select2" style="width: 100%;">
-                                                <option name="type" value="<%= food[i].type._id%>"><%= food[i].type.name%></option>
-                                                <% if (typeof FoodTypeArray !== 'undefined' && FoodTypeArray.length > 0) {%>
-                                                <%for (var j = 0; j < FoodTypeArray.length; j++) { %>
-                                                    <option  name ="type" value="<%= FoodTypeArray[j]._id%>"><%= FoodTypeArray[j].name %></option>
-                                                <%}%>
-                                                <%}%>
-                                            </select>
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <input type="text"
-                                                   id="price"
-                                                   name="price"
-                                                   class="form-control"
-                                                   placeholder="Price"
-                                                   value="<%= food[i].price%>">
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <select id="status"  name="status" class="form-control select2" style="width: 100%;">
-                                                <% if (food[i].status === true) {%>
-                                                    <option name="status" value="<%= true %>>">Active</option>
-                                                    <option  name ="status" value="<%=false%>">Inactive</option>
-                                                <%}%>
-                                            </select>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md">
-                                                <div class="col-md-8 icheck-primary">
+                <div class="card" style="border: 1px solid orange;">
+                    <div class="card-body" style="border: 1px solid orange;">
+                        <div class="card-header">
+                            <% for(let i=0;i<food.length;i++){%>
+                                <h3 class="card-title">Food Item</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="e-profile">
+                                <div class="tab-content pt-3">
+                                    <div class="tab-pane active">
+                                        <form action="/adminRestaurant/food/edit/<%= food[0]._id %>" method="POST" enctype="multipart/form-data">
+                                            <p>Modified : <%= food[i].modified %> </p>
+                                            <div class="container">
+                                                <div class="container__image">
+                                                    <input type="image" class="container__image"
+                                                           src="../../images/<%= food[i].picture%>"
+                                                           id="picture"
+                                                           name="img">
+                                                    <input type="file" accept="image/*" class="container__image"
+                                                           id="picture"
+                                                           name="picture">
+                                                </div>
+                                                <div class="container__text">
+                                                    <label>Food</label>
+                                                    <input type="text"
+                                                           id="name"
+                                                           name="name"
+                                                           class="form-control"
+                                                           value="<%= food[i].name%>">
+                                                    <label>Description</label>
+                                                    <input type="text"
+                                                           id="description"
+                                                           name="description"
+                                                           class="form-control"
+                                                           value="<%= food[i].description%>">
+                                                    <label>Food Type</label>
+                                                    <div class="input-group mb-3">
+                                                        <select id="type"  name="type" class="form-control select2" style="width: 100%;" placehp>
+                                                            <% if (typeof FoodTypeArray !== 'undefined' && FoodTypeArray.length > 0) {%>
+                                                                <option name="type" value="<%= food[i].type._id %>"selected><%= food[i].type.name %></option>
+                                                                <%for (var j = 0; j < FoodTypeArray.length; j++) { %>
+                                                                    <option  name ="type" value="<%= FoodTypeArray[j]._id%>"><%= FoodTypeArray[j].name %></option>
+                                                                <%}%>
+                                                            <%}%>
+                                                        </select>
+                                                    </div>
+                                                    <label>Price</label>
+                                                    <input type="text"
+                                                           id="price"
+                                                           name="price"
+                                                           class="form-control"
+                                                           value="<%= food[i].price %>">
+                                                    <p class="project-actions text-right">
+                                                        <button type="submit" class="btn btn-success">Submit</button>
+                                                    </p>
                                                 </div>
                                             </div>
-                                            <div class="col-6 submit">
-                                                <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                                            </div>
-                                        </div>
-                                    </form>
 
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        <%}%>
+                        </div>
                     </div>
-
                 </div>
+            </div>
+            <%}%>
+        </div>
+    </div>
+    </div>
+</main>
