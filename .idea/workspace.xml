@@ -2,25 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/views/admin/addRestaurantType.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/admin/foodType.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/admin/restaurantType.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/picture-1613481331507.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/picture-1613481474715.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/picture-1613481480879.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482244062.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482301000.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482349250.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482395799.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482515898.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482558501.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482593328.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482704406.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/picture-1613482739714.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/admin/order.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/adminControllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/adminControllers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Restaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Restaurant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/RestaurantAdmin.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/RestaurantAdmin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/RestaurantType.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/RestaurantType.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Supplier.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/uploadController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/uploadController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/RestaurantAdmin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/RestaurantAdmin.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/add-restaurant-admin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/add-restaurant-admin.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/add-suppliers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/add-suppliers.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/admin/admin-restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/admin-restaurant.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/food.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/food.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/orders.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/orders.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/partials/navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/partials/navbar.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/admin/partials/sidebar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/partials/sidebar.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/profile.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/profile.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/admin/restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurant.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/supplier.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/supplier.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/suppliers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/suppliers.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/restaurants.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurants.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,6 +164,8 @@
       <workItem from="1612352861819" duration="13000" />
       <workItem from="1613032189943" duration="7178000" />
       <workItem from="1613376654288" duration="25663000" />
+      <workItem from="1613459709770" duration="5804000" />
+      <workItem from="1613477618419" duration="6116000" />
     </task>
     <servers />
   </component>

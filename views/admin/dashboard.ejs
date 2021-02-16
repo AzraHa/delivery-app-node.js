@@ -46,7 +46,7 @@
                                 <%for(let i=0;i<order.length;i++){%>
                                     <tr>
                                         <td><%= i+1 %></td>
-                                        <td><a href="#"><%=order[i]._id %></a></td>
+                                        <td><a href="/admin/order/<%=order[i]._id %>"><%=order[i]._id %></a></td>
                                         <td><span class="badge badge-success"><%= order[i].status %></span></td>
                                         <td><%= order[i].supplier %></td>
                                         <%for(let j=0;j<order[i].restaurant.length;j++){%>

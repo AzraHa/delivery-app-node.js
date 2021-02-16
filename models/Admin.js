@@ -17,6 +17,10 @@ const AdminSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+  picture:{
+      type:String,
+      default:""
+  },
     date: {
         type: Date,
         default: Date.now

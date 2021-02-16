@@ -36,11 +36,21 @@
                                 <div class="e-profile">
                                     <div class="tab-content pt-3">
                                         <div class="tab-pane active">
-                                            <form action="/admin/restaurants/<%=restaurant[0]._id%>" method="post">
+                                            <form action="/admin/restaurants/<%=restaurant[0]._id%>" method="post" enctype="multipart/form-data">
                                                 <div class="container">
+                                                    <div class="container__image">
+                                                        <input type="image" class="container__image"
+                                                               src="../../images/<%= restaurant[i].image %>"
+                                                               id="picture"
+                                                               name="img">
+                                                        <input type="file" accept="image/*" class="container__image"
+                                                               id="picture"
+                                                               name="picture">
+                                                    </div>
                                                     <div class="container__image">
                                                         <div id="googleMap" class="form-control " style=" position: relative; overflow: hidden; width: 100%; margin: 5px; height: 400px;"></div>
                                                     </div>
+
                                                     <div class="container__text">
                                                         <label>Name</label>
                                                         <p class="form-control" style="border:1px solid #F9723D;color:#495057;"><%= restaurant[i].name%></p>

@@ -47,7 +47,7 @@
                                         <td><%= i+1 %> </td>
                                         <td><%= resAdminArray[i].name %></td>
                                         <td><%= resAdminArray[i].email %></td>
-                                        <td><%= resAdminArray[i].restaurant.name %></td>
+                                            <td><a href="/admin/restaurants/<%= resAdminArray[i].restaurant._id%>"><%= resAdminArray[i].restaurant.name %></a></td>
                                         <td><%= resAdminArray[i].address %></td>
                                         <% if(resAdminArray[i].status === true){%>
                                             <td>Active</td>

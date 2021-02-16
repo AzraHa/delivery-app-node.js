@@ -14,6 +14,8 @@ const Order = require("../models/Order");
 const TotalOrder = require("../models/TotalOrder");
 const Food = require("../models/Food");
 const RestaurantType = require("../models/RestaurantType");
+const Admin = require("../models/Admin");
+const bcrypt = require('bcryptjs');
 /* Linkovi za mape
 * https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform#maps_places_autocomplete_addressform-javascript
 * https://developers.google.com/maps/documentation/javascript/examples/directions-travel-modes
@@ -397,10 +399,12 @@ router.get('/restaurants/:id',function(req,res,next){
         });
       });
 });
-router.post('/restaurants/:id',function(req,res,next){
+router.post('/restaurants/:id',upload.single('picture'),function(req,res,next){
   const {address,email,type} = req.body;
   const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
-  Restaurant.findOneAndUpdate({_id: req.params.id}, {
+  if(req.file){
+    Restaurant.findOneAndUpdate({_id: req.params.id}, {
+      image:req.file.filename,
       modified: modified,
       email: email,
       address: address,
@@ -409,11 +413,27 @@ router.post('/restaurants/:id',function(req,res,next){
       if (err) {
         console.log("Something wrong when updating data! " + err);
       }
-    if (sucess) {
-      console.log("Updated" + sucess);
-    }
-    res.redirect('/admin/restaurants');
+      if (sucess) {
+        console.log("Updated" + sucess);
+      }
+      res.redirect('/admin/restaurants');
     });
+  }else {
+    Restaurant.findOneAndUpdate({_id: req.params.id}, {
+      modified: modified,
+      email: email,
+      address: address,
+      type: type
+    }, (err, sucess) => {
+      if (err) {
+        console.log("Something wrong when updating data! " + err);
+      }
+      if (sucess) {
+        console.log("Updated" + sucess);
+      }
+      res.redirect('/admin/restaurants');
+    });
+  }
 });
 
 router.get('/orders',function (req,res,next) {
@@ -427,13 +447,114 @@ router.get('/orders',function (req,res,next) {
       });
     })
 });
-
+router.get('/order/:id',function (req,res,next) {
+  let orderID = req.params.id;
+  TotalOrder.find({_id:orderID})
+    .populate('restaurant').populate('customer').populate('supplier').populate('order')
+    .exec(function (err, doc) {
+      console.log(doc);
+      res.render('admin/order', {
+        user: req.user,
+        order: doc
+      });
+    })
+});
 router.get('/profile',function (req,res,next){
-  res.render('admin/profile',{user:req.user});
+  Admin.findOne({_id:req.user._id},function(err,admin){
+    res.render('admin/profile',{
+      user:req.user,
+      admin:admin
+    });
+  });
 });
-router.post('/profile',function (req,res,next){
+router.post('/profile',upload.single('picture'),async function (req,res,next){
+    let {name, address, email, password,adminID} = req.body;
+    let newPassword;
+    const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+    if (!req.file && password === "") {
+      Admin.updateOne({_id: adminID},
+        {
+          name: name,
+          address: address,
+          email: email,
+          date: modified,
+        },
+        function (error, success) {
+        if(error) console.log("Error "+error.message);
+          res.redirect('/admin/profile');
+        });
+    }else if(!req.file && password!== ""){
+      bcrypt.genSalt(10, function (saltError, salt) {
+        if (saltError) {
+          throw saltError
+        } else {
+          bcrypt.hash(password, salt, function (hashError, hash) {
+            if (hashError) {
+              throw hashError
+            } else {
+              newPassword = hash;
+              Admin.updateOne({_id: adminID},
+                {
+                  name: name,
+                  address: address,
+                  email: email,
+                  date: modified,
+                  password:newPassword
+                },
+                function (error, success) {
+                  res.redirect('/admin/profile');
+                });
+            }
+          })
+        }
+      });
+    }
+    else if(req.file && password === ""){
+      console.log("slika"+req.file.filename)
+      Admin.updateOne({_id: adminID},
+        {
+          picture:req.file.filename,
+          name: name,
+          address: address,
+          email: email,
+          date: modified
+        },
+        function (error, success) {
+          res.redirect('/admin/profile');
+        });
+    }
+    else if(req.file && password !== ""){
+      bcrypt.genSalt(10, function (saltError, salt) {
+        if (saltError) {
+          throw saltError
+        } else {
+          bcrypt.hash(password, salt, function (hashError, hash) {
+            if (hashError) {
+              throw hashError
+            } else {
+              newPassword = hash;
+              Admin.updateOne({_id: adminID},
+                {
+                  picture: req.file.filename,
+                  name: name,
+                  address: address,
+                  email: email,
+                  date: modified,
+                  password:newPassword,
+                },
+                function (error, success) {
+                  if(error)console.log("error"+error+error.message);
+                  if(success)console.log("success: " +success)
+                  res.redirect('/admin/profile');
+                });
+            }
+          })
+        }
+      });
+    }
+});
 
-});
+
 
 router.get('/mail',function (req,res,next){
   //nodemailer sa w3schools :)
