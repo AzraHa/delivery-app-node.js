@@ -22,6 +22,7 @@ const RestaurantAdminSchema = new mongoose.Schema({
     type:String,
     required:true
   },
+  picture:{type:String},
   date: {
     type: Date,
     default: Date.now

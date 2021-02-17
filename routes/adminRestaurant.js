@@ -43,7 +43,7 @@ router.get('/logout',function (req,res,next){
   res.cookie('jwt','',{maxAge: 1 });
   req.logout();
   req.flash('success_msg', 'You are logged out');
-  res.redirect('/');
+  res.redirect('/adminRestaurant/login');
 });
 
 router.get('/admin',function (req,res,next){
@@ -71,11 +71,32 @@ router.get('/administrator',function(req,res,next){
   });
 });
 
-router.post('/administrator/:id',function(req,res,next){
+router.post('/administrator/:id',upload.single('picture'),function(req,res,next){
   const adminID = req.params.id;
-  const restaurant = req.user.restaurant;
-
-
+  const {name,email,address} = req.body;
+  const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+  if(!req.file){
+    RestaurantAdmin.updateOne({ _id: adminID},  {
+        modified:modified,
+        name:name,
+        email:email,
+        address:address
+      },
+      function (error, success) {
+        res.redirect('/adminRestaurant/administrator');
+      });
+  }else{
+    RestaurantAdmin.updateOne({ _id: adminID},  {
+        modified:modified,
+        name:name,
+        email:email,
+        address:address,
+        picture:req.file.filename
+      },
+      function (error, success) {
+        res.redirect('/adminRestaurant/administrator');
+      });
+  }
 });
 
 router.post('/admin/edit/:id',function(req,res,next){

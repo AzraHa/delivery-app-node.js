@@ -154,7 +154,7 @@
                                     <%for (var i = 0; i < RestaurantArray.length; i++) { %>
                                         <% if(RestaurantArray[i].status === true) {%>
                                             <td><%= i+1 %></td>
-                                            <td><img src="../<%= RestaurantArray[i].image%>" style="width: 50px;"></td>
+                                            <td><img src="../images/<%= RestaurantArray[i].image%>" style="width: 50px;"></td>
                                             <td><%= RestaurantArray[i].name %></td>
 
                                             <td><%= RestaurantArray[i].address %></td>
