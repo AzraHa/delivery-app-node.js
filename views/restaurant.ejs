@@ -19,57 +19,34 @@
     <div id="googleMap" class="form-control " style="position: relative; overflow: hidden; width: 100%; height:90%;margin: 10px;"></div>
 </div>
 <div class="moja ">
-    <div class="card" style="background-color: rgba(245, 245, 245, 0.2); ">
-        <div class="card-body">
-            <h3>PONUDA</h3>
-            <div class="card-group">
-                <%for(let i=0;i < food.length;i++){%>
-                    <div class="card" style="width: 20rem;margin:5px;">
-                        <img class="card-img-top" src="../images/sabburito-mexico-grill.jpg " style="width:100%;"alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= food[i].name %></h5>
-                            <p class="card-text"><%= food[i].description %></p>
-                            <p class="card-text"><%= food[i].price %> KM</p>
-                            <hr><p class="card-text"><%= food[i].restaurant.name %></p>
-                            <a href="#" class="btn btn-primary">Add to cart</a>
-                        </div>
-                    </div>
-                <%}%>
-            </div>
-        </div>
-        <div class="card-body">
-            <h3>MENI</h3>
-            <div class="card-group">
-                <%for(let i=0;i < food.length;i++){%>
-                    <div class="card" style="width: 20rem;margin:5px;">
-                        <img class="card-img-top" src="../images/sabburito-mexico-grill.jpg " style="width:100%;"alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= food[i].name %></h5>
-                            <p class="card-text"><%= food[i].description %></p>
-                            <p class="card-text"><%= food[i].price %> KM</p>
-                            <hr><p class="card-text"><%= food[i].restaurant.name %></p>
-                            <a href="#" onclick="addToCart('<%= food[i]._id%>','<%= food[i].restaurant._id%>');" class="btn btn-primary">Add to cart</a>
-                        </div>
-                    </div>
-                <%}%>
-            </div>
-        </div>
-        <div class="card-body">
-            <h3>AKCIJE</h3>
-            <div class="card-group">
-                <% if (typeof sale !== 'undefined' && sale.length >= 0) {%>
-                    <%for(let i=0;i < sale.length;i++){%>
-                        <div class="card" style="width: 20rem;margin:5px;">
-                            <img class="card-img-top" src="../images/sabburito-mexico-grill.jpg " style="width:100%;"alt="Card image cap">
+    <div class="album">
+        <div class="container">
+            <%for(let t=0;t<tip.length;t++){%>
+            <div class="row">
+                <% for(let i=0;i<food.length;i++){%>
+                <%if(food[i].type.name === tip[t].name){%>
+                    <div class="col-md-4">
+                        <div class="card" style="border:1px solid #F9723D;height:500px;">
+                            <img class="bd-placeholder-img card-img-top" style="border-bottom:1px solid #F9723D;"width="450" height="300" src="../../images/<%= food[i].picture%>">
                             <div class="card-body">
-                                <h5 class="card-title"><%= sale[i].food %></h5>
-                                <p class="card-text"><%= sale[i].date_from %></p>
-                                <p class="card-text"><%= sale[i].date_to %> </p>
-                                <hr><p class="card-text"><%= sale[i].salePrice %> KM</p>
-                                <a href="#" onclick="addToCart('<%= food[i]._id%>','<%= food[i].restaurant._id%>');" class="btn btn-primary">Add to cart</a>
+                                <h5 class="card-text" style="color: #F9723D;font-weight: bold;"><%= food[i].name%></h5>
+                                <p class="card-text"><%=food[i].description%></p>
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="card-price text-left" style="color: #F9723D;font-weight: bold;"><%=food[i].price%><span class="period">KM</span></h6>
+                                    <div class="btn-group text-right">
+                                        <a class="btn btn-success btn-sm" href="#">
+                                            <i class="fa fa-plus">
+                                            </i>
+                                            Add to cart
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    <%}%>
+                    </div>
+                <%}%>
+
+                <%}%>
                 <%}%>
             </div>
         </div>

@@ -71,15 +71,17 @@ router.post('/add-order/:foodID/restaurant/:restaurantID',function (req,res,next
 router.get('/restaurant/:id',function (req,res,next){
    Restaurant.find({_id:req.params.id},function (err,restaurant){
        const restID = restaurant[0]._id;
-       Food.find({restaurant:restID}).populate('restaurant').exec(function (err,food){
-           Sale.find({restaurant:restID}).populate('food').exec(function (err,sale){
-               res.render('restaurant',{
-                   restaurant:restaurant,
-                   user:req.user,
-                   food:food,
-                   sale:sale
-               })
+       Food.find({restaurant:restID}).populate('restaurant').populate('type').sort("type").exec(function (err,food){
+         FoodType.find({}).exec(function (err,tip){
+           console.info(food[0].type.name);
+           console.info(tip);
+           res.render('restaurant',{
+             restaurant:restaurant,
+             user:req.user,
+             food:food,
+             tip:tip
            })
+         })
        })
    })
 });
