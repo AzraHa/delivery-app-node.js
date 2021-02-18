@@ -17,7 +17,7 @@ router.get('/logout',userController.logout);
 router.get('/dashboard',function(req,res,next){
     Food.find({}).populate('restaurant').sort({"modified" : -1}).limit(6).exec(function(err,food){
         FoodType.find().exec(function (err,foodtype){
-            Restaurant.find({},function (err,restaurant){
+            Restaurant.find({}).limit(6).exec(function (err,restaurant){
                 Order.find({'customer':req.user._id,status:1}).populate('food').populate('restaurant').exec(function (err,order)
                 {
                     //console.log("ORDER-LEN"+order.length+" ORD#ER "+order)

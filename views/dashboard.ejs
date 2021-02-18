@@ -29,178 +29,53 @@
 </head>
 
 <body>
-
 <% include partials/navigation %>
-
-<div class="naslovna">
-    <div class="naslovna1">
-        <div class="naslovna-left">
-            <h1 style="color: #ffffff;text-shadow: 2px 2px #F9723D;">Search</h1>
-            <div>
-                <form action=" ">
-                    <div class="input-group ">
-                        <input type="search" class="form-control form-control-lg " placeholder="Type your keywords here ">
-                        <div class="input-group-append ">
-                            <button type="submit " class="input-group-text ">
-                                <i class=" fa fa-search "></i>
-                            </button>
+<div class="homepage">
+    <div class="naslovna">
+        <div class="naslovna1">
+            <div class="naslovna-left">
+                <h1 style="color: #ffffff;text-shadow: 2px 2px #F9723D;">Search</h1>
+                <div>
+                    <form action=" ">
+                        <div class="input-group ">
+                            <input type="search" class="form-control form-control-lg " placeholder="Type your keywords here ">
+                            <div class="input-group-append ">
+                                <button type="submit " class="input-group-text ">
+                                    <i class=" fa fa-search "></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="naslovna2 ">
-    </div>
-</div>
-
-<div class="moja ">
-    <div class="card" style="background-color: rgba(245, 245, 245, 0.2); ">
-        <div class="card-body">
-            <h3>PONUDA</h3>
-            <div class="card-group">
-                <%for(let i=0;i < food.length;i++){%>
-                    <div class="card" style="width: 20rem;margin:5px;">
-                        <img class="card-img-top" src="../images/sabburito-mexico-grill.jpg " style="width:100%;"alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= food[i].name %></h5>
-                            <p class="card-text"><%= food[i].description %></p>
-                            <p class="card-text"><%= food[i].price %> KM</p>
-                            <hr><p class="card-text"><%= food[i].restaurant.name %></p>
-                            <a href="#" class="btn btn-primary">Add to cart</a>
-                        </div>
-                    </div>
-                <%}%>
-            </div>
+        <div class="naslovna2 ">
         </div>
-        <div class="card-body">
-            <h3>MENI</h3>
-            <div class="card-group">
-                <%for(let i=0;i < food.length;i++){%>
-                    <div class="card" style="width: 20rem;margin:5px;">
-                        <img class="card-img-top" src="../images/sabburito-mexico-grill.jpg " style="width:100%;"alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= food[i].name %></h5>
-                            <p class="card-text"><%= food[i].description %></p>
-                            <p class="card-text"><%= food[i].price %> KM</p>
-                            <hr><p class="card-text"><%= food[i].restaurant.name %></p>
-                            <a href="#" onclick="addToCart('<%= food[i]._id%>','<%= food[i].restaurant._id%>');" class="btn btn-primary">Add to cart</a>
+    </div>
+    <div class="album">
+        <div class="container">
+            <div class="row">
+                <% for(let i=0;i<restaurant.length;i++){%>
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <img class="bd-placeholder-img card-img-top" width="450" height="300" src="../images/<%= restaurant[i].image%>">
+                            <div class="card-body">
+                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    </div>
+                                    <small class="text-muted">9 mins</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 <%}%>
             </div>
         </div>
     </div>
-    <div class="restorani">
-        <div class="restoran" style="height:50vh;">
-            <div class="card card-outline card-primary">
-                <div class="card-header text-center">
-                    <h1><b>Restaurants</b></h1>
-                </div>
-                <div class="card-body">
-                    <ul>
-                        <%for(let k=0;k<restaurant.length;k++){%>
-                            <li><a href="#"> <%= restaurant[k].name%> </a></li>
-                        <%}%>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="restoran">
-            <div class="card card-outline card-primary">
-                <div class="card-header text-center">
-                    <h1><b>Addresses</b></h1>
-                </div>
-                <div class="card-body">
-                    <div class="input-group mb-3">
-                        <div class="input-group">
-                            <label for="inputEmail3 " class="col-sm-2 col-form-label mr-2 "></label>
-                            <div id="googleMap" class="form-control " style="position: relative; overflow: hidden; width: 100%; height:50vh ;margin: 5px;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-
-    var viewMarkers = <%-JSON.stringify(restaurant)%>;
-    console.log(typeof viewMarkers);
-    const adresa = viewMarkers[0].koordinate;
-    const adrese =[];
-    for(let j=0;j<2;j++){
-        var latlong = viewMarkers[j].koordinate.split(',');
-        var latitude = parseFloat(latlong[0]);
-        var longitude = parseFloat(latlong[1]);
-        var addd = viewMarkers[j].address;
-        adrese.push([latitude,longitude,addd]);
-    }
-    function myMap() {
-        var mapProp= {
-            center:new google.maps.LatLng(43.8575738,18.4098533),
-            zoom:14,
-        };
-        var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-        for (i = 0; i < adrese.length; i++) {
-            var icon = '';
-            if (adrese[i][0].length !== '' && adrese[i][1].length !== '') {
-
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(adrese[i][0], adrese[i][1]),
-                    map: map,
-                    title: "adresa"+i,
-                });
-
-                var contentString = adrese[i][2];
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString,
-                    maxWidth: 160
-                });
-                infowindow.open(map, marker);
-
-                // Event that closes the Info Window with a click on the map
-                google.maps.event.addListener(map, 'click', (function(infowindow) {
-                    return function() {
-                        infowindow.close();
-                    }
-                })(infowindow));
-
-                google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                    return function() {
-                        var contentString = adrese[i][2];
-                        infowindow.setContent(contentString);
-                        infowindow.open(map, marker);
-                    }
-                })(marker, i));
-            }
-        }
-    }
-
-    /*$( "#kosara" ).ready(function() {
-        $('#lblCartCount').html(155+1);
-    });
-    $( "#kosara" ).click(function() {
-        $('#lblCartCount').html(155);
-    });*/
-    function addToCart(id,restaurantID){
-        document.location.reload(true);
-        $.ajax({
-            url:"/users/add-order/"+id+"/restaurant/"+restaurantID,
-            method: "POST",
-            success: function(result){
-            }
-        });
-    }
-
-</script>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVWoPIcc1pz1z5p_Ja6_CD7Ed9MzWN_ko&callback=myMap"></script>
-
-</body>
-</html>
-
 </div>
 </body>
 </html>
+
