@@ -8,6 +8,7 @@ const Restaurant = require("../models/Restaurant");
 const Order = require("../models/Order");
 const User = require("../models/User");
 const TotalOrder = require("../models/TotalOrder");
+const {ObjectId} = require("bson");
 
 router.get('/login',userController.login_get);
 router.post('/login',userController.login_post);
@@ -45,14 +46,18 @@ router.post('/add-order/:foodID/restaurant/:restaurantID',function (req,res,next
     const userID = req.user._id;
     const restaurantID = req.params.restaurantID;
     const quantity = 1;
-    const order = new Order({
-      quantity:quantity,
-      customer:userID,
-      restaurant:restaurantID,
-      food:foodID,
-      status:1
+    Order.findOneAndUpdate({customer:userID,
+        restaurant:restaurantID,
+        food:foodID,
+        status:1},
+      { $inc: {quantity:1} },
+      { upsert: true, new: true }, (err, doc) => {
+        console.log(doc);
+
+        if (err) {
+        console.log("Something wrong when updating data!");
+      }
     });
-    order.save();
     User.updateOne({ _id: req.user._id},  {
       $push: {
         orders:order._id
@@ -69,8 +74,8 @@ router.post('/add-order/:foodID/restaurant/:restaurantID',function (req,res,next
 });
 
 router.get('/restaurant/:id',function (req,res,next){
-   Restaurant.find({_id:req.params.id},function (err,restaurant){
-       const restID = restaurant[0]._id;
+   Restaurant.find({_id:req.params.id},function (err,rest){
+       const restID = req.params.id;
        const tipovi = [];
        Food.find({restaurant:restID}).populate('restaurant').populate('type').sort("type").exec(function (err,food){
          for(let t =0;t<food.length;t++){
@@ -78,28 +83,61 @@ router.get('/restaurant/:id',function (req,res,next){
              tipovi.push(food[t].type.name)
            }
          }
-         console.log(tipovi)
-         res.render('restaurant',{
-             restaurant:restaurant,
-             user:req.user,
-             food:food,
-           tip:tipovi
+         FoodType.find({},function(err,foodtype){
+           Restaurant.find({},function (err,restaurant){
+             Order.find({'customer':req.user._id,status:1}).populate('food').populate('restaurant').exec(function (err,order){
+               res.render('restaurant',{
+                 restaurant:restaurant,
+                 rest:rest,
+                 user:req.user,
+                 food:food,
+                 foodtype:foodtype,
+                 tip:tipovi,
+                 order:order,
+                 order_len:order.length
+               })
+             })
            })
+         })
        })
    })
 });
-router.post('/send-order',function(req,res,next){
-  TotalOrder.findOneAndUpdate( { customer : req.user._id,status:1}, {
-    status:2,
-   },{},function(err, doc) {
-    if (err) throw err;
-    //else {console.log(doc);}
+router.delete('/order/:id/:food',function (req,res,next){
+  Order.deleteOne({ _id: req.params.id , food:req.params.food }, function (err) {
+    if (err) return err;
+    else res.sendStatus(200);
   });
-  Order.update( { status : 1,customer:req.user._id}, {"$set":{"status": 2,"address":req.body.address}},{multi: true},function(err, doc) {
-    if (err) throw err;
-    else {//console.log(doc);
-      res.redirect("/users/dashboard");}
-  })
 });
+router.post('/send-order',function(req,res,next) {
+  let totalOrder = new TotalOrder({
+    customer: req.user._id,
+    restaurant: req.user._id,
+    orders:req.user._id,
+    status: 1
+  });
+  totalOrder.save();
+
+  Order.find({customer: req.user._id, status: 1}, function (err, ord) {
+    let order = ord[0]._id
+    console.log(order);
+    TotalOrder.findOneAndUpdate({_id: totalOrder._id}, {
+      $push: {
+        orders: {
+          _id : order
+        }
+      }
+    });
+  });
+
+  Order.updateMany({status: 1, customer: req.user._id}, {"$set": {"status": 2}}, {multi: true}, function (err, doc) {
+    if (err) throw err;
+    else {
+      console.log(doc);
+      res.redirect("/users/dashboard");
+    }
+  });
+});
+
+
 
 module.exports = router;

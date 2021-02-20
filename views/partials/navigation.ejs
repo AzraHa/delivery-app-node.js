@@ -70,14 +70,34 @@
                                 <% let total=Number(0);%>
                                 <% if(typeof order !== "undefined" && order.length >0 ){%>
                                     <%for(let s=0;s<order.length;s++){%>
-                                    <%total+=Number(order[s].food[0].price)%>
-                                    <input type="hidden" name="ovo" value="<%=order%>">
-                                        <tr>
-                                            <td name="kolicina"><%= order[s].quantity %></td>
-                                            <td name="naziv"><%= order[s].food[0].name %></td>
-                                            <td><%= order[s].food[0].description %></td>
-                                            <td></td>
-                                            <td class="text-center"><%= order[s].food[0].price %></td>
+                                    <%total+=Number(order[s].food[0].price*((order[s].quantity)))%>
+                                    <input type="hidden" name="ovo" value="<%=order[0]._id%>">
+                                        <tr id="<%=order[s]._id%>">
+                                            <td>
+                                                <input name="kolicina" type="hidden" value="<%= order[s].quantity %>">
+                                                <%= order[s].quantity %>
+                                            </td>
+                                            <td>
+                                                <input  name="naziv"  type="hidden" value="<%= order[s].food[0].name %>">
+                                                <%= order[s].food[0].name %>
+                                            </td>
+                                            <td>
+                                                <% let opis = order[s].food[0].description %>
+                                                <%= opis.slice(opis,20)+"..."%>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="restoran" value="<%=order[s].restaurant[0]._id%>">
+                                                <%= order[s].restaurant[0].name %>
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="hidden" name="cijena" value="<%=order[s].food[0].price %>">
+                                                <%= order[s].food[0].price %>
+                                            </td>
+                                            <td class="project-actions text-right">
+                                                <a class="close" aria-label="Close" onclick="deleteFromOrder('<%= order[s]._id %>','<%=order[s].food[0]._id%>');">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </a>
+                                            </td>
                                         </tr>
                                     <%}%>
                                 <%}%>
@@ -104,26 +124,7 @@
                     <div class="collapse" id="collapseExample">
                         <div class="card card-body">
                             Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                            <div class="input-group mb-3">
-                                <input type="text"
-                                       id="address"
-                                       name="address"
-                                       class="form-control"
-                                       placeholder="Address">
-                                <div class="input-group-append" >
-                                    <div class="input-group-text">
-                                        <span class="fa fa-map-marker" id="dugme"></span>
-                                    </div>
-                                    <div class="input-group-text">
-                                        <span class="fa fa-search" id="submit"></span>
-                                    </div>
-                                </div>
-                                <div class="input-group">
-                                    <label for="inputEmail3 " class="col-sm-2 col-form-label mr-2 "></label>
-                                    <div id="googleMap" class="form-control " style="position: relative; overflow: hidden; width: 100%; margin: 5px; height: 200px; "></div>
 
-                                </div>
-                            </div>
                             <button type="submit" class="btn btn-primary" >Send</button>
                         </div>
                     </div>
@@ -139,5 +140,14 @@
 </div>
 <script>
     $('.dropdown-toggle').dropdown();
+    function deleteFromOrder(orderID,foodID){
+        $.ajax({
+            url: "/users/order/" + orderID + "/"+foodID,
+            method: "DELETE",
+            success: function (result) {
+                $('#'+orderID+'').remove();
+            }
+        })
+    }
 </script>
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title><%=restaurant[0].name%> </title>
+    <title><%=rest[0].name%> </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/stylesheets/style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -14,13 +14,13 @@
 
 </head>
 <body>
-
-<div class="naslovna" style=" background:rgba(255, 255, 255, 0.5);">
-    <div><img src="../../images/<%=restaurant[0].image%>" style="height:90%;margin: 10px;"></div>
+<% include partials/navigation %>
+<div class="naslovna" style=" background:rgba(255, 255, 255, 0.5);margin-top:60px;">
+    <div><img src="../../images/<%=rest[0].image%>" style="height:90%;margin: 10px;"></div>
     <div id="googleMap" class="form-control " style="position: relative; overflow: hidden; width: 100%; height:90%;margin: 10px;"></div>
-    <input type="hidden" id="address" value="<%= restaurant[0].address %>">
-    <input type="hidden" id="restaurantName" value="<%= restaurant[0].name %>">
-    <input type="hidden" id="koordinate" name="koordinate" value="<%= restaurant[0].koordinate%>">
+    <input type="hidden" id="address" value="<%= rest[0].address %>">
+    <input type="hidden" id="restaurantName" value="<%= rest[0].name %>">
+    <input type="hidden" id="koordinate" name="koordinate" value="<%= rest[0].koordinate%>">
 </div>
 <div class="moja " style=" background:rgba(0, 0, 0, 0.5); ">
     <section class="sticky-top offer-dedicated-nav bg-white border-top-0 shadow-sm ">
@@ -29,7 +29,7 @@
                 <div class="col-md-12">
                     <ul class="nav">
                         <li class="nav-item mr-auto" style="border: 2px solid #F9723D;">
-                            <a class="nav-link" href="#"><%= restaurant[0].name %></a>
+                            <a class="nav-link" href="#"><%= rest[0].name %></a>
                         </li>
 
                         <%for(let t=0;t<tip.length;t++){%>
@@ -58,7 +58,7 @@
                                             <div class="d-flex justify-content-between">
                                                 <h6 class="card-price text-left" style="color: #F9723D;font-weight: bold;"><%=food[i].price%><span class="period">KM</span></h6>
                                                 <div class="btn-group text-right">
-                                                    <a class="btn btn-success btn-sm" href="#">
+                                                    <a class="btn btn-success btn-sm" href="#"  onclick="addToCart('<%= food[i]._id%>','<%= rest[0]._id%>');">
                                                         <i class="fa fa-plus">
                                                         </i>
                                                         Add to cart
@@ -77,6 +77,16 @@
 </div>
 
 <script>
+
+    function addToCart(id,restaurantID) {
+        $.ajax({
+            url: "/users/add-order/" + id + "/restaurant/" + restaurantID,
+            method: "POST",
+            success: function (result) {
+            }
+        })
+    }
+
     const adresa = document.getElementById("koordinate").value;
     const adres = adresa.replace("(","").replace(")","");
     const nova = adres.split(",");
@@ -173,22 +183,7 @@
                 });
             }
         }
-        function geocodeAddress(geocoder, resultsMap) {
-            const address = document.getElementById("address").value;
-            geocoder.geocode({ address: address }, (results, status) => {
-                if (status === "OK") {
-                    resultsMap.setCenter(results[0].geometry.location);
-                    y.value = results[0].geometry.location;
-                    console.log(y);
-                    new google.maps.Marker({
-                        map: resultsMap,
-                        position: results[0].geometry.location,
-                    });
-                } else {
-                    alert("Geocode was not successful for the following reason: " + status);
-                }
-            });
-        }
+
         google.maps.event.addListener(map, 'click', function(event) {
             placeMarker(event.latLng);
             y.value = event.latLng;

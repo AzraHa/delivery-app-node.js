@@ -8,7 +8,6 @@ const orderSchema = new mongoose.Schema({
   supplier: [{ type: mongoose.Schema.Types.ObjectId, ref: "Supplier" }],
   food:[{ type: mongoose.Schema.Types.ObjectId, ref: "Food" }],
   status:{type:Number,required:true},
-  address:{type:String,required:true},
   date: {type: Date, default: Date.now}
 });
 
