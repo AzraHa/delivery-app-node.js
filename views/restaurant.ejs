@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard</title>
+    <title><%=restaurant[0].name%> </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/stylesheets/style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -15,86 +15,193 @@
 </head>
 <body>
 
-<div class="naslovna">
+<div class="naslovna" style=" background:rgba(255, 255, 255, 0.5);">
+    <div><img src="../../images/<%=restaurant[0].image%>" style="height:90%;margin: 10px;"></div>
     <div id="googleMap" class="form-control " style="position: relative; overflow: hidden; width: 100%; height:90%;margin: 10px;"></div>
+    <input type="hidden" id="address" value="<%= restaurant[0].address %>">
+    <input type="hidden" id="restaurantName" value="<%= restaurant[0].name %>">
+    <input type="hidden" id="koordinate" name="koordinate" value="<%= restaurant[0].koordinate%>">
 </div>
-<div class="moja ">
-    <div class="album">
+<div class="moja " style=" background:rgba(0, 0, 0, 0.5); ">
+    <section class="sticky-top offer-dedicated-nav bg-white border-top-0 shadow-sm ">
         <div class="container">
-            <%for(let t=0;t<tip.length;t++){%>
             <div class="row">
-                <% for(let i=0;i<food.length;i++){%>
-                <%if(food[i].type.name === tip[t].name){%>
-                    <div class="col-md-4">
-                        <div class="card" style="border:1px solid #F9723D;height:500px;">
-                            <img class="bd-placeholder-img card-img-top" style="border-bottom:1px solid #F9723D;"width="450" height="300" src="../../images/<%= food[i].picture%>">
-                            <div class="card-body">
-                                <h5 class="card-text" style="color: #F9723D;font-weight: bold;"><%= food[i].name%></h5>
-                                <p class="card-text"><%=food[i].description%></p>
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="card-price text-left" style="color: #F9723D;font-weight: bold;"><%=food[i].price%><span class="period">KM</span></h6>
-                                    <div class="btn-group text-right">
-                                        <a class="btn btn-success btn-sm" href="#">
-                                            <i class="fa fa-plus">
-                                            </i>
-                                            Add to cart
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <%}%>
+                <div class="col-md-12">
+                    <ul class="nav">
+                        <li class="nav-item mr-auto" style="border: 2px solid #F9723D;">
+                            <a class="nav-link" href="#"><%= restaurant[0].name %></a>
+                        </li>
 
-                <%}%>
-                <%}%>
+                        <%for(let t=0;t<tip.length;t++){%>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#<%= tip[t] %>" role="tab" aria-controls="pills-order-online" aria-selected="true"><%= tip[t] %></a>
+                            </li>
+                        <%}%>
+                    </ul>
+                </div>
             </div>
         </div>
+    </section>
+    <div class="album">
+        <%for(let t=0;t<tip.length;t++){%>
+            <h1 class="text-center" style="color:#F9723D;" id="<%= tip[t] %>"><%= tip[t] %></h1>
+            <div class="container">
+                <div class="row">
+                    <% for(let i=0;i<food.length;i++){%>
+                        <%if(food[i].type.name === tip[t]){%>
+                                <div class="col-md-4" style=" margin-top: 35px;">
+                                    <div class="card" style="border:1px solid #F9723D;height:500px;">
+                                        <img class="bd-placeholder-img card-img-top" style="border-bottom:1px solid #F9723D;"width="450" height="300" src="../../images/<%= food[i].picture%>">
+                                        <div class="card-body">
+                                            <h5 class="card-text" style="color: #F9723D;font-weight: bold;"><%= food[i].name%></h5>
+                                            <p class="card-text"><%=food[i].description%></p>
+                                            <div class="d-flex justify-content-between">
+                                                <h6 class="card-price text-left" style="color: #F9723D;font-weight: bold;"><%=food[i].price%><span class="period">KM</span></h6>
+                                                <div class="btn-group text-right">
+                                                    <a class="btn btn-success btn-sm" href="#">
+                                                        <i class="fa fa-plus">
+                                                        </i>
+                                                        Add to cart
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <%}%>
+                        <%}%>
+                </div>
+            </div>
+        <%}%>
     </div>
 </div>
+
 <script>
-    var restoran = <%-JSON.stringify(restaurant)%>;
-    const adresa = restoran[0].koordinate;
-    var latlong = adresa.split(',');
-    var latitude = parseFloat(latlong[0]);
-    var longitude = parseFloat(latlong[1]);
-    var addd = restoran[0].address;
+    const adresa = document.getElementById("koordinate").value;
+    const adres = adresa.replace("(","").replace(")","");
+    const nova = adres.split(",");
+    var latitude = parseFloat(nova[0]);
+    var longitude = parseFloat(nova[1]);
+    var addd = document.getElementById("address").value;
+    //console.log(latitude,longitude);
+    const adrese =[];
+    adrese.push([latitude,longitude,addd]);
 
     function myMap() {
         var mapProp= {
             center:new google.maps.LatLng(latitude,longitude),
-            zoom:16,
+            zoom:18,
         };
         var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(latitude, longitude),
-            map: map,
-            animation: google.maps.Animation.DROP,
-        });
-        var contentString = addd;
-        var infowindow = new google.maps.InfoWindow({
-            content: contentString,
-            maxWidth: 160
-        });
-        infowindow.open(map, marker);
-        marker.addListener("click", toggleBounce);
-        function toggleBounce() {
-            infowindow.open(map, marker);
-            if (marker.getAnimation() !== null) {
-                marker.setAnimation(null);
-            } else {
-                marker.setAnimation(google.maps.Animation.BOUNCE);
+        const geocoder = new google.maps.Geocoder();
+        var x = document.getElementById("address");
+        var y = document.getElementById("koordinate");
+        var z = document.getElementById("restaurantName").value;
+        for (i = 0; i < adrese.length; i++) {
+            var icon = '';
+            if (adrese[i][0].length !== '' && adrese[i][1].length !== '') {
+
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(adrese[i][0], adrese[i][1]),
+                    map: map,
+                    title: "adresa"+i,
+                });
+
+                var contentString = z +" "+ adrese[i][2];
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    maxWidth: 160
+                });
+                infowindow.open(map, marker);
+
+                // Event that closes the Info Window with a click on the map
+                google.maps.event.addListener(map, 'click', (function(infowindow) {
+                    return function() {
+                        infowindow.close();
+                    }
+                })(infowindow));
+
+                google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                    return function() {
+                        var contentString = adrese[i][2];
+                        infowindow.setContent(contentString);
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+
             }
         }
+
+        var Mar;
+
+        function placeMarker(location) {
+            if ( Mar ) {
+                Mar.setPosition(location);
+                geocoder.geocode({ location}, (results, status) => {
+                    if (status === "OK") {
+                        if (results[0]) {
+                            infowindow.setContent(results[0].formatted_address);
+                            //console.log(results[0].formatted_address);
+                            x.value = results[0].formatted_address;
+                            infowindow.open(map, Mar);
+                        } else {
+                            window.alert("No results found");
+                        }
+                    } else {
+                        window.alert("Geocoder failed due to: " + status);
+                    }
+                });
+            } else {
+                Mar = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+                Mar.setPosition(location);
+                geocoder.geocode({ location }, (results, status) => {
+                    if (status === "OK") {
+                        if (results[0]) {
+                            infowindow.setContent(results[0].formatted_address);
+                            //console.log(results[0].formatted_address);
+                            x.value = results[0].formatted_address;
+                            infowindow.open(map, Mar);
+                        } else {
+                            window.alert("No results found");
+                        }
+                    } else {
+                        window.alert("Geocoder failed due to: " + status);
+                    }
+                });
+            }
+        }
+        function geocodeAddress(geocoder, resultsMap) {
+            const address = document.getElementById("address").value;
+            geocoder.geocode({ address: address }, (results, status) => {
+                if (status === "OK") {
+                    resultsMap.setCenter(results[0].geometry.location);
+                    y.value = results[0].geometry.location;
+                    console.log(y);
+                    new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location,
+                    });
+                } else {
+                    alert("Geocode was not successful for the following reason: " + status);
+                }
+            });
+        }
+        google.maps.event.addListener(map, 'click', function(event) {
+            placeMarker(event.latLng);
+            y.value = event.latLng;
+            console.log(y)
+        });
+
+
+
     }
 
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVWoPIcc1pz1z5p_Ja6_CD7Ed9MzWN_ko&callback=myMap"></script>
-
 </body>
 </html>
 
-</div>
-</body>
-</html>

@@ -128,6 +128,15 @@ body{
   flex-flow: row nowrap;
 }
 
+.vrste{
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-flow: row nowrap;
+  margin-bottom:50px ;
+}
 .login-box {
   width: 50%;
   margin-left: 15px;
@@ -141,7 +150,9 @@ body{
 .card-primary.card-outline {
   border-top: 3px solid #F9723D;
 }
-
+a{
+  color:  #F9723D;
+}
 .card-primary.card-outline a>.terms,
 .icheck-primary,
 a.h1,
@@ -731,4 +742,26 @@ ul li{
 }
 .container__text select{
   border:1px solid #F9723D;
+}
+.offer-dedicated-nav{
+  border-top:1px solid #e2e2e2 !important;
+}
+
+.offer-dedicated-nav .nav-link.active{
+  color: #fff;
+  background-color: #21c1ab;
+}
+
+.offer-dedicated-nav .nav-link.back{
+  color: #fff;
+  background-color: gray;
+}
+
+.offer-dedicated-nav .nav-link.big{
+  width:240px;
+  font-size:20px;
+  border:1px solid #e2e2e2;
+  padding:10px 20px;
+  text-align:center;
+  margin:20px 10px;
 }
