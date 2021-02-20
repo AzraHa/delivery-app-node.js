@@ -45,33 +45,33 @@ router.post('/add-order/:foodID/restaurant/:restaurantID',function (req,res,next
     const foodID = req.params.foodID;
     const userID = req.user._id;
     const restaurantID = req.params.restaurantID;
-    const quantity = 1;
+
     Order.findOneAndUpdate({customer:userID,
         restaurant:restaurantID,
         food:foodID,
         status:1},
       { $inc: {quantity:1} },
       { upsert: true, new: true }, (err, doc) => {
-        console.log(doc);
-
+        //console.log(doc);
+        TotalOrder.findOneAndUpdate( { customer : userID,status:1}, {
+          customer:userID,
+          restaurant:restaurantID,
+          $push: {
+            orders:doc._id,
+          }},{ upsert : true,new:true },function(err, doc) {
+          if (err) throw err;
+          User.updateOne({ _id: req.user._id},  {
+            $push: {
+              orders:doc._id
+            }
+          });
+        });
         if (err) {
         console.log("Something wrong when updating data!");
       }
     });
-    User.updateOne({ _id: req.user._id},  {
-      $push: {
-        orders:order._id
-      }
-    });
-    TotalOrder.findOneAndUpdate( { customer : userID,status:1}, {
-      customer:userID,
-      restaurant:restaurantID,
-      $push: {
-        orders:order._id,
-      }},{ upsert : true },function(err, doc) {
-      if (err) throw err;
-    });
 });
+
 
 router.get('/restaurant/:id',function (req,res,next){
    Restaurant.find({_id:req.params.id},function (err,rest){
@@ -109,30 +109,35 @@ router.delete('/order/:id/:food',function (req,res,next){
   });
 });
 router.post('/send-order',function(req,res,next) {
+  let nizNarudzbi = [];
+  const niz = req.body.ovo;
+  for(let i = 0; i<niz.length;i++){
+    nizNarudzbi.push(ObjectId(niz[i]._id));
+  }
+  const restoran = ObjectId(req.body.restoran);
   let totalOrder = new TotalOrder({
     customer: req.user._id,
-    restaurant: req.user._id,
-    orders:req.user._id,
+    restaurant:restoran,
     status: 1
   });
-  totalOrder.save();
 
-  Order.find({customer: req.user._id, status: 1}, function (err, ord) {
-    let order = ord[0]._id
-    console.log(order);
-    TotalOrder.findOneAndUpdate({_id: totalOrder._id}, {
+
+    TotalOrder.updateOne({_id: totalOrder._id, customer: req.user._id,status: 1}, {
       $push: {
-        orders: {
-          _id : order
-        }
+        orders:{552:jzfguz}}
+    }, {upsert: true, new: true}, (err, sucess) => {
+      if (err) {
+        console.log("Something wrong when updating data!");
       }
     });
-  });
+
+
+
 
   Order.updateMany({status: 1, customer: req.user._id}, {"$set": {"status": 2}}, {multi: true}, function (err, doc) {
     if (err) throw err;
     else {
-      console.log(doc);
+     // console.log(doc);
       res.redirect("/users/dashboard");
     }
   });
