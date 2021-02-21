@@ -4,12 +4,15 @@ const Supplier = require("../models/Supplier");
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const moment = require('moment');
-const jwt = require("jsonwebtoken"); // require
+const jwt = require("jsonwebtoken");
+const upload = require('../controllers/uploadController');
+
 const router = express.Router();
 
 router.get('/login',function (req,res,next){
   res.render('supplier/login');
 });
+
 router.post('/login',function(req,res,next){
   passport.authenticate('supplier', {
     successRedirect: '/supplier/dashboard',
@@ -27,7 +30,44 @@ router.post('/login',function(req,res,next){
 });
 
 router.get('/dashboard',function (req,res,next){
-  res.render('supplier/dashboard');
+  TotalOrder.find({status: 2,supplier:req.user._id})
+    .populate([{
+      path: 'orders',
+      populate: {
+        path: 'food',
+        model: 'Food'
+      }
+    }]).populate('customer').populate('restaurant').
+  exec(function(err,orders){
+    //Odradjene narudzbe imaju polje status 5
+    TotalOrder.find({status: 5,supplier:req.user._id})
+      .populate([{
+        path: 'orders',
+        populate: {
+          path: 'food',
+          model: 'Food'
+        }
+      }]).populate('customer').populate('restaurant').
+      exec(function(err,ordersN) {
+        //Narudzbe u toku
+      TotalOrder.find({status: 5,supplier:req.user._id}).populate([{
+        path: 'orders',
+        populate: {
+          path: 'food',
+          model: 'Food'
+        }
+      }]).populate('customer').populate('restaurant').
+      exec(function(err,ordersA) {
+        res.render('supplier/dashboard',
+          {
+            user: req.user,
+            orders: orders,
+            ordersN: ordersN,
+            ordersA:ordersA
+          });
+      });
+    });
+  })
 });
 
 router.get('/logout',function (req,res,next){
@@ -37,18 +77,120 @@ router.get('/logout',function (req,res,next){
   res.redirect('/supplier/login');
 });
 
-router.get('/orders',function (req,res,next){
-//podaci o narudzbi,status,cijena,adresa,način plaćanja,gdje podize gdje dodtavlja,za koliko vremena
+router.get('/order-confirm/:id',function (req,res,next){
+  TotalOrder.findOne({_id: req.params.id})
+    .populate([{
+      path: 'orders',
+      populate: {
+        path: 'food',
+        model: 'Food'
+      }
+    }]).populate('customer').populate('restaurant')
+    .exec(function (err, order) {
+      res.render('supplier/confirm-order',{user:req.user,order:order})
+    });
 });
-router.post('/orders',function (req,res,next){
-
+router.post('/order-confirm/:id',function (req,res,next){
+  //status 3 narudzba potvrđena od strane dostavljaca
+  TotalOrder.updateOne({ _id: req.params.id},  {
+      status: 3
+    },
+    function (error, success) {
+      res.redirect('/supplier/dashboard');
+    });
 });
-
-router.get('/order-confirm',function (req,res,next){
-  TotalOrder.find({supplier:req.user._id,status:2},function(err,orders){
-    res.render('/orders',
-      {user:req.user})
-  });
+router.get('/profile',function(req,res,next){
+  Supplier.findOne({_id:req.user._id},function(err,supplier){
+    res.render('supplier/profile',
+      {user:req.user,
+      supplier:supplier})
+  })
+});
+router.post('/profile',upload.single('picture'),async function (req,res,next){
+  let {name, address, email, password,supplierID} = req.body;
+  let newPassword;
+  const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+  if (!req.file && password === "") {
+    Supplier.updateOne({_id: supplierID},
+      {
+        name: name,
+        address: address,
+        email: email,
+        date: modified,
+      },
+      function (error, success) {
+        if(error) console.log("Error "+error.message);
+        res.redirect('/supplier/profile');
+      });
+  }else if(!req.file && password!== ""){
+    bcrypt.genSalt(10, function (saltError, salt) {
+      if (saltError) {
+        throw saltError
+      } else {
+        bcrypt.hash(password, salt, function (hashError, hash) {
+          if (hashError) {
+            throw hashError
+          } else {
+            newPassword = hash;
+            Supplier.updateOne({_id: supplierID},
+              {
+                name: name,
+                address: address,
+                email: email,
+                date: modified,
+                password:newPassword
+              },
+              function (error, success) {
+                res.redirect('/supplier/profile');
+              });
+          }
+        })
+      }
+    });
+  }
+  else if(req.file && password === ""){
+    console.log("slika"+req.file.filename)
+    Supplier.updateOne({_id: supplierID},
+      {
+        picture:req.file.filename,
+        name: name,
+        address: address,
+        email: email,
+        date: modified
+      },
+      function (error, success) {
+        res.redirect('/supplier/profile');
+      });
+  }
+  else if(req.file && password !== ""){
+    bcrypt.genSalt(10, function (saltError, salt) {
+      if (saltError) {
+        throw saltError
+      } else {
+        bcrypt.hash(password, salt, function (hashError, hash) {
+          if (hashError) {
+            throw hashError
+          } else {
+            newPassword = hash;
+            Supplier.updateOne({_id: supplierID},
+              {
+                picture: req.file.filename,
+                name: name,
+                address: address,
+                email: email,
+                date: modified,
+                password:newPassword,
+              },
+              function (error, success) {
+                if(error)console.log("error"+error+error.message);
+                if(success)console.log("success: " +success)
+                res.redirect('/admin/profile');
+              });
+          }
+        })
+      }
+    });
+  }
 });
 
 module.exports = router;

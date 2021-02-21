@@ -85,8 +85,7 @@ module.exports = function(passport) {
     new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
       // Match user
       Supplier.findOne({
-        email: email,
-        status: true
+        email: email
       }).then(user => {
         if (!user) {
           return done(null, false, { message: 'That email is not registered' });

@@ -17,181 +17,141 @@
 <main role="main">
     <% include partials/navigation %>
     <div class="container-fluid">
-        <div class="row">
-            <%include partials/sidebar %>
-            <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-                    <h1 class="h2">Dashboard</h1>
-                </div>
-                <!-- TABLE: LATEST ORDERS -->
-                <div class="card">
-                    <div class="card-header border-transparent">
-                        <h3 class="card-title">Latest Orders</h3>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table m-0">
-                                <thead>
-                                <tr>
-                                    <th>No:</th>
-                                    <th>Order ID</th>
-                                    <th>Status</th>
-                                    <th>Supplier</th>
-                                    <th>Restaurant</th>
-                                    <th>Customer</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <% if (typeof order !== 'undefined' && order.length > 0) {%>
-                                <%for(let i=0;i<order.length;i++){%>
-                                    <tr>
-                                        <td><%= i+1 %></td>
-                                        <td><a href="/admin/order/<%=order[i]._id %>"><%=order[i]._id %></a></td>
-                                        <td><span class="badge badge-success"><%= order[i].status %></span></td>
-                                        <td><%= order[i].supplier %></td>
-                                        <%for(let j=0;j<order[i].restaurant.length;j++){%>
-                                            <td><a href="#"><li class="list-group-item"><%= order[i].restaurant[j].name %></li></a> </td>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+            <h1 class="h2">Dashboard</h1>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Orders</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table m-0">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Restaurant</th>
+                                <th>Restaurant Address</th>
+                                <th>Customer Address</th>
+                                <th>Items</th>
+                                <th>Price</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%for(let i=0;i<orders.length;i++){%>
+                            <tr>
+                                <td><%= i+1 %></td>
+                                <td><%= orders[i].restaurant[0].name%></td>
+                                <td><%= orders[i].restaurant[0].address%></td>
+                                <td><%= orders[i].customer.address %></td>
+                                <td><% let total=Number(0);%>
+                                    <ul class="list-group">
+                                        <% for(let j=0;j<ordersN[i].orders.length;j++){%>
+                                            <li><%= ordersN[i].orders[j].food[0].name%> : <%= ordersN[i].orders[j].quantity %> </li>
+
+                                            <%total+=Number(ordersN[i].orders[j].food[0].price* ((ordersN[i].orders[j].quantity)))%>
                                         <%}%>
-                                        <td><%= order[i].customer.name %></td>
-                                        <td></td>
-                                    </tr>
-                                <%}%>
-                                <%}%>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card-footer clearfix">
-                        <a href="/admin/orders" class="btn btn-sm btn-secondary float-right">View All Orders</a>
-                    </div>
-
+                                    </ul>
+                                </td>
+                                <td> <%= total %>  KM</td>
+                                <td class="project-actions ">
+                                    <a class="btn btn-primary btn-sm" href="/supplier/order-confirm/<%=orders[i]._id%>">
+                                        <i class="fa fa-folder">
+                                        </i>
+                                        View/Confirm
+                                    </a>
+                                </td>
+                            </tr>
+                        <%}%>
+                        </tbody>
+                    </table>
                 </div>
-                <!-- TABLE: LATEST ORDERS -->
-                <div class="card">
-                    <div class="card-header border-transparent">
-                        <h3 class="card-title">Suppliers</h3>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table m-0">
-                                <thead>
-                                <tr>
-                                    <th>No: </th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Restaurant</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <% if (typeof suppliersArray !== 'undefined' && suppliersArray.length > 0) {%>
-                                    <%for (var i = 0; i < suppliersArray.length; i++) { %>
-                                        <% if(suppliersArray[i].status === true) {%>
-                                            <td><%= i+1 %> </td>
-                                            <td><%= suppliersArray[i].name %></td>
-                                            <td><%= suppliersArray[i].email %></td>
-                                            <td>
-                                                <ul class="list-group">
-                                                    <%for(let j=0;j<suppliersArray[i].restaurant.length;j++){%>
-                                                        <a href="#"><li class="list-group-item"><%= suppliersArray[i].restaurant[j].name %></li></a>
-                                                    <%}%>
-                                                </ul>
-                                            </td>
-                                            <% if(suppliersArray[i].status === true){%>
-                                                <td>Active</td>
-                                            <%} else {%>
-                                                <td>X</td>
-                                            <%}%>
-                                            <td class="project-actions text-right">
-                                                <a class="btn btn-primary btn-sm" href="/admin/suppliers/<%= suppliersArray[i]._id%>">
-                                                    <i class="fa fa-folder">
-                                                    </i>
-                                                    View
-                                                </a>
-                                                <a class="btn btn-danger btn-sm" href="/admin/suppliers/delete/<%= suppliersArray[i]._id%>">
-                                                    <i class="fa fa-trash">
-                                                    </i>
-                                                    Delete
-                                                </a>
-                                            </td>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Orders/Active(now)</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table m-0">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Restaurant</th>
+                            <th>Restaurant Address</th>
+                            <th>Customer Address</th>
+                            <th>Items</th>
+                            <th>Price</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%for(let i=0;i<ordersA.length;i++){%>
+                            <tr>
+                                <td><%= i+1 %></td>
+                                <td><%= ordersA[i].restaurant[0].name%></td>
+                                <td><%= ordersA[i].restaurant[0].address%></td>
+                                <td><%= ordersA[i].customer.address %></td>
+                                <td><% let total=Number(0);%>
+                                    <ul class="list-group">
+                                        <% for(let j=0;j<ordersA[i].orders.length;j++){%>
+                                            <li><%= ordersA[i].orders[j].food[0].name%> : <%= ordersA[i].orders[j].quantity %> </li>
+                                            <%total+=Number(ordersA[i].orders[j].food[0].price* ((ordersA[i].orders[j].quantity)))%>
+                                        <%}%>
+                                    </ul>
+                                </td>
+                                <td> <%= total %>  KM</td>
 
-                                        <% } %>
-                                </tr>
-                                <%}%>
-                                <% } %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card-footer clearfix">
-                        <a href="/admin/suppliers" class="btn btn-sm btn-secondary float-right">View All Suppliers</a>
-                    </div>
-
+                            </tr>
+                        <%}%>
+                        </tbody>
+                    </table>
                 </div>
-                <!-- TABLE: LATEST ORDERS -->
-                <div class="card">
-                    <div class="card-header border-transparent">
-                        <h3 class="card-title">Restaurants</h3>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table m-0">
-                                <thead>
-                                <tr>
-                                    <th>No:</th>
-                                    <th>Picture</th>
-                                    <th>Name</th>
-                                    <th>Address</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <% if (typeof RestaurantArray !== 'undefined' && RestaurantArray.length > 0) {%>
-                                    <%for (var i = 0; i < RestaurantArray.length; i++) { %>
-                                        <% if(RestaurantArray[i].status === true) {%>
-                                            <td><%= i+1 %></td>
-                                            <td><img src="../images/<%= RestaurantArray[i].image%>" style="width: 50px;"></td>
-                                            <td><%= RestaurantArray[i].name %></td>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Orders/Inactive</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table m-0">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Restaurant</th>
+                            <th>Restaurant Address</th>
+                            <th>Customer Address</th>
+                            <th>Items</th>
+                            <th>Price</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%for(let i=0;i<ordersN.length;i++){%>
+                            <tr>
+                                <td><%= i+1 %></td>
+                                <td><%= ordersN[i].restaurant[0].name%></td>
+                                <td><%= ordersN[i].restaurant[0].address%></td>
+                                <td><%= ordersN[i].customer.address %></td>
+                                <td><% let total=Number(0);%>
+                                    <ul class="list-group">
+                                        <% for(let j=0;j<ordersN[i].orders.length;j++){%>
+                                            <li><%= ordersN[i].orders[j].food[0].name%> : <%= ordersN[i].orders[j].quantity %> </li>
 
-                                            <td><%= RestaurantArray[i].address %></td>
-
-                                            <% if(RestaurantArray[i].status === true){%>
-                                                <td>Active</td>
-                                            <%} else {%>
-                                                <td>X</td>
-                                            <%}%>
-                                            <td class="project-actions text-right">
-                                                <a class="btn btn-primary btn-sm" href="/admin/restaurants/<%= RestaurantArray[i]._id%>">
-                                                    <i class="fa fa-folder">
-                                                    </i>
-                                                    View
-                                                </a>
-                                                <a class="btn btn-danger btn-sm" href="#">
-                                                    <i class="fa fa-trash">
-                                                    </i>
-                                                    Delete
-                                                </a>
-                                            </td>
+                                            <%total+=Number(ordersN[i].orders[j].food[0].price* ((ordersN[i].orders[j].quantity)))%>
+                                        <%}%>
+                                    </ul>
+                                </td>
+                                <td> <%= total %>  KM</td>
 
 
-                                        <% } %>
-                                </tr>
-                                <%}%>
-                                <% } %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card-footer clearfix">
-                        <a href="/admin/restaurants" class="btn btn-sm btn-secondary float-right">View All Restaurants</a>
-                    </div>
-
-                </div>
-
+                            </tr>
+                        <%}%>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

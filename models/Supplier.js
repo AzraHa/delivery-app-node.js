@@ -10,6 +10,7 @@ const SupplierSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  picture:{type:String},
   s_address:{
     type: String,
     required: true
@@ -22,6 +23,7 @@ const SupplierSchema = new mongoose.Schema({
   password:{
     type: String
   },
+
   restaurant: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }],
   date: {
     type: Date,

@@ -14,72 +14,64 @@
 
 <body>
 <main role="main">
-    <% include partials/navbar %>
+    <% include partials/navigation %>
     <div class="container-fluid">
-        <div class="row">
-            <%include partials/sidebar %>
-            <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
-                    <h1 class="h2">Dashboard</h1>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+            <h1 class="h2">Dashboard</h1>
+        </div>
+        <div class="card">
+            <div class="card-body" style="width: 100%;border-top: 1px solid orange;">
+                <div class="card-header">
+                    <h3 class="card-title">Order</h3>
                 </div>
-                <div class="card" style="border: 1px solid orange;">
-                    <div class="card-body" style="width: 100%;border-top: 1px solid orange;">
-                        <div class="card-header">
-                            <h3 class="card-title">Order: <%= order[0]._id %></h3>
-                        </div>
-                        <div class="container">
-                            <div class="container__image" style="width: 100%!important;">
-                                <label>Customer Name</label>
-                                <p class="form-control" ><%= order[0].customer.name%></p>
-                                <label>Customer Email</label>
-                                <p class="form-control"> <%= order[0].customer.email%></p>
-                                <label>Customer Address</label>
-                                <p class="form-control" style="height: 80px;"><%= order[0].customer.address%></p>
-                                <label>Customer Status</label>
-                                <%if(order[0].customer.status === 1){ %>
-                                    <p class="form-control">Active</p>
-                                <%}%>
-                            </div>
-                            <div class="container__image" style="width: 100%!important;">
-                                <label>Supplier Name</label>
-                                <p class="form-control" ><%= supplier.name%></p>
-                                <label>Supplier Email</label>
-                                <p class="form-control"> <%= supplier.email%></p>
-                                <label>Supplier Address</label>
-                                <p class="form-control"><%= supplier.s_address%></p>
-                                <label>Supplier Status</label>
-                                <%if(order[0].supplier.status === true){ %>
-                                    <p class="form-control">Active</p>
-                                <%}else{%>
-                                    <p class="form-control">Inactive</p>
-                                <%}%>
-                            </div>
-                        </div>
-                        <%for( let n=0;n<order.length;n++){%>
-                            <div class="container" >
-                                <% for(let j=0;j<order[n].orders.length;j++){%>
-                                    <div class="container__image">
-                                        <label>Order</label>
-                                        <p class="form-control" ><%= order[n].orders[j].food[0].name%></p>
-                                        <label>Quantity</label>
-                                        <p class="form-control"> <%= order[n].orders[j].quantity%></p>
-                                        <label>Price</label>
-                                        <p class="form-control"> <%= order[n].orders[j].food[0].price%></p>
-                                        <label>Total</label>
-                                        <%let total = 0;%>
-                                        <p class="form-control">
-                                            <%= total+=Number(order[n].orders[j].food[0].price*((order[n].orders[j].quantity)))%>
-                                        </p>
-                                    </div>
-                                <%}%>
-                            </div>
+                <form action="/supplier/order-confirm/<%= order._id%>" method="post">
+                <div class="container">
+                    <div class="container__image" style="width: 100%!important;">
+                        <label>Customer Name</label>
+                        <p class="form-control" ><%= order.customer.name%></p>
+                        <label>Customer Email</label>
+                        <p class="form-control"> <%= order.customer.email%></p>
+                        <label>Customer Address</label>
+                        <p class="form-control" style="height: 80px;"><%= order.customer.address%></p>
+                        <label>Customer Status</label>
+                        <%if(order.customer.status === 1){ %>
+                            <p class="form-control">Active</p>
                         <%}%>
-
-
-
-                        </div>
+                    </div>
+                    <div class="container__image" style="width: 100%!important;">
+                        <label>Restaurant</label>
+                        <p class="form-control" ><%= order.restaurant[0].name%></p>
+                        <label>Customer Email</label>
+                        <p class="form-control"> <%= order.restaurant[0].email%></p>
+                        <label>Customer Address</label>
+                        <p class="form-control" style="height: 80px;"><%= order.restaurant[0].address%></p>
                     </div>
                 </div>
+                <div class="container" >
+                    <% let totalPrice = 0;%>
+                    <% for(let j=0;j<order.orders.length;j++){%>
+                        <div class="container__image">
+                            <label>Order</label>
+                            <p class="form-control" ><%= order.orders[j].food[0].name%></p>
+                            <label>Quantity</label>
+                            <p class="form-control"> <%= order.orders[j].quantity%></p>
+                            <label>Price</label>
+                            <p class="form-control"> <%= order.orders[j].food[0].price%></p>
+                            <label>Total</label>
+                            <%let total = 0;%>
+                            <p class="form-control">
+                                <%= total+=Number(order.orders[j].food[0].price*((order.orders[j].quantity)))%>
+                            </p>
+                            <% totalPrice+=total%>
+                        </div>
+                    <%}%>
+                    <div class="container__image">
+                        <label>Total Price</label>
+                            <p class="form-control">Total Price : <%= totalPrice%> KM </p>
+                            <p class="project-actions text-right mt-3"><button type="submit" class="btn btn-success">Submit</button></p>
+                    </div>
+                </div>
+            </form>
             </div>
         </div>
     </div>
