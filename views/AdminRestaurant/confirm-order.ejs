@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+
+<body>
+<main role="main">
+    <% include partials/navbar %>
+    <div class="container-fluid">
+        <div class="row">
+            <%include partials/sidebar %>
+            <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
+                <div class="card" style="border: 1px solid orange;">
+                    <div class="card-body" style="width: 100%;border-top: 1px solid orange;">
+                        <div class="card-header">
+                            <h3 class="card-title">Order: <%= order[0]._id %></h3>
+                        </div>
+                        <div class="container">
+                            <div class="container__image" style="width: 100%!important;">
+                                <label>Customer Name</label>
+                                <p class="form-control" ><%= order[0].customer.name%></p>
+                                <label>Customer Email</label>
+                                <p class="form-control"> <%= order[0].customer.email%></p>
+                                <label>Customer Address</label>
+                                <p class="form-control" style="height: 80px;"><%= order[0].customer.address%></p>
+                                <label>Customer Status</label>
+                                <%if(order[0].customer.status === 1){ %>
+                                    <p class="form-control">Active</p>
+                                <%}%>
+                            </div>
+                            <div class="container__image" style="width: 100%!important;">
+                                <label>Supplier Name</label>
+                                <p class="form-control" ><%= supplier.name%></p>
+                                <label>Supplier Email</label>
+                                <p class="form-control"> <%= supplier.email%></p>
+                                <label>Supplier Address</label>
+                                <p class="form-control"><%= supplier.s_address%></p>
+                                <label>Supplier Status</label>
+                                <%if(order[0].supplier.status === true){ %>
+                                    <p class="form-control">Active</p>
+                                <%}else{%>
+                                    <p class="form-control">Inactive</p>
+                                <%}%>
+                            </div>
+                        </div>
+                        <%for( let n=0;n<order.length;n++){%>
+                            <div class="container" >
+                                <% for(let j=0;j<order[n].orders.length;j++){%>
+                                    <div class="container__image">
+                                        <label>Order</label>
+                                        <p class="form-control" ><%= order[n].orders[j].food[0].name%></p>
+                                        <label>Quantity</label>
+                                        <p class="form-control"> <%= order[n].orders[j].quantity%></p>
+                                        <label>Price</label>
+                                        <p class="form-control"> <%= order[n].orders[j].food[0].price%></p>
+                                        <label>Total</label>
+                                        <%let total = 0;%>
+                                        <p class="form-control">
+                                            <%= total+=Number(order[n].orders[j].food[0].price*((order[n].orders[j].quantity)))%>
+                                        </p>
+                                    </div>
+                                <%}%>
+                            </div>
+                        <%}%>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

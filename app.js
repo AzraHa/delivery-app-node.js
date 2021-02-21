@@ -24,6 +24,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
 var adminRestaurantRouter = require('./routes/adminRestaurant');
+var supplierRouter = require('./routes/supplier');
+
 
 mongoose.set('useFindAndModify', false); //DeprecationWarning: collection.findAndModify is deprecated.
 var app = express();
@@ -84,6 +86,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin',adminRouter);
 app.use('/adminRestaurant',adminRestaurantRouter);
+app.use('/supplier',supplierRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -17,13 +17,16 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+  koordinate:{type:String,required:true},
+  number:{type:Number,required:true},
     orders: [{ type: mongoose.Schema.Types.ObjectId, ref: "TotalOrder" }],
+    restaurants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }],
     date: {
         type: Date,
         default: Date.now
     },
     status:{
-        type: Boolean,
+        type: Number,
         required:true
     },
     modified:{

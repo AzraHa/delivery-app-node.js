@@ -44,7 +44,7 @@
                                 <%for(let i=0;i<orders.length;i++){%>
                                     <tr>
                                         <td><%= orders[i]._id%></td>
-                                        <td><%= orders[i].food[0].name%></td>
+                                        <td><%= orders[i].orders[0].food[0].name%></td>
                                         <td><%= orders[i].status %></td>
                                         <td><%= orders[i].supplier.name %></td>
                                         <td><%= orders[i].restaurant[0].name%></td>

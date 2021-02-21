@@ -41,23 +41,38 @@
                             <table class="table m-0">
                                 <thead>
                                 <tr>
-                                    <th>No :</th>
+                                    <th></th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Adress</th>
                                     <th>Last modified</th>
                                     <th>Status</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <% if (typeof customer !== 'undefined' && customer.length >= 0) {%>
-                                            <%for (var i = 0; i < customer.length; i++) { %>
+                                        <% if (typeof customers !== 'undefined' && customers.length > 0) {%>
+                                            <%for (var i = 0; i < customers.length; i++) { %>
                                                 <td><%= i+1 %> </td>
-                                                <td><%= customer[i].name %></td>
-                                                <td><%= customer[i].email %></td>
-                                                <td><%= customer[i].address %></td>
-                                                <td><%= customer[i].modified %></td>
+                                                <td><%= customers[i].name %></td>
+                                                <td><%= customers[i].email %></td>
+                                                <td><%= customers[i].address %></td>
+                                                <% let opis = ""+(customers[i].modified) %>
+                                                <td><%= opis.slice(4,25)%></td>
+                                                <%if(customers[i].status=== 1){%>
+                                                    <td>Active</td>
+                                                <%}else{%>
+                                                    <td>Inactive</td>
+                                                <%}%>
+                                            <td class="project-actions text-right">
+                                                <a class="btn btn-primary btn-sm" href="/adminRestaurant/customers/<%= customers[i]._id%>">
+                                                    <i class="fa fa-folder">
+                                                    </i>
+                                                    View
+                                                </a>
+
+                                            </td>
                                             <%}%>
                                         <% } %>
                                     </tr>

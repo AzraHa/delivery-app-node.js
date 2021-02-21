@@ -13,6 +13,8 @@ const Sale = require("../models/Sale");
 const moment = require('moment');
 const Order = require("../models/Order");
 const TotalOrder = require("../models/TotalOrder");
+const geolib = require('geolib');
+const {ObjectId} = require("bson");
 
 router.get('/',function (req,res,next){
   res.render('AdminRestaurant/login',{user:req.user});
@@ -302,9 +304,20 @@ router.post('/add-restaurant-admin',function (req,res,next){
 
 router.get('/customers',function (req,res,next){
   const restaurant = req.user.restaurant;
-  User.find({restaurant:restaurant},function(err,customer){
-    res.render('AdminRestaurant/customers',{user:req.user,customer:customer});
-  });
+  User.find({status:1,restaurants:restaurant},function(err,customers){
+    console.log(customers)
+      res.render('AdminRestaurant/customers',{user:req.user._id,customers:customers});
+    })
+});
+router.get('/customers/:id',function (req,res,next){
+  const user = req.params.id;
+  User.find({_id:user}).populate('orders').exec(function(err,customer){
+   Order.find({customer:user,restaurant:req.user.restaurant}).sort([['status', 'descending']]).populate('food').exec(function(err,totalOrder){
+     console.log(totalOrder);
+     res.render('AdminRestaurant/customer',{user:req.user._id,customer:customer,totalOrder:totalOrder});
+
+    })
+  })
 });
 router.get('/orders',function (req,res,next){
   Order.find().populate('restaurant').populate('user').populate('food').exec(function (err,orders){
@@ -315,10 +328,93 @@ router.get('/orders',function (req,res,next){
   })
 });
 router.get('/order-confirm',function (req,res,next){
-  res.render('AdminRestaurant/order-confirm',{user:req.user});
-});
-router.post('/order-confirm',function (req,res,next){
+  TotalOrder.find({restaurant:req.user.restaurant,status:2})
+    .populate([{
+      path: 'orders',
+      populate: {
+        path: 'food',
+        model: 'Food'
+      }
+    }])
+    .exec(function (err,orders){
+     // console.log(orders[0].orders[0])
+   // console.log(orders[0].orders[0].food[0].name)
+    res.render('AdminRestaurant/order-confirm',
+      {user:req.user,
+        orders:orders});
 
+  })
+
+});
+router.get('/order-confirm/:id',function (req,res,next) {
+  let dostavljacID = [];
+  let najmanja = 100000000000;
+  Restaurant.findOne({_id:req.user.restaurant},function(err,restaurant){
+    const adresa = restaurant.koordinate.replace("(","").replace(")","");
+    const nova = adresa.split(",");
+    let RestoranLatitude = parseFloat(nova[0]);
+    let RestoranLongitude = parseFloat(nova[1]);
+    console.log("LATR :"+RestoranLatitude+" LONGR: "+RestoranLongitude);
+    Supplier.find({restaurant:req.user.restaurant,status:1},function(err,suppliers){
+        /*Trazi najmanju udaljenost između dostavljača i restorana
+        for(let s=0;s<suppliers.length;s++){
+          const adres = suppliers[s].koordinate.replace("(","").replace(")","");
+          const nova = adres.split(",");
+          var latitude1 = parseFloat(nova[0]);
+          var longitude1 = parseFloat(nova[1]);
+          var minimalna = geolib.getDistance( { latitude: latitude1, longitude:longitude1},
+            { latitude: RestoranLatitude, longitude: RestoranLongitude },accuracy = 1);
+          console.log("MINIMALNA: "+minimalna)
+          if(minimalna<najmanja){
+            najmanja = minimalna;
+            dostavljacID.push(ObjectId(suppliers[s]._id));
+          }
+          console.log("NAJMANJA"+najmanja);
+          console.log(dostavljacID, typeof dostavljacID);
+        }*/
+      TotalOrder.find({_id: req.params.id})
+        .populate([{
+          path: 'orders',
+          populate: {
+            path: 'food',
+            model: 'Food'
+          }
+        }]).populate('customer')
+        .exec(function (err, order) {
+          Supplier.findOne({_id:dostavljacID},function (err,supplier){
+            console.log("supplier"+supplier)
+            res.render('AdminRestaurant/confirm-order',
+              {
+                user: req.user,
+                order: order,
+                supplier:supplier
+              });
+          });
+        });
+    })
+  });
+
+  /*TotalOrder.find({_id: req.params.id})
+    .populate([{
+      path: 'orders',
+      populate: {
+        path: 'food',
+        model: 'Food'
+      }
+    }]).populate('customer')
+    .exec(function (err, order) {
+
+      res.render('AdminRestaurant/confirm-order',
+        {
+          user: req.user,
+          order: order
+        });
+    });*/
+});
+router.post('/order-confirm/:id',function (req,res,next){
+
+
+ /* geolib.getDistance(start, end, accuracy = 1)*/
 });
 router.get('/assign-order',function (req,res,next){
   res.render('AdminRestaurant/admin',{user:req.user});

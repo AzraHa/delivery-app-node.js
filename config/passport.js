@@ -7,6 +7,7 @@ const Admin = require('../models/Admin');
 
 const RestaurantAdmin = require('../models/RestaurantAdmin');
 const passportJWT = require("passport-jwt");
+const Supplier = require("../models/Supplier");
 const JWTStrategy   = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 
@@ -68,6 +69,28 @@ module.exports = function(passport) {
           return done(null, false, { message: 'That email is not registered' });
         }
 
+        // Match password
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+          if (err) throw err;
+          if (isMatch) {
+            return done(null, user);
+          } else {
+            return done(null, false, { message: 'Password incorrect' });
+          }
+        });
+      });
+    })
+  );
+  passport.use('supplier',
+    new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+      // Match user
+      Supplier.findOne({
+        email: email,
+        status: true
+      }).then(user => {
+        if (!user) {
+          return done(null, false, { message: 'That email is not registered' });
+        }
         // Match password
         bcrypt.compare(password, user.password, (err, isMatch) => {
           if (err) throw err;

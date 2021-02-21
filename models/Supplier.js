@@ -18,6 +18,7 @@ const SupplierSchema = new mongoose.Schema({
     type:String,
     required:true
   },
+  orders:[{ type: mongoose.Schema.Types.ObjectId, ref: "TotalOrder" }],
   password:{
     type: String
   },
@@ -27,7 +28,7 @@ const SupplierSchema = new mongoose.Schema({
     default: Date.now
   },
   status:{
-    type: Boolean,
+    type: Number,
     required:true
   },
   modified:{
