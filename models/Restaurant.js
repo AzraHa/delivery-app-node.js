@@ -22,7 +22,7 @@ const RestaurantSchema = new mongoose.Schema({
   image:{
     type: String
   },
-
+  distance:{type:Number},
   food: [{ type: mongoose.Schema.Types.ObjectId, ref: "Food"}],
   date: {
     type: Date,

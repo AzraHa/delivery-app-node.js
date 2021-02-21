@@ -142,27 +142,16 @@ module.exports.find_restaurant_admin = (req,res,next) => {
 }
 
 module.exports.find_suppliers = (req,res,next) => {
-
-  Supplier.find({})//sve restorane sa suppliers
-    .populate('restaurant') // only works if we pushed refs to person.eventsAttended
+  Supplier.find({})
+    .populate('restaurant')
     .exec(function(err, person) {
       console.log(person);
       if (err) console.log(err);
       res.render('admin/suppliers', {
         user: req.user,
-        suppliersArray: person
+        suppliers: person
       });
     });
-  /*Restaurant
-    .findOne({ name: 'Baze' })
-    .populate('suppliers') // only works if we pushed refs to person.eventsAttended
-    .exec(function(err, person) {
-      if (err) console.log(err);
-      console.log("res"+person);
-    });*/
-  /*Restaurant.find ({ '_id': '5ffb541d3f81fb13e0591dea'}).populate ('suppliers').exec (function (err, surveys) {
-    return res.json (surveys);
-  });*/
 }
 
 module.exports.delete_customers = (req,res,next) => {

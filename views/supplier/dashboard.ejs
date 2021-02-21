@@ -35,34 +35,39 @@
                                 <th>Customer Address</th>
                                 <th>Items</th>
                                 <th>Price</th>
+                                <th>Date</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                        <%for(let i=0;i<orders.length;i++){%>
-                            <tr>
-                                <td><%= i+1 %></td>
-                                <td><%= orders[i].restaurant[0].name%></td>
-                                <td><%= orders[i].restaurant[0].address%></td>
-                                <td><%= orders[i].customer.address %></td>
-                                <td><% let total=Number(0);%>
-                                    <ul class="list-group">
-                                        <% for(let j=0;j<ordersN[i].orders.length;j++){%>
-                                            <li><%= ordersN[i].orders[j].food[0].name%> : <%= ordersN[i].orders[j].quantity %> </li>
 
-                                            <%total+=Number(ordersN[i].orders[j].food[0].price* ((ordersN[i].orders[j].quantity)))%>
-                                        <%}%>
-                                    </ul>
-                                </td>
-                                <td> <%= total %>  KM</td>
-                                <td class="project-actions ">
-                                    <a class="btn btn-primary btn-sm" href="/supplier/order-confirm/<%=orders[i]._id%>">
-                                        <i class="fa fa-folder">
-                                        </i>
-                                        View/Confirm
-                                    </a>
-                                </td>
-                            </tr>
+                        <% if (typeof orders !== 'undefined' && orders.length > 0) {%>
+                            <%for(let i=0;i<orders.length;i++){%>
+                                <tr>
+                                    <td><%= i+1 %></td>
+                                    <td><%= orders[i].restaurant[0].name%></td>
+                                    <td><%= orders[i].restaurant[0].address%></td>
+                                    <td><%= orders[i].customer.address %></td>
+                                    <td><% let total=Number(0);%>
+                                        <ul class="list-group">
+                                            <% for(let j=0;j<orders[i].orders.length;j++){%>
+                                                <li><%= orders[i].orders[j].food[0].name%> : <%= orders[i].orders[j].quantity %> </li>
+
+                                                <%total+=Number(orders[i].orders[j].food[0].price* ((orders[i].orders[j].quantity)))%>
+                                            <%}%>
+                                        </ul>
+                                    </td>
+                                    <td> <%= total %>  KM</td>
+                                    <td><%= orders[i].date %></td>
+                                    <td class="project-actions ">
+                                        <a class="btn btn-primary btn-sm" href="/supplier/order-confirm/<%=orders[i]._id%>">
+                                            <i class="fa fa-folder">
+                                            </i>
+                                            View/Confirm
+                                        </a>
+                                    </td>
+                                </tr>
+                            <%}%>
                         <%}%>
                         </tbody>
                     </table>
@@ -84,27 +89,36 @@
                             <th>Customer Address</th>
                             <th>Items</th>
                             <th>Price</th>
+                            <th>Date</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <%for(let i=0;i<ordersA.length;i++){%>
-                            <tr>
-                                <td><%= i+1 %></td>
-                                <td><%= ordersA[i].restaurant[0].name%></td>
-                                <td><%= ordersA[i].restaurant[0].address%></td>
-                                <td><%= ordersA[i].customer.address %></td>
-                                <td><% let total=Number(0);%>
-                                    <ul class="list-group">
-                                        <% for(let j=0;j<ordersA[i].orders.length;j++){%>
-                                            <li><%= ordersA[i].orders[j].food[0].name%> : <%= ordersA[i].orders[j].quantity %> </li>
-                                            <%total+=Number(ordersA[i].orders[j].food[0].price* ((ordersA[i].orders[j].quantity)))%>
-                                        <%}%>
-                                    </ul>
-                                </td>
-                                <td> <%= total %>  KM</td>
+                        <% if (typeof ordersA !== 'undefined' && ordersA.length > 0) {%>
+                            <%for(let i=0;i<ordersA.length;i++){%>
+                                    <tr id="<%=ordersA[i]._id%>">
+                                        <td><%= i+1 %></td>
+                                        <td><%= ordersA[i].restaurant[0].name%></td>
+                                        <td><%= ordersA[i].restaurant[0].address%></td>
+                                        <td><%= ordersA[i].customer.address %></td>
+                                        <td><% let total=Number(0);%>
+                                            <ul class="list-group">
+                                                <% for(let j=0;j<ordersA[i].orders.length;j++){%>
+                                                    <li><%= ordersA[i].orders[j].food[0].name%> : <%= ordersA[i].orders[j].quantity %> </li>
+                                                    <%total+=Number(ordersA[i].orders[j].food[0].price* ((ordersA[i].orders[j].quantity)))%>
+                                                <%}%>
+                                            </ul>
+                                        </td>
+                                        <td> <%= total %>  KM</td>
+                                        <td><%= ordersA[i].date%></td>
+                                        <td class="project-actions ">
+                                            <a class="btn btn-primary btn-sm" onclick="endOrder('<%=ordersA[i]._id%>')" >
+                                                End order
+                                            </a>
+                                        </td>
 
-                            </tr>
+                                    </tr>
+                                <%}%>
                         <%}%>
                         </tbody>
                     </table>
@@ -126,29 +140,31 @@
                             <th>Customer Address</th>
                             <th>Items</th>
                             <th>Price</th>
+                            <th>Date</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <%for(let i=0;i<ordersN.length;i++){%>
-                            <tr>
-                                <td><%= i+1 %></td>
-                                <td><%= ordersN[i].restaurant[0].name%></td>
-                                <td><%= ordersN[i].restaurant[0].address%></td>
-                                <td><%= ordersN[i].customer.address %></td>
-                                <td><% let total=Number(0);%>
-                                    <ul class="list-group">
-                                        <% for(let j=0;j<ordersN[i].orders.length;j++){%>
-                                            <li><%= ordersN[i].orders[j].food[0].name%> : <%= ordersN[i].orders[j].quantity %> </li>
+                        <% if (typeof ordersN !== 'undefined' && ordersN.length > 0) {%>
+                            <%for(let i=0;i<ordersN.length;i++){%>
+                                <tr>
+                                    <td><%= i+1 %></td>
+                                    <td><%= ordersN[i].restaurant[0].name%></td>
+                                    <td><%= ordersN[i].restaurant[0].address%></td>
+                                    <td><%= ordersN[i].customer.address %></td>
+                                    <td><% let total=Number(0);%>
+                                        <ul class="list-group">
+                                            <% for(let j=0;j<ordersN[i].orders.length;j++){%>
+                                                <li><%= ordersN[i].orders[j].food[0].name%> : <%= ordersN[i].orders[j].quantity %> </li>
 
-                                            <%total+=Number(ordersN[i].orders[j].food[0].price* ((ordersN[i].orders[j].quantity)))%>
-                                        <%}%>
-                                    </ul>
-                                </td>
-                                <td> <%= total %>  KM</td>
-
-
-                            </tr>
+                                                <%total+=Number(ordersN[i].orders[j].food[0].price* ((ordersN[i].orders[j].quantity)))%>
+                                            <%}%>
+                                        </ul>
+                                    </td>
+                                    <td> <%= total %>  KM</td>
+                                    <td><%=ordersN[i].date %></td>
+                                </tr>
+                            <%}%>
                         <%}%>
                         </tbody>
                     </table>
@@ -157,5 +173,19 @@
         </div>
     </div>
 </main>
+<script>
+    function endOrder(id){
+        $.ajax({
+            url:"/supplier/active-order/"+id,
+            method: "POST",
+            success: function(data){
+                setTimeout(function(){// wait for 5 secs(2)
+                    $('#'+id+'').remove();
+                    location.reload(); // then reload the page.(3)
+                }, 50);
+            }
+        });
+    }
+</script>
 </body>
 </html>

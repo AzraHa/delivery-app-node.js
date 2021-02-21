@@ -85,10 +85,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+
                                     <% if (typeof suppliersArray !== 'undefined' && suppliersArray.length > 0) {%>
                                     <%for (var i = 0; i < suppliersArray.length; i++) { %>
-                                        <% if(suppliersArray[i].status === true) {%>
+                                        <tr>
                                             <td><%= i+1 %> </td>
                                             <td><%= suppliersArray[i].name %></td>
                                             <td><%= suppliersArray[i].email %></td>
@@ -117,7 +117,7 @@
                                                 </a>
                                             </td>
 
-                                        <% } %>
+
                                 </tr>
                                 <%}%>
                                 <% } %>

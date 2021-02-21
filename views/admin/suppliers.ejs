@@ -3,13 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard</title>
+    <title>Suppliers</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- Custom styles for this template -->
     <link href="/stylesheets/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Fontawesome-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
+
 <body>
 <main role="main">
     <% include partials/navbar %>
@@ -17,71 +19,67 @@
         <div class="row">
             <%include partials/sidebar %>
             <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3">
                     <h1 class="h2">Dashboard</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group mr-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                            <span data-feather="calendar"></span>
+                            This week
+                        </button>
+                    </div>
                 </div>
-                <div class="card" style="border: 1px solid orange;">
+                <!-- TABLE: LATEST ORDERS -->
+                <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Suppliers</h3>
                     </div>
-                    <!-- /.card-header -->
-                    <div class="card-body" style="border: 1px solid orange;">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Restaurant</th>
-                                <th>Address</th>
-                                <th>Status</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                <tr>
+                                    <th>No :</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Adress</th>
+                                    <th>Last modified</th>
+                                    <th>Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% if (typeof suppliers !== 'undefined' && suppliers.length >= 0) {%>
+                                <%for (var i = 0; i < suppliers.length; i++) { %>
+                                <tr id="<%=suppliers[i]._id%>">
+                                    <td><%= i+1 %> </td>
+                                    <td><%= suppliers[i].name %></td>
+                                    <td><%= suppliers[i].email %></td>
+                                    <td><%= suppliers[i].s_address %></td>
+                                    <td><%= suppliers[i].modified %></td>
+                                    <td class="project-actions text-right">
+                                        <a class="btn btn-primary btn-sm" href="/admin/suppliers/<%= suppliers[i]._id%>">
+                                            <i class="fa fa-folder">
+                                            </i>
+                                            View
+                                        </a>
+                                        <a class="btn btn-danger btn-sm" onclick="deleteSupplier('<%= suppliers[i]._id%>')">
+                                            <i class="fa fa-trash">
+                                            </i>
+                                            Delete
+                                        </a>
+                                    </td>
 
-                                <% if (typeof suppliersArray !== 'undefined' && suppliersArray.length > 0) {%>
-                                <%for (var i = 0; i < suppliersArray.length; i++) { %>
-                                    <tr id="<%= suppliersArray[i]._id%>">
-                                    <% if(suppliersArray[i].status === true) {%>
-                                        <td><%= suppliersArray[i].name %></td>
-                                        <td><%= suppliersArray[i].email %></td>
-                                        <td>
-                                            <ul class="list-group">
-                                                <%for(let j=0;j<suppliersArray[i].restaurant.length;j++){%>
-                                                    <a href="/admin/restaurants/<%= suppliersArray[i].restaurant[j]._id%>"><li class="list-group-item"><%= suppliersArray[i].restaurant[j].name %></li></a>
-                                                <%}%>
-                                            </ul>
-                                        </td>
-                                        <td><%= suppliersArray[i].s_address %></td>
-                                        <% if(suppliersArray[i].status === true){%>
-                                            <td>Active</td>
-                                        <%} else {%>
-                                            <td>X</td>
-                                        <%}%>
-                                        <td class="project-actions text-right">
-                                            <a class="btn btn-primary btn-sm" href="/admin/suppliers/<%= suppliersArray[i]._id%>">
-                                                <i class="fa fa-folder">
-                                                </i>
-                                                View
-                                            </a>
-                                            <a class="btn btn-danger btn-sm" onclick="deleteSupplier('<%= suppliersArray[i]._id%>')">
-                                                <i class="fa fa-trash">
-                                                </i>
-                                                Delete
-                                            </a>
-                                        </td>
-
-                                    <% } %>
-                            </tr>
-                            <%}%>
-                            <% } %>
-                            </tbody>
-
-                        </table>
+                                </tr>
+                                <%}%>
+                                <% } %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
             </div>
         </div>
     </div>

@@ -2,15 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/views/supplier/profile.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/passport.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/passport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Supplier.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/adminControllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/adminControllers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Restaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Restaurant.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/supplier.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/supplier/confirm-order.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/supplier/confirm-order.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/add-restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/add-restaurant.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/admin-restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/admin-restaurant.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/food.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/food.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/foodedit.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/foodedit.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/order.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/order.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/orders.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/orders.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurant.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/restaurants.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurants.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/supplier.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/supplier.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/suppliers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/suppliers.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/user.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/user.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/supplier/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/supplier/dashboard.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/supplier/partials/navigation.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/supplier/partials/navigation.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/supplier/partials/sidebar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/supplier/partials/sidebar.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,6 +170,7 @@
       <workItem from="1613833147132" duration="4871000" />
       <workItem from="1613893714987" duration="20197000" />
       <workItem from="1613915906762" duration="6739000" />
+      <workItem from="1613941581547" duration="7954000" />
     </task>
     <servers />
   </component>

@@ -24,13 +24,13 @@ router.get('/dashboard',function (req,res,next) {
   /*Orders.find({}).select({"price"}).sort({"price" : -1}).limit(1).exec(function(err, doc){
       let max_price = doc[0].price;
     });*/
-  TotalOrder.find({})//sve restorane sa suppliers
-    .populate('restaurant').populate('customer')
+  TotalOrder.find({})
+    .populate('restaurant').populate('customer').limit(4)
     .exec(function (err, doc) {
-      Supplier.find({})//sve restorane sa suppliers
-        .populate('restaurant').populate('customer')
+      Supplier.find({})
+        .populate('restaurant').populate('customer').limit(4)
         .exec(function (err, supplier) {
-          Restaurant.find({status: true}, function (err, Restaurant) {
+          Restaurant.find({status: true}).limit(4). exec(function (err, Restaurant) {
             res.render('admin/dashboard', {
               user: req.user,
               order: doc,
@@ -168,7 +168,7 @@ router.post('/food/:id',upload.single('picture'),function (req,res,next) {
   const {name, type, price, restaurant, picture} = req.body;
   //const image = req.file.filename;
   const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
-  console.log("name: " + name + " type: " + type + " price: " + price + " restaurant: " + restaurant + " picture " );
+  //console.log("name: " + name + " type: " + type + " price: " + price + " restaurant: " + restaurant + " picture " );
   if (!req.file) {
     Food.updateOne({_id: req.params.id},
       {
@@ -211,7 +211,7 @@ router.get('/add-restaurant',function (req,res,next){
 
 router.post('/add-restaurant',upload.single('picture'),function (req,res,next){
 
-  const {name, email, address,koordinate} = req.body;
+  const {name, email, address,koordinate,distance} = req.body;
   const image = req.file.filename;
   console.log('photo '+image);
   let errors = [];
@@ -223,11 +223,12 @@ router.post('/add-restaurant',upload.single('picture'),function (req,res,next){
         errors,
         name,
         email,
-        address
+        address,
+        distance
       });
     } else {
       const newRestaurant = new Restaurant({
-        name, email, address,email,image,status,koordinate
+        name, email, address,email,image,status,koordinate,distance
       });
       console.log(newRestaurant);
       newRestaurant
@@ -385,7 +386,7 @@ router.get('/restaurants/:id',function(req,res,next){
       .exec(function(err, rest) {
         //console.log(rest);
         if (err) console.log(err);
-        Supplier.find({status:true,restaurant:rest_id},function (err,supplier){
+        Supplier.find({restaurant:rest_id},function (err,supplier){
           if (err)
             return done(err);
           if (supplier) {
@@ -437,10 +438,9 @@ router.post('/restaurants/:id',upload.single('picture'),function(req,res,next){
 });
 
 router.get('/orders',function (req,res,next) {
-  TotalOrder.find({})//sve restorane sa suppliers
-    .populate('restaurant').populate('customer')
+  TotalOrder.find({})
+    .populate('restaurant').populate('customer').populate('supplier')
     .exec(function (err, doc) {
-      //console.log(doc);
       res.render('admin/orders', {
         user: req.user,
         order: doc

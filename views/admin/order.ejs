@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard</title>
+    <title>Order</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- Custom styles for this template -->
     <link href="/stylesheets/style.css" rel="stylesheet">
@@ -36,7 +36,7 @@
                                 <label>Customer Address</label>
                                 <p class="form-control"><%= order[0].customer.address%></p>
                                 <label>Customer Status</label>
-                                <%if(order[0].customer.status === true){ %>
+                                <%if(order[0].customer.status === 1){ %>
                                     <p class="form-control">Active</p>
                                 <%}%>
                             </div>

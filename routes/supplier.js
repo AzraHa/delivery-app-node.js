@@ -6,6 +6,7 @@ const passport = require('passport');
 const moment = require('moment');
 const jwt = require("jsonwebtoken");
 const upload = require('../controllers/uploadController');
+const nodemailer = require('nodemailer');
 
 const router = express.Router();
 
@@ -50,7 +51,7 @@ router.get('/dashboard',function (req,res,next){
       }]).populate('customer').populate('restaurant').
       exec(function(err,ordersN) {
         //Narudzbe u toku
-      TotalOrder.find({status: 5,supplier:req.user._id}).populate([{
+      TotalOrder.find({status: 3,supplier:req.user._id}).populate([{
         path: 'orders',
         populate: {
           path: 'food',
@@ -95,9 +96,40 @@ router.post('/order-confirm/:id',function (req,res,next){
   TotalOrder.updateOne({ _id: req.params.id},  {
       status: 3
     },
-    function (error, success) {
+    {new: true,upsert: true}).populate({path:'restaurant', model: 'Restaurant' }).exec(function(err,doc) {
+    if (err) {
+      console.log("Something wrong when updating data!");
+    }
+    Supplier.findOne({_id: req.user._id}).populate({
+      path: 'restaurant',
+      model: 'Restaurant'
+    }).exec(function (err, supplier) {
+      const restaurantEmail = (supplier.restaurant[0].email)
+      //nodemailer sa w3schools :)
+      var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'nodeprojekat@gmail.com',
+          pass: 'node1234'
+        }
+      });
+      var mailOptions = {
+        from: supplier.email,
+        to: restaurantEmail,
+        subject: 'Order Confirmed',
+        text: 'I '+supplier.name +' confirm the order ' + req.params.id
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
       res.redirect('/supplier/dashboard');
     });
+  });
 });
 router.get('/profile',function(req,res,next){
   Supplier.findOne({_id:req.user._id},function(err,supplier){
@@ -105,6 +137,39 @@ router.get('/profile',function(req,res,next){
       {user:req.user,
       supplier:supplier})
   })
+});
+router.post('/active-order/:id',function(req,res,next){
+  TotalOrder.findOneAndUpdate({_id:req.params.id},{status:5},{new:true},function(err,supplier) {
+    Supplier.findOne({_id: req.user._id}).populate({
+      path: 'restaurant',
+      model: 'Restaurant'
+    }).exec(function (err, supplier) {
+      const restaurantEmail = (supplier.restaurant[0].email)
+      //nodemailer sa w3schools :)
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'nodeprojekat@gmail.com',
+          pass: 'node1234'
+        }
+      });
+      const mailOptions = {
+        from: supplier.email,
+        to: restaurantEmail,
+        subject: 'Order Delivered',
+        text: 'I ' + supplier.name + ' delivered the order ' + req.params.id
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+      res.redirect('/supplier/dashboard');
+    })
+  });
 });
 router.post('/profile',upload.single('picture'),async function (req,res,next){
   let {name, address, email, password,supplierID} = req.body;
