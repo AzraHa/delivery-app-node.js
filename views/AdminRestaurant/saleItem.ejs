@@ -48,21 +48,9 @@
                                             </div>
                                             <div class="container__text">
                                                 <label>Name</label>
-                                                <input type="text"
-                                                       id="name"
-                                                       name="name"
-                                                       class="form-control"
-                                                       placeholder="Name"
-                                                       value="<%= sale[i].name %>">
+                                                <input type="hidden" name="food" value="<%=sale[i].food._id%>">
+                                                <p id="name" name="name" class="form-control" placeholder="Name" style="border: 1px solid #F9723D"><%= sale[i].food.name %></p>
                                                     <label>Type</label>
-                                                    <select id="type"  name="type" class="form-control select2" style="width: 100%;">
-                                                    <option name="type" value="<%= sale[i].type._id%>"><%= sale[i].type.name%></option>
-                                                    <% if (typeof FoodTypeArray !== 'undefined' && FoodTypeArray.length > 0) {%>
-                                                    <%for (var j = 0; j < FoodTypeArray.length; j++) { %>
-                                                        <option  name ="type" value="<%= FoodTypeArray[j]._id%>"><%= FoodTypeArray[j].name %></option>
-                                                    <%}%>
-                                                    <%}%>
-                                                    </select>
                                                     <label>Date From</label>
                                                     <input type="date"
                                                            id="date_from"
@@ -86,7 +74,7 @@
                                                    placeholder="Price"
                                                    value="<%= sale[i].salePrice%>">
                                                 <label>Status</label>
-                                            <input type="text"
+                                                <input type="text"
                                                    id="status"
                                                    name="status"
                                                    class="form-control"

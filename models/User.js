@@ -19,6 +19,7 @@ const UserSchema = new mongoose.Schema({
     },
   koordinate:{type:String,required:true},
   number:{type:Number,required:true},
+  picture:{type:String},
     orders: [{ type: mongoose.Schema.Types.ObjectId, ref: "TotalOrder" }],
     restaurants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }],
     date: {

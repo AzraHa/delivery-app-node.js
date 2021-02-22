@@ -2,17 +2,116 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/views/search.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/user/foodType.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/user/profile.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/user/sale.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/userController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Supplier.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/adminControllers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/userController.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/FoodType.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/FoodType.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Restaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Restaurant.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/RestaurantType.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Sale.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Sale.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/TotalOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/TotalOrder.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/nodemon" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/nodemon" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/nodemon.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/nodemon.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/binary-extensions/binary-extensions.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/binary-extensions/binary-extensions.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/binary-extensions/binary-extensions.json.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/binary-extensions/binary-extensions.json.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/binary-extensions/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/binary-extensions/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/binary-extensions/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/binary-extensions/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/binary-extensions/license" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/binary-extensions/license" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/binary-extensions/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/binary-extensions/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/binary-extensions/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/binary-extensions/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chokidar/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/chokidar/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chokidar/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/chokidar/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chokidar/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/chokidar/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chokidar/lib/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/chokidar/lib/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chokidar/lib/fsevents-handler.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/chokidar/lib/fsevents-handler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chokidar/lib/nodefs-handler.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/chokidar/lib/nodefs-handler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chokidar/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/chokidar/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/chokidar/types/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/chokidar/types/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/.jshintrc" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/.jshintrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/.travis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/bin/nodemon.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/bin/nodemon.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/bin/postinstall.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/bin/postinstall.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/commitlint.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/commitlint.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/authors.txt" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/authors.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/config.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/help.txt" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/help.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/logo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/logo.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/options.txt" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/options.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/topics.txt" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/topics.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/usage.txt" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/usage.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/whoami.txt" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/doc/cli/whoami.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/cli/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/cli/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/cli/parse.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/cli/parse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/config/command.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/config/command.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/config/defaults.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/config/defaults.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/config/exec.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/config/exec.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/config/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/config/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/config/load.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/config/load.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/help/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/help/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/monitor/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/monitor/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/monitor/match.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/monitor/match.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/monitor/run.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/monitor/run.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/monitor/signals.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/monitor/signals.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/monitor/watch.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/monitor/watch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/nodemon.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/nodemon.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/rules/add.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/rules/add.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/rules/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/rules/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/rules/parse.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/rules/parse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/spawn.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/spawn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/utils/bus.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/utils/bus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/utils/clone.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/utils/clone.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/utils/colour.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/utils/colour.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/utils/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/utils/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/utils/log.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/utils/log.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/utils/merge.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/utils/merge.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/lib/version.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/lib/version.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/nodemon/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/nodemon/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/stylesheets/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/adminRestaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/adminRestaurant.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/map.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/supplier.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/dashboard.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/login.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/register.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/register.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/supplier/confirm-order.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/supplier/confirm-order.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/add-sale.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/add-sale.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/confirm-order.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/confirm-order.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/login.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/order-confirm.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/order-confirm.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/orders.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/orders.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/sale.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/sale.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/saleItem.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/saleItem.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/suppliers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/suppliers.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/add-restaurant-admin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/add-restaurant-admin.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/add-restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/add-restaurant.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/add-suppliers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/add-suppliers.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/login.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/order.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/order.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/partials/sidebar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/partials/sidebar.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/register.ejs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/indeks.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/indeks.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/index.ejs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/layout.ejs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/login.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/map.ejs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/partials/footer.ejs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/partials/navigation.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/partials/navigation.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/register.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/register.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/restaurant.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/search.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/search.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/signup.ejs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/supplier/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/supplier/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/supplier/partials/messages.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/partials/messages.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/welcome.ejs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +162,12 @@
       <recent name="C:\Users\USER\WebstormProjects\projekat\views\supplier\partials" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views\AdminRestaurant" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views\admin" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\USER\WebstormProjects\projekat\views\partials" />
+      <recent name="C:\Users\USER\WebstormProjects\projekat\views" />
+      <recent name="C:\Users\USER\WebstormProjects\projekat\views\user\partials" />
+      <recent name="C:\Users\USER\WebstormProjects\projekat\views\user" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -164,7 +269,7 @@
       <workItem from="1613893714987" duration="20197000" />
       <workItem from="1613915906762" duration="6739000" />
       <workItem from="1613941581547" duration="7954000" />
-      <workItem from="1613981770346" duration="7442000" />
+      <workItem from="1613981770346" duration="30219000" />
     </task>
     <servers />
   </component>

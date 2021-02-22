@@ -1,10 +1,7 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 const SaleSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
+    food:  { type: mongoose.Schema.Types.ObjectId, ref: "Food" },
     date_from:{
         type:String,
         required:true
@@ -22,7 +19,6 @@ const SaleSchema = new mongoose.Schema({
     },
     restaurant: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" },
     food: { type: mongoose.Schema.Types.ObjectId, ref: "Food" },
-    type: { type: mongoose.Schema.Types.ObjectId, ref: "FoodType" },
     date: {
         type: Date,
         default: Date.now

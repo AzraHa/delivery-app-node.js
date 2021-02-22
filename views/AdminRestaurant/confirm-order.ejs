@@ -24,6 +24,7 @@
                 </div>
                 <div class="card" style="border: 1px solid orange;">
                     <div class="card-body" style="width: 100%;border-top: 1px solid orange;">
+                        <form method="post" action="/adminRestaurant/order-confirm/<%= order[0]._id %>">
                         <div class="card-header">
                             <h3 class="card-title">Order: <%= order[0]._id %></h3>
                         </div>
@@ -40,20 +41,21 @@
                                     <p class="form-control">Active</p>
                                 <%}%>
                             </div>
-                            <div class="container__image" style="width: 100%!important;">
-                                <label>Supplier Name</label>
-                                <p class="form-control" ><%= supplier.name%></p>
-                                <label>Supplier Email</label>
-                                <p class="form-control"> <%= supplier.email%></p>
-                                <label>Supplier Address</label>
-                                <p class="form-control"><%= supplier.s_address%></p>
-                                <label>Supplier Status</label>
-                                <%if(order[0].supplier.status === true){ %>
-                                    <p class="form-control">Active</p>
-                                <%}else{%>
-                                    <p class="form-control">Inactive</p>
-                                <%}%>
-                            </div>
+                            <%if(typeof supplier !== "undefined"){%>
+                                <div class="container__image" style="width: 100%!important;">
+                                    <label>Customer Name</label>
+                                    <input type="hidden" value="<%= supplier._id%>" name="supplier">
+                                    <p class="form-control" ><%= supplier.name%></p>
+                                    <label>Customer Email</label>
+                                    <p class="form-control"> <%= supplier.email%></p>
+                                    <label>Customer Address</label>
+                                    <p class="form-control" style="height: 80px;"><%= supplier.s_address%></p>
+                                    <label>Customer Status</label>
+                                    <%if(supplier.status === 2){ %>
+                                        <p class="form-control">Wait to confirm order</p>
+                                    <%}%>
+                                </div>
+                            <%}%>
                         </div>
                         <%for( let n=0;n<order.length;n++){%>
                             <div class="container" >
@@ -74,9 +76,11 @@
                                 <%}%>
                             </div>
                         <%}%>
+                            <p class="project-actions text-right mt-3">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </p>
 
-
-
+                        </form>
                         </div>
                     </div>
                 </div>

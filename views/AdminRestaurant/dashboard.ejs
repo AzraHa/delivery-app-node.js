@@ -45,9 +45,9 @@
                                 <%for(let i=0;i<order.length;i++){%>
                                     <tr>
                                         <td><%= i+1 %></td>
-                                        <td><a href="/adminRestaurant/orders/<%= order[i]._id %>"><%=order[i]._id %></a></td>
+                                        <td><%=order[i]._id %></td>
                                         <td><span class="badge badge-success"><%= order[i].status %></span></td>
-                                        <td><%= order[i].supplier %></td>
+                                        <td><%= order[i].supplier[0].name %></td>
                                         <td><%= order[i].customer.name %></td>
                                     </tr>
                                 <%}%>
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div class="card-footer clearfix">
-                        <a href="/admin/orders" class="btn btn-sm btn-secondary float-right">View All Orders</a>
+                        <a href="/adminRestaurant/orders" class="btn btn-sm btn-secondary float-right">View All Orders</a>
                     </div>
                 </div>
             </div>

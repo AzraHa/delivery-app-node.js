@@ -2,22 +2,29 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
+    <% if (!req.user) {%>
+        <li><a href='login.ejs'>Login</a></li>
+        <li><a href='register.ejs'>Register</a></li>
+    <% } %>
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#"><%= user.name %></a>
+                <a class="nav-link" href="/users/profile"><%= user.name %></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/users/sale">Sale</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Jela</a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Food</a>
                 <div class="dropdown-menu" style="border: 1px solid orange;">
                     <%for(let k=0;k<foodtype.length;k++){%>
-                        <a class="dropdown-item"href="#"> <%= foodtype[k].name%> </a>
+                        <a class="dropdown-item"href="/users/foodType/<%= foodtype[k]._id%>"> <%= foodtype[k].name%> </a>
                     <%}%>
                 </div>
             </li>
+
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Restorani/Gradovi</a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Restaurants</a>
                 <div class="dropdown-menu" style="border: 1px solid orange;">
                     <%for(let k=0;k<restaurant.length;k++){%>
                         <a class="dropdown-item"href="/users/restaurant/<%= restaurant[k]._id %>"> <%= restaurant[k].name%> </a>
@@ -117,28 +124,37 @@
                                 </tr>
                             </table>
                         </div>
-                    </div>
-                    <!-- /.col -->
-                </div>
-                <div class="modal-footer">
-                    <div class="collapse" id="collapseExample">
-                        <div class="card card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-
+                        <div class="text-right">
+                            <select id="placanje"  name="placanje" class="form-control select2" style="width: 100%;">
+                                <option value="" disabled selected>Payment method</option>
+                                <option  name ="" value="kartica">Card</option>
+                                <option  name ="" value="gotovina">Cash</option>
+                            </select>
+                            <label class="text-left" style="width: 100%;">Delivery time </label>
+                            <input type="date" id="vrijeme" name="vrijeme" class="form-control select2" style="width: 100%;">
                             <button type="submit" class="btn btn-primary" >Send</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                        >>
-                    </a>
-
                 </div>
             </form>
         </div>
     </div>
 </div>
 <script>
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1;
+    var yyyy = today.getFullYear();
+    if(dd<10){
+        dd='0'+dd
+    }
+    if(mm<10){
+        mm='0'+mm
+    }
+    today = yyyy+'-'+mm+'-'+dd;
+    document.getElementById("vrijeme").setAttribute("min", today);
+
     $('.dropdown-toggle').dropdown();
     function deleteFromOrder(orderID,foodID){
         $.ajax({

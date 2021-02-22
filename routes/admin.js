@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const adminController = require('../controllers/adminControllers');
 const Restaurant = require('../models/Restaurant');
 const Supplier = require('../models/Supplier');
 const upload = require('../controllers/uploadController');
@@ -10,20 +9,46 @@ const User = require("../models/User"); // require
 const FoodType = require('../models/FoodType');
 const passport = require('passport');
 const jwt = require("jsonwebtoken");
-const Order = require("../models/Order");
 const TotalOrder = require("../models/TotalOrder");
 const Food = require("../models/Food");
-const RestaurantType = require("../models/RestaurantType");
 const Admin = require("../models/Admin");
 const bcrypt = require('bcryptjs');
-/* Linkovi za mape
-* https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform#maps_places_autocomplete_addressform-javascript
-* https://developers.google.com/maps/documentation/javascript/examples/directions-travel-modes
-* https://developers.google.com/maps/documentation/javascript/examples/directions-complex*/
+const maxAge = 3 *24 *60 *60 ;
+const createToken = (id) => {
+  return jwt.sign({id},'strasno',{
+    expiresIn: maxAge
+  });
+}
+
+router.get('/login',function(req,res,next){
+  res.render('admin/login');
+});
+
+router.post('/login',function(req,res,next){
+  passport.authenticate('administrator', {
+    successRedirect: '/admin/dashboard',
+    failureRedirect: '/admin/login',
+    failureFlash: true
+  })(req, res, next);
+  const maxAge = 3 *24 *60 *60 ;
+  const createToken = (id) => {
+    return jwt.sign({id},'strasno',{
+      expiresIn: maxAge
+    });
+  }
+  const token = createToken(Admin._id);
+  res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+});
+
+
+router.get('/logout',function(req,res,next){
+  res.cookie('jwt','',{maxAge: 1 });
+  req.logout();
+  req.flash('success_msg', 'You are logged out');
+  res.redirect('/admin/login');
+});
+
 router.get('/dashboard',function (req,res,next) {
-  /*Orders.find({}).select({"price"}).sort({"price" : -1}).limit(1).exec(function(err, doc){
-      let max_price = doc[0].price;
-    });*/
   TotalOrder.find({})
     .populate('restaurant').populate('customer').limit(4)
     .exec(function (err, doc) {
@@ -41,41 +66,86 @@ router.get('/dashboard',function (req,res,next) {
         });
     });
 });
-router.get('/login',adminController.admin_login_get);
 
-const maxAge = 3 *24 *60 *60 ;
-const createToken = (id) => {
-  return jwt.sign({id},'strasno',{
-    expiresIn: maxAge
+router.get('/customers/:status',function (req,res,next){
+  const st = req.params.status;
+  let status = true;
+  if(st==="false") status = false;
+  User.find({status:status}, function(err, Users){
+    if (err)
+      return done(err);
+
+    if (Users) {
+      console.log(Users);
+      res.render('admin/users', {
+        user: req.user,
+        usersArray: Users,
+        stat: status
+      });
+    }
   });
-}
-router.post('/login',
-    passport.authenticate('administrator',{
-      failureRedirect: '/admin/login',
-      failureFlash: true
-    }),
-    function(req, res) {
-      // If this function gets called, authentication was successful.
-      // `req.user` contains the authenticated user.
-      res.cookie('jwt', createToken(req.user._id), { httpOnly: true, maxAge: 5555 * 1000 });
-      res.redirect('/admin/dashboard');
+});
+
+router.get('/add-restaurant-admin',function(req,res,next){
+  Restaurant.find({})
+    .exec(function(err, restaurant) {
+      console.log(restaurant);
+      if (err) console.log(err);
+      res.render('admin/add-restaurant-admin', {
+        user: req.user,
+        restaurantsArray: restaurant
+      });
     });
+});
 
-router.get('/register',adminController.admin_register_get);
-
-router.post('/register',adminController.admin_register_post);
-
-router.post('/login',adminController.admin_login_post);
-
-router.get('/logout',adminController.admin_logout);
-
-router.get('/customers/:status',adminController.find_customers);
-
-router.get('/delete-customers/:id', adminController.delete_customers);
-
-router.get('/add-restaurant-admin',adminController.add_restaurant_admin_get);
-
-router.post('/add-restaurant-admin',adminController.add_restaurant_admin_post);
+router.post('/add-restaurant-admin',function(req,res,next){
+  const {restaurantName, adminName, address, koordinate , adminEmail, password} = req.body;
+  const status = true;
+  let errors = [];
+  if (!adminName || !adminEmail || !password || !address ) {
+    errors.push({msg: 'Please enter all fields'});
+  }
+  if (errors.length > 0) {
+    res.render('admin/add-restaurant-admin', {
+      errors,
+      adminName,
+      adminEmail
+    });
+  }else {
+    Restaurant.findOne({ email: adminEmail }).then(user => {
+      if (user) {
+        errors.push({ msg: 'Email already exists' });
+        res.render('admin/add-restaurant-admin', {
+          errors,
+          adminName,
+          adminEmail
+        });
+      } else {
+        const newUser = new RestaurantAdmin({
+          name: adminName,
+          email: adminEmail,
+          password: password,
+          restaurant : restaurantName,
+          address: address,
+          koordinate:koordinate,
+          status: status
+        });
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(user => {
+                res.redirect('/admin/dashboard');
+              })
+              .catch(err => console.log(err));
+          });
+        });
+      }
+    });
+  }
+});
 
 router.get('/customers/active/:id',function (req,res,next) {
   User.find({_id: req.params.id,status:true}, function(err, user){
@@ -89,7 +159,18 @@ router.get('/customers/active/:id',function (req,res,next) {
   });
 });
 
-router.get('/admins',adminController.find_restaurant_admin);
+router.get('/admins',function(req,res,next){
+  RestaurantAdmin.find({status:true})
+    .populate('restaurant')
+    .exec(function(err, resAdmin) {
+      console.log(resAdmin);
+      if (err) console.log(err);
+      res.render('admin/admin-restaurant', {
+        user: req.user,
+        resAdminArray: resAdmin
+      });
+    });
+});
 
 router.delete('/suppliers/delete/:id',function(req,res,next){
   const supplierID = req.params.id;
@@ -98,6 +179,7 @@ router.delete('/suppliers/delete/:id',function(req,res,next){
     else res.sendStatus(200);
   });
 });
+
 router.get('/admins/:id',function (req,res,next){
   const adminID = req.params.id;
   RestaurantAdmin.find({_id:adminID})
@@ -114,6 +196,7 @@ router.get('/admins/:id',function (req,res,next){
         });
       });
 });
+
 router.post('/admins/:id',function (req,res,next){
   const AdminID = req.params.id;
   const {name,email,address} = req.body;
@@ -129,6 +212,7 @@ router.post('/admins/:id',function (req,res,next){
           res.redirect('/admin/admins');
     });
 });
+
 router.delete('/admins/delete/:id',function (req,res,next){
   const AdminID = req.params.id;
   RestaurantAdmin.deleteOne({ _id: AdminID }, function (err) {
@@ -137,11 +221,25 @@ router.delete('/admins/delete/:id',function (req,res,next){
   });
 
 });
-router.get('/suppliers',adminController.find_suppliers);
+
+router.get('/suppliers',function(req,res,next){
+  Supplier.find({})
+    .populate('restaurant')
+    .exec(function(err, person) {
+      console.log(person);
+      if (err) console.log(err);
+      res.render('admin/suppliers', {
+        user: req.user,
+        suppliers: person
+      });
+    });
+});
 
 router.get('/user',function (req,res,next){
   res.send(req.user);
 })
+
+
 router.get('/food',function (req,res,next){
   Food.find({},function(err,food){
     res.render('admin/food',{
@@ -150,6 +248,7 @@ router.get('/food',function (req,res,next){
     })
   });
 });
+
 router.get('/food/:id',function (req,res,next){
   Food.find({_id:req.params.id}).populate('type').populate('restaurant').exec(function(err,food){
     FoodType.find({},function(err,FoodTypeArray){
@@ -164,6 +263,7 @@ router.get('/food/:id',function (req,res,next){
     })
   });
 });
+
 router.post('/food/:id',upload.single('picture'),function (req,res,next) {
   const {name, type, price, restaurant, picture} = req.body;
   //const image = req.file.filename;
@@ -210,34 +310,71 @@ router.get('/add-restaurant',function (req,res,next){
 });
 
 router.post('/add-restaurant',upload.single('picture'),function (req,res,next){
-
   const {name, email, address,koordinate,distance} = req.body;
-  const image = req.file.filename;
-  console.log('photo '+image);
   let errors = [];
   const status = true;
-  Restaurant.findOne({ name: name,email:email }).then(resAdmin => {
-    if (resAdmin) {
-      errors.push({ msg: 'Restaurant already exists' });
-      res.render('admin/add-restaurant', {
-        errors,
-        name,
-        email,
-        address,
-        distance
+  if (!name || !email || !address ) {
+    errors.push({msg: 'Please enter all fields'});
+  }
+  if (errors.length > 0) {
+    res.render('admin/add-restaurant', {
+      errors,
+      name,
+      email,
+      address,
+      distance,
+      user:req.user
+    });
+  }else {
+
+    if (!req.file) {
+      Restaurant.findOne({name: name, email: email}).then(rest => {
+        if (rest) {
+          errors.push({msg: 'Restaurant already exists'});
+          res.render('admin/add-restaurant', {
+            errors,
+            name,
+            email,
+            address,
+            distance,
+            user:req.user
+          });
+        } else {
+          const newRestaurant = new Restaurant({
+            name, email, address, status, koordinate, distance
+          });
+          newRestaurant
+            .save()
+            .then(user => {
+              res.redirect('/admin/restaurants');
+            })
+        }
       });
     } else {
-      const newRestaurant = new Restaurant({
-        name, email, address,email,image,status,koordinate,distance
+      Restaurant.findOne({name: name, email: email}).then(resta => {
+        if (resta) {
+          errors.push({msg: 'Restaurant already exists'});
+          res.render('admin/add-restaurant', {
+            errors,
+            name,
+            email,
+            address,
+            distance,
+            user:req.user
+          });
+        } else {
+          const newRestaurant = new Restaurant({
+            name, email, address, status, image: req.file.filename, koordinate, distance
+          });
+          newRestaurant
+            .save()
+            .then(user => {
+              res.redirect('/admin/restaurants');
+            })
+        }
       });
-      console.log(newRestaurant);
-      newRestaurant
-        .save()
-        .then(user =>{
-          res.redirect('/admin/dashboard');
-        })
     }
-  });
+  }
 });
 
 router.get('/restaurants',function (req,res,next){
@@ -254,6 +391,7 @@ router.get('/restaurants',function (req,res,next){
     }
   });
 });
+
 router.get('/add-suppliers',function (req,res,next){
   Restaurant.find({status:true},function (err,restaurant){
     if (err)
@@ -267,26 +405,62 @@ router.get('/add-suppliers',function (req,res,next){
     }
   });
 });
+
 router.post('/add-suppliers',function (req,res,next){
-  const {name, restaurantName,email,address,koordinate} = req.body;
-  const status = true;
-  const comm = new Supplier({
-        name:name,
-        email:email,
-        s_address:address,
-        koordinate:koordinate,
-        restaurant:restaurantName,
-        status:status
-  });
-  comm.save();
-  Restaurant.updateOne({ _id: restaurantName}, { $push: {
-      suppliers: {
-        _id : comm._id
-      }
-    }  },
-    function (error, success) {
-      res.redirect('/admin/suppliers');
+  const {name, restaurantName,email,address,koordinate,password} = req.body;
+  const status = 1;
+  let errors = [];
+  if (!name || !email || !address ) {
+    errors.push({msg: 'Please enter all fields'});
+  }
+  if (errors.length > 0) {
+    res.render('admin/add-suppliers', {
+      errors,
+      name,
+      email,
+      address,
+      user:req.user
     });
+  }else{
+    Supplier.findOne({ email: email }).then(user => {
+      if (user) {
+        errors.push({ msg: 'Email already exists' });
+        res.render('admin/add-suppliers', {
+          errors,
+          name,
+          email,
+          user:req.user
+        });
+      } else {
+        const newUser =new Supplier({
+          name:name,
+          email:email,
+          s_address:address,
+          koordinate:koordinate,
+          password:password,
+          restaurant:restaurantName,
+          status:status
+        });
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save().then(user => {
+              Restaurant.updateOne({ _id: restaurantName}, { $push: {
+                    suppliers: {
+                      _id : newUser._id
+                    }
+                  }  },
+                function (error, success) {
+                  res.redirect('/admin/suppliers');
+                });
+            })
+          });
+        });
+      }
+    });
+  }
 
 });
 
@@ -312,6 +486,7 @@ router.get('/suppliers/:id',function(req,res,next){
 
     });
 });
+
 router.post('/suppliers/:id',function(req,res,next){
   const {name,email,address,restaurant,koordinate} = req.body;
   const supplierID = req.params.id;
@@ -350,35 +525,8 @@ router.post('/suppliers/:id',function(req,res,next){
     });
   }
 });
-router.post('/add-restaurant-suppliers',function(req,res,next){
-  const restaurantID = req.body.restaurantID;
-  const supplierID = req.body.supplierID;
-  const supplierEmail = req.body.email;
-  const supplierAddress = req.body.address;
-  Supplier.findOneAndUpdate({_id: supplierID}, { email:supplierEmail,s_address:supplierAddress,
-    $push: {
-      restaurant: {
-        _id : restaurantID
-      }
-    }  }, {new: true}, (err, doc) => {
-    if (err) {
-      console.log("Something wrong when updating data!");
-    }
-    //console.log(doc);
-  });
-  Restaurant.findOneAndUpdate({_id: restaurantID}, { $push: {
-      suppliers: {
-        _id : supplierID
-      },
-    }  }, {new: true}, (err, doc) => {
-    if (err) {
-      console.log("Something wrong when updating data!");
-    }
-    //console.log(doc);
-  });
-  res.redirect('/admin/suppliers');
 
-});
+
 router.get('/restaurants/:id',function(req,res,next){
   const rest_id = req.params.id;
   Restaurant.find({ _id: rest_id})
@@ -400,6 +548,7 @@ router.get('/restaurants/:id',function(req,res,next){
         });
       });
 });
+
 router.post('/restaurants/:id',upload.single('picture'),function(req,res,next){
   const {address,email,type} = req.body;
   const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
@@ -447,10 +596,18 @@ router.get('/orders',function (req,res,next) {
       });
     })
 });
+
 router.get('/order/:id',function (req,res,next) {
   let orderID = req.params.id;
   TotalOrder.find({_id:orderID})
-    .populate('restaurant').populate('customer').populate('supplier').populate('order')
+    .populate([{
+    path: 'orders',
+    populate: {
+      path: 'food',
+      model: 'Food'
+    }
+  }])
+    .populate('restaurant').populate('customer').populate('supplier')
     .exec(function (err, doc) {
       console.log(doc);
       res.render('admin/order', {
@@ -459,6 +616,7 @@ router.get('/order/:id',function (req,res,next) {
       });
     })
 });
+
 router.get('/profile',function (req,res,next){
   Admin.findOne({_id:req.user._id},function(err,admin){
     res.render('admin/profile',{
@@ -467,6 +625,7 @@ router.get('/profile',function (req,res,next){
     });
   });
 });
+
 router.post('/profile',upload.single('picture'),async function (req,res,next){
     let {name, address, email, password,adminID} = req.body;
     let newPassword;
@@ -555,38 +714,10 @@ router.post('/profile',upload.single('picture'),async function (req,res,next){
 });
 
 
-
-router.get('/mail',function (req,res,next){
-  //nodemailer sa w3schools :)
-  var nodemailer = require('nodemailer');
-
-  var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'nodeprojekat@gmail.com',
-      pass: 'node1234'
-    }
-  });
-
-  var mailOptions = {
-    from: 'azrahadzihajdarevic28@gmail.com',
-    to: 'azrychh@gmail.com',
-    subject: 'Sending Email using Node.js',
-    text: 'That was easy!'
-  };
-
-  transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
-});
-
 router.get('/add-food-type',function (req,res,next){
   res.render('admin/add-food-type',{user:req.user});
 });
+
 router.get('/foodType',function (req,res,next){
   FoodType.find({},function (err,type){
     res.render('admin/foodType',{
@@ -595,6 +726,7 @@ router.get('/foodType',function (req,res,next){
     });
   });
 });
+
 router.delete('/foodType/:id',function (req,res,next){
   const foodTypeID = req.params.id;
   FoodType.deleteOne({ _id: foodTypeID }, function (err) {
@@ -602,6 +734,7 @@ router.delete('/foodType/:id',function (req,res,next){
     else res.sendStatus(200);
   });
 });
+
 router.post('/add-food-type',function (req,res,next){
   const name = req.body.name;
   const status = true;
@@ -610,38 +743,8 @@ router.post('/add-food-type',function (req,res,next){
     status:status
   });
   comm.save();
-  comm.save();
-  //console.log(comm);
-  res.redirect('/admin/dashboard');
+  res.redirect('/admin/foodType');
 });
-router.get('/add-restaurant-type',function (req,res,next){
-  res.render('admin/addRestaurantType',{
-    user:req.user
-  });
-});
-router.post('/add-restaurant-type',function (req,res,next){
-  const name = req.body.name;
-  const status = true;
-  const comm = new RestaurantType({
-    name:name,
-    status:status
-  });
-  comm.save();
-  res.redirect('/admin/dashboard');
-});
-router.get('/restaurantType',function (req,res,next){
-  RestaurantType.find({},function (err,rType){
-    res.render('admin/restaurantType', {
-      user:req.user,
-      rType:rType
-      });
-  });
-});
-router.delete('/restaurantType/:id',function (req,res,next){
-  const RestaurantTypeID = req.params.id;
-  RestaurantType.deleteOne({ _id: RestaurantTypeID }, function (err) {
-    if (err) return err;
-    else res.sendStatus(200);
-  });
-});
+
+
 module.exports = router;

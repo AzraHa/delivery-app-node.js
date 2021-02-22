@@ -94,10 +94,7 @@ router.get('/order-confirm/:id',function (req,res,next){
 });
 router.post('/order-confirm/:id/:customer',function (req,res,next){
   //status 3 narudzba potvrđena od strane dostavljaca
-  TotalOrder.updateOne({ _id: req.params.id},  {
-      status: 3
-    },
-    {new: true,upsert: true}).
+  TotalOrder.updateOne({ _id: req.params.id},  {status: 3}, {new: true}).
   populate({path:'restaurant', model: 'Restaurant' }).populate({path:'customer', model: 'User' })
     .exec(function(err,doc) {
     if (err) {
@@ -119,7 +116,7 @@ router.post('/order-confirm/:id/:customer',function (req,res,next){
           from: supplier.email,
           to: user.email,
           subject: 'Order Confirmed',
-          text: 'Your order has been confirmed by our supplier and it is at your door in 30 minutes .'
+          text: 'Your order has been confirmed by our supplier and it is at your door on ' + moment(doc.date).add(30, 'm')
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -275,7 +272,7 @@ router.post('/profile',upload.single('picture'),async function (req,res,next){
               function (error, success) {
                 if(error)console.log("error"+error+error.message);
                 if(success)console.log("success: " +success)
-                res.redirect('/admin/profile');
+                res.redirect('/supplier/profile');
               });
           }
         })

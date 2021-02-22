@@ -6,7 +6,6 @@ const FoodTypeSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  restaurant: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }],
   date: {
     type: Date,
     default: Date.now

@@ -21,7 +21,7 @@ router.get('/',function (req,res,next){
 });
 router.get('/dashboard',function (req,res,next){
   TotalOrder.find({'restaurant':req.user.restaurant})
-    .populate('customer')
+    .populate('customer').populate('supplier')
     .exec(function (err, doc) {
       console.log(req.user);
       res.render('AdminRestaurant/dashboard',{
@@ -320,7 +320,8 @@ router.get('/customers/:id',function (req,res,next){
   })
 });
 router.get('/orders',function (req,res,next){
-  Order.find().populate('restaurant').populate('user').populate('food').exec(function (err,orders){
+  TotalOrder.find({restaurant:req.user.restaurant}).populate('restaurant').populate('customer').populate('food').populate('supplier').
+  exec(function (err,orders){
     res.render('AdminRestaurant/orders',{
       user:req.user,
       orders:orders
@@ -348,17 +349,17 @@ router.get('/order-confirm',function (req,res,next){
 });
 router.get('/order-confirm/:id',function (req,res,next) {
   let dostavljacID = [];
-  let najmanja = 100000000000;
+  let najmanja = 500000;
   Restaurant.findOne({_id:req.user.restaurant},function(err,restaurant){
     const adresa = restaurant.koordinate.replace("(","").replace(")","");
     const nova = adresa.split(",");
     let RestoranLatitude = parseFloat(nova[0]);
     let RestoranLongitude = parseFloat(nova[1]);
-    console.log("LATR :"+RestoranLatitude+" LONGR: "+RestoranLongitude);
-    Supplier.find({restaurant:req.user.restaurant,status:1},function(err,suppliers){
-        /*Trazi najmanju udaljenost između dostavljača i restorana
-        for(let s=0;s<suppliers.length;s++){
-          const adres = suppliers[s].koordinate.replace("(","").replace(")","");
+    //console.log("LATR :"+RestoranLatitude+" LONGR: "+RestoranLongitude);
+    Supplier.find({restaurant:req.user.restaurant,status:2},function(err,supplier){
+        //Trazi najmanju udaljenost između dostavljača i restorana
+        for(let s=0;s<supplier.length;s++){
+          const adres = supplier[s].koordinate.replace("(","").replace(")","");
           const nova = adres.split(",");
           var latitude1 = parseFloat(nova[0]);
           var longitude1 = parseFloat(nova[1]);
@@ -367,11 +368,11 @@ router.get('/order-confirm/:id',function (req,res,next) {
           console.log("MINIMALNA: "+minimalna)
           if(minimalna<najmanja){
             najmanja = minimalna;
-            dostavljacID.push(ObjectId(suppliers[s]._id));
+            dostavljacID.push(ObjectId(supplier[s]._id));
           }
           console.log("NAJMANJA"+najmanja);
           console.log(dostavljacID, typeof dostavljacID);
-        }*/
+        }
       TotalOrder.find({_id: req.params.id})
         .populate([{
           path: 'orders',
@@ -382,39 +383,28 @@ router.get('/order-confirm/:id',function (req,res,next) {
         }]).populate('customer')
         .exec(function (err, order) {
           Supplier.findOne({_id:dostavljacID},function (err,supplier){
-            console.log("supplier"+supplier)
-            res.render('AdminRestaurant/confirm-order',
-              {
-                user: req.user,
-                order: order,
-                supplier:supplier
-              });
+              res.render('AdminRestaurant/confirm-order',
+                {
+                  user: req.user,
+                  order: order,
+                  supplier:supplier
+                });
+            })
           });
         });
-    })
   });
 
-  /*TotalOrder.find({_id: req.params.id})
-    .populate([{
-      path: 'orders',
-      populate: {
-        path: 'food',
-        model: 'Food'
-      }
-    }]).populate('customer')
-    .exec(function (err, order) {
-
-      res.render('AdminRestaurant/confirm-order',
-        {
-          user: req.user,
-          order: order
-        });
-    });*/
 });
 router.post('/order-confirm/:id',function (req,res,next){
-
-
- /* geolib.getDistance(start, end, accuracy = 1)*/
+  const supplierID = req.body.supplier;
+  TotalOrder.findOneAndUpdate({_id:req.params.id},{status:3},{new:true},function(err,order) {
+    if (err) {
+      console.log("Something wrong when updating data!");
+    }
+    Supplier.findOneAndUpdate({_id:supplierID},{status:3},{new:true},function (err,supplie){
+      res.redirect('/adminRestaurant/dashboard');
+    })
+  });
 });
 router.get('/assign-order',function (req,res,next){
   res.render('AdminRestaurant/admin',{user:req.user});
@@ -509,26 +499,26 @@ router.post('/add-supplier',function (req,res,next){
       }
     }},
       function (error, success) {
-        res.redirect('/AdminRestaurant/suppliers');
+        res.redirect('/adminRestaurant/suppliers');
   });
 });
 
 
 router.get('/add-sale',function (req,res,next){
-  FoodType.find({},function (err,foodType){
-    res.render('AdminRestaurant/add-sale',{
-      user:req.user,
-      FoodTypeArray:foodType
-    });
+    Food.find({restaurant:req.user.restaurant},function(err,food){
+      res.render('AdminRestaurant/add-sale',{
+        user:req.user,
+        food:food
+      });
   });
 });
 router.post('/add-sale',upload.single('picture'),function (req,res,next){
-  const {name,type,desc,price,date_from,date_to } = req.body;
+  const {name,desc,price,date_from,date_to,food } = req.body;
   const picture = req.file.filename;
   const status = true;
   const newSale = new Sale({
     name:name,
-    type:type,
+    food:food,
     description:desc,
     salePrice:price,
     date_from:date_from,
@@ -543,7 +533,7 @@ router.post('/add-sale',upload.single('picture'),function (req,res,next){
   });
 });
 router.get('/sale',function (req,res,next){
-  Sale.find({restaurant:req.user.restaurant}).populate('type').exec(function(err,sale){
+  Sale.find({restaurant:req.user.restaurant}).populate('food').exec(function(err,sale){
     res.render('AdminRestaurant/sale',{
       user:req.user,
       sale:sale
@@ -552,27 +542,23 @@ router.get('/sale',function (req,res,next){
 });
 router.get('/sale/:id',function (req,res,next){
   const saleID = req.params.id;
-  Sale.find({_id: saleID}).populate('type').exec(function(err,sale) {
-    FoodType.find({}, function (err, ftype) {
+  Sale.find({_id: saleID}).populate('food').exec(function(err,sale) {
       res.render('adminRestaurant/saleItem', {
         user: req.user,
-        sale: sale,
-        FoodTypeArray: ftype
-      });
+        sale: sale
     });
   });
 });
 
 router.post('/sale/edit/:id',upload.single('picture'),function (req,res,next){
   const saleID = req.params.id;
-  const {name,type,date_from,date_to,price,status} = req.body;
-  //console.log(name,type,date_from,date_to,price,status);
+  const {name,food,date_from,date_to,price,status} = req.body;
   const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
   if(!req.file)
   {
     Sale.updateOne({ _id: saleID},  {
         name:name,
-        type:type,
+        food:food,
         date_from:date_from,
         date_to:date_to,
         salePrice:price,
@@ -585,7 +571,7 @@ router.post('/sale/edit/:id',upload.single('picture'),function (req,res,next){
   }else{
     Sale.updateOne({ _id: saleID},  {
         name:name,
-        type:type,
+        food:food,
         date_from:date_from,
         date_to:date_to,
         salePrice:price,
