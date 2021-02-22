@@ -7,6 +7,7 @@ const moment = require('moment');
 const jwt = require("jsonwebtoken");
 const upload = require('../controllers/uploadController');
 const nodemailer = require('nodemailer');
+const User = require("../models/User");
 
 const router = express.Router();
 
@@ -91,12 +92,14 @@ router.get('/order-confirm/:id',function (req,res,next){
       res.render('supplier/confirm-order',{user:req.user,order:order})
     });
 });
-router.post('/order-confirm/:id',function (req,res,next){
+router.post('/order-confirm/:id/:customer',function (req,res,next){
   //status 3 narudzba potvrđena od strane dostavljaca
   TotalOrder.updateOne({ _id: req.params.id},  {
       status: 3
     },
-    {new: true,upsert: true}).populate({path:'restaurant', model: 'Restaurant' }).exec(function(err,doc) {
+    {new: true,upsert: true}).
+  populate({path:'restaurant', model: 'Restaurant' }).populate({path:'customer', model: 'User' })
+    .exec(function(err,doc) {
     if (err) {
       console.log("Something wrong when updating data!");
     }
@@ -104,6 +107,29 @@ router.post('/order-confirm/:id',function (req,res,next){
       path: 'restaurant',
       model: 'Restaurant'
     }).exec(function (err, supplier) {
+      User.findOne({_id:req.params.customer},function(err,user){
+        var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'nodeprojekat@gmail.com',
+            pass: 'node1234'
+          }
+        });
+        var mailOptions = {
+          from: supplier.email,
+          to: user.email,
+          subject: 'Order Confirmed',
+          text: 'Your order has been confirmed by our supplier and it is at your door in 30 minutes .'
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+      })
       const restaurantEmail = (supplier.restaurant[0].email)
       //nodemailer sa w3schools :)
       var transporter = nodemailer.createTransport({
@@ -140,7 +166,7 @@ router.get('/profile',function(req,res,next){
 });
 router.post('/active-order/:id',function(req,res,next){
   TotalOrder.findOneAndUpdate({_id:req.params.id},{status:5},{new:true},function(err,supplier) {
-    Supplier.findOne({_id: req.user._id}).populate({
+    Supplier.findOneAndUpdate({_id: req.user._id},{status:1},{new:true}).populate({
       path: 'restaurant',
       model: 'Restaurant'
     }).exec(function (err, supplier) {

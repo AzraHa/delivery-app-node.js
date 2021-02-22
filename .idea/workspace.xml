@@ -2,24 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/views/search.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/adminControllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/adminControllers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Restaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Restaurant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/userController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Supplier.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/TotalOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/TotalOrder.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/supplier.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/add-restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/add-restaurant.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/admin-restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/admin-restaurant.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/dashboard.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/food.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/food.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/foodedit.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/foodedit.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/order.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/order.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/orders.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/orders.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurant.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/restaurants.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurants.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/supplier.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/supplier.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/suppliers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/suppliers.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/user.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/user.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/supplier/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/supplier/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/login.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/register.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/register.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/supplier/confirm-order.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/supplier/confirm-order.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +50,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="13.14.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="13.13.40" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/views/supplier" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/views" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -65,11 +58,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\USER\WebstormProjects\projekat\views" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views\supplier" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views\supplier\partials" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views\AdminRestaurant" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views\admin" />
-      <recent name="C:\Users\USER\WebstormProjects\projekat\models" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -171,6 +164,7 @@
       <workItem from="1613893714987" duration="20197000" />
       <workItem from="1613915906762" duration="6739000" />
       <workItem from="1613941581547" duration="7954000" />
+      <workItem from="1613981770346" duration="7442000" />
     </task>
     <servers />
   </component>

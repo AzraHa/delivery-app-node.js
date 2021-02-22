@@ -12,26 +12,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-<style>
-    ul
-    {
-        list-style-type: none;
-        counter-reset: section;
-        -moz-column-count: 3;
-        -moz-column-gap: 20px;
-        -webkit-column-count: 3;
-        -webkit-column-gap: 20px;
-        column-count: 3;
-        column-gap: 20px;
-    }
-
-</style>
 </head>
 
 <body>
-<% include partials/navigation %>
-<div class="homepage">
-    <div class="naslovna">
+<div class="moja " style=" background:rgba(0, 0, 0, 0.5); ">
+    <div class="naslovna" style="background:none !important;">
         <div class="naslovna1">
             <div class="naslovna-left">
                 <h1 style="color: #ffffff;text-shadow: 2px 2px #F9723D;">Search</h1>
@@ -53,27 +38,36 @@
         </div>
     </div>
     <div class="album">
-        <div class="container">
-            <div class="row">
-                <% for(let i=0;i<restaurant.length;i++){%>
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                            <img class="bd-placeholder-img card-img-top" width="450" height="300" src="../images/<%= restaurant[i].image%>">
-                            <div class="card-body">
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a class="btn btn-primary btn-block" href="/users/restaurant/<%=restaurant[i]._id%>">View</a>
+            <h1 class="text-center" style="color:#F9723D;"><%= tip %></h1>
+            <div class="container">
+                <div class="row">
+                    <% for(let i=0;i<food.length;i++){%>
+                        <div class="col-md-4" style=" margin-top: 35px;">
+                            <div class="card" style="border:1px solid #F9723D;height:550px;">
+                                <img class="bd-placeholder-img card-img-top" style="border-bottom:1px solid #F9723D;"width="450" height="300" src="../../images/<%= food[i].picture%>">
+                                <div class="card-body">
+                                    <h5 class="card-text" style="color: #F9723D;font-weight: bold;"><%= food[i].name%></h5>
+                                    <a href="/users/restaurant/<%= food[i].restaurant._id%>"><h5 class="card-text" style="font-weight: bold;"><%= food[i].restaurant.name%></h5>
+                                    <p class="card-text"><%=food[i].description%></p>
+                                    <div class="d-flex justify-content-between">
+                                        <h6 class="card-price text-left" style="color: #F9723D;font-weight: bold;"><%=food[i].price%><span class="period">KM</span></h6>
+                                        <div class="btn-group text-right">
+                                            <a class="btn btn-success btn-sm" href="#"  onclick="addToCart('<%= food[i]._id%>','<%= food[i].restaurant._id%>');">
+                                                <i class="fa fa-plus">
+                                                </i>
+                                                Add to cart
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                <%}%>
+                    <%}%>
+                </div>
             </div>
-        </div>
     </div>
 </div>
+
 <script>
     /*$( "#kosara" ).ready(function() {
         $('#lblCartCount').html(155+1);

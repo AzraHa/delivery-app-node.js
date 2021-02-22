@@ -26,10 +26,10 @@ module.exports.registration_get = (req,res) => {
 
 //Registration form
 module.exports.registration_post = async (req,res) => {
-  const {name, email, password, password2, address} = req.body;
+  const {name, email, password, password2, address,number,koordinate} = req.body;
   let errors = [];
   const status = true;
-  if (!name || !email || !password || !password2 || !address) {
+  if (!name || !email || !password || !password2 || !address || !number) {
     errors.push({msg: 'Please enter all fields'});
   }
 
@@ -48,7 +48,8 @@ module.exports.registration_post = async (req,res) => {
       email,
       password,
       password2,
-      address
+      address,
+      number
 
     });
   }else {
@@ -69,7 +70,9 @@ module.exports.registration_post = async (req,res) => {
           email,
           password,
           address,
-          status
+          status,
+          number,
+          koordinate
         });
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {

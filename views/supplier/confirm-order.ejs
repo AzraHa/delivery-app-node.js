@@ -24,7 +24,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Order</h3>
                 </div>
-                <form action="/supplier/order-confirm/<%= order._id%>" method="post">
+                <form action="/supplier/order-confirm/<%= order._id%>/<%= order.customer._id%>" method="post">
                 <div class="container">
                     <div class="container__image" style="width: 100%!important;">
                         <label>Customer Name</label>

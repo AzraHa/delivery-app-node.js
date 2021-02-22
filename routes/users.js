@@ -12,7 +12,7 @@ const {ObjectId} = require("bson");
 const moment = require('moment');
 const Supplier = require("../models/Supplier");
 const geolib = require("geolib");
-
+const nodemailer = require('nodemailer');
 
 router.get('/login',userController.login_get);
 router.post('/login',userController.login_post);
@@ -20,27 +20,75 @@ router.get('/register',userController.registration_get);
 router.post('/register',userController.registration_post);
 router.get('/logout',userController.logout);
 router.get('/dashboard',function(req,res,next){
-    Food.find({}).populate('restaurant').sort({"modified" : -1}).limit(6).exec(function(err,food){
+  Food.find({}).populate('restaurant').sort({"modified" : -1}).limit(6).exec(function(err,food){
         FoodType.find().exec(function (err,foodtype){
-            Restaurant.find({}).limit(6).exec(function (err,restaurant){
-                Order.find({'customer':req.user._id,status:1}).populate('food').populate('restaurant').exec(function (err,order)
-                {
-                    //console.log("ORDER-LEN"+order.length+" ORD#ER "+order)
-                    res.render('dashboard',{
-                        user:req.user,
-                        food:food,
-                        foodtype:foodtype,
-                        restaurant:restaurant,
-                        restoran:JSON.stringify(restaurant),
-                        order_len:order.length,
-                        order:order
-                    });
-                });
+            Restaurant.find({}).exec(function (err,allRestaurants){
+                  User.findOne({_id: req.user._id}, function (err, user) {
+                      const adresa = user.koordinate.replace("(", "").replace(")", "");
+                      const nova = adresa.split(",");
+                      let userLatitude = parseFloat(nova[0]);
+                      let userLongitude = parseFloat(nova[1]);
+                      console.log("koordinate" + userLatitude + " " + userLongitude);
+                      var restorani = [];
+                      for(let k=0;k<allRestaurants.length;k++)
+                      {
+                        var restoranDostava = allRestaurants[k].distance;
+                        const adresa = allRestaurants[k].koordinate.replace("(", "").replace(")", "");
+                        const nova = adresa.split(",");
+                        let restoranLatitude = parseFloat(nova[0]);
+                        let restoranLongitude = parseFloat(nova[1]);
+                        var udaljenost = geolib.getDistance({latitude: userLatitude, longitude: userLongitude},
+                          {latitude: restoranLatitude, longitude: restoranLongitude}, accuracy = 1);
+                        if(udaljenost<=restoranDostava){
+                          restorani.push(allRestaurants[k]);
+                        }
+                      }
+                      console.log("restorani: " + restorani)
 
-            })
-        })
+                      Order.find({
+                        'customer': req.user._id,
+                        status: 1
+                      }).populate('food').populate('restaurant').exec(function (err, order) {
+                        //console.log("ORDER-LEN"+order.length+" ORD#ER "+order)
+                        res.render('dashboard', {
+                          user: req.user,
+                          food: food,
+                          foodtype: foodtype,
+                          restaurant: restorani,
+                          restoran: JSON.stringify(allRestaurants),
+                          order_len: order.length,
+                          order: order
+                        });
+                      });
+                    })
+                  })
+                })
     });
 });
+router.post('/search',function(req,res,next){
+  Food.find({name:req.body.nazivArtikla},function(err,food){
+    if(typeof food === "undefined" || food.length<1){
+      FoodType.find({name:req.body.nazivArtikla},function(err,types){
+        Food.find({type:types[0]._id}).populate('restaurant').exec(function(err,food){
+          console.log(food)
+          res.render('search', {
+            user: req.user,
+            food: food,
+            tip:req.body.nazivArtikla
+          });
+        });
+      })
+    }else{
+      console.log(food)
+      res.render('search', {
+        user: req.user,
+        food: food,
+        tip:req.body.nazivArtikla
+      });
+    }
+  });
+});
+
 router.get('/order/:id',function (req,res,next){
 
 });
@@ -146,7 +194,7 @@ router.post('/send-order',function(req,res,next) {
             Supplier.findOneAndUpdate({_id:dostavljacID},{status:2,
               $push: {
                 orders:doc._id,
-              }},{upsert: true, new: true},function(err,supplier){
+              }},{new: true},function(err,supplier){
               if (err) {
                 console.log("Something wrong when updating data!");
               }
@@ -155,7 +203,30 @@ router.post('/send-order',function(req,res,next) {
         })
       });
     })
+  //nodemailer sa w3schools :)
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'nodeprojekat@gmail.com',
+      pass: 'node1234'
+    }
+  });
 
+  var mailOptions = {
+    from: 'nodeprojekat@gmail.com',
+    to: req.user.email,
+    subject: 'Order update',
+    text: 'Dear, '+req.user.name+' your order has been created and we are waiting delivery confirmation.'+
+      'You will be notified when it happens . Please be patient .'
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
   Order.updateMany({status: 1, customer: req.user._id}, {
     "$set": {"status": 2}},
     {multi: true}, function (err, doc) {

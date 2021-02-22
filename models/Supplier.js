@@ -35,7 +35,7 @@ const SupplierSchema = new mongoose.Schema({
   },
   modified:{
     type:String,
-    default: moment(new Date).format("MM/DD/YYYY, h:mm:ss a")
+    default: moment(new Date).format("MM/DD/YYYY, h:mm:ss ")
   }
 });
 
