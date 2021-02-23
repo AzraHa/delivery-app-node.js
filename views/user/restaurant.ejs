@@ -58,7 +58,7 @@
                                             <div class="d-flex justify-content-between">
                                                 <h6 class="card-price text-left" style="color: #F9723D;font-weight: bold;"><%=food[i].price%><span class="period">KM</span></h6>
                                                 <div class="btn-group text-right">
-                                                    <a class="btn btn-success btn-sm" href="#"  onclick="addToCart('<%= food[i]._id%>','<%= rest[0]._id%>');">
+                                                    <a class="btn btn-success btn-sm" href="javascript:void(0)"  onclick="addToCart('<%= food[i]._id%>','<%= rest[0]._id%>');">
                                                         <i class="fa fa-plus">
                                                         </i>
                                                         Add to cart
@@ -78,14 +78,6 @@
 
 <script>
 
-    function addToCart(id,restaurantID) {
-        $.ajax({
-            url: "/users/add-order/" + id + "/restaurant/" + restaurantID,
-            method: "POST",
-            success: function (result) {
-            }
-        })
-    }
 
     const adresa = document.getElementById("koordinate").value;
     const adres = adresa.replace("(","").replace(")","");

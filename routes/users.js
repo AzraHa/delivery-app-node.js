@@ -127,40 +127,58 @@ router.get('/dashboard',function(req,res,next){
   Food.find({}).populate('restaurant').sort({"modified" : -1}).limit(6).exec(function(err,food){
         FoodType.find().exec(function (err,foodtype){
             Restaurant.find({}).exec(function (err,allRestaurants){
-                  User.findOne({_id: req.user._id}, function (err, user) {
-                      const adresa = user.koordinate.replace("(", "").replace(")", "");
-                      const nova = adresa.split(",");
-                      let userLatitude = parseFloat(nova[0]);
-                      let userLongitude = parseFloat(nova[1]);
-                      var restorani = [];
-                      for(let k=0;k<allRestaurants.length;k++)
-                      {
-                        var restoranDostava = allRestaurants[k].distance;
-                        const adresa = allRestaurants[k].koordinate.replace("(", "").replace(")", "");
-                        const nova = adresa.split(",");
-                        let restoranLatitude = parseFloat(nova[0]);
-                        let restoranLongitude = parseFloat(nova[1]);
-                        var udaljenost = geolib.getDistance({latitude: userLatitude, longitude: userLongitude},
-                          {latitude: restoranLatitude, longitude: restoranLongitude}, accuracy = 1);
-                        if(udaljenost<=restoranDostava){
-                          restorani.push(allRestaurants[k]);
-                        }
-                      }
-                      Order.find({'customer': req.user._id, status: 1}).populate('food').populate('restaurant').exec(function (err, order) {
-                        res.render('user/dashboard', {
-                          user: req.user,
-                          food: food,
-                          foodtype: foodtype,
-                          restaurant: restorani,
-                          restoran: JSON.stringify(allRestaurants),
-                          order_len: order.length,
-                          order: order
-                        });
-                      });
-                  })
+              if(req.user){
+                User.findOne({_id: req.user._id}, function (err, user) {
+                  const adresa = user.koordinate.replace("(", "").replace(")", "");
+                  const nova = adresa.split(",");
+                  let userLatitude = parseFloat(nova[0]);
+                  let userLongitude = parseFloat(nova[1]);
+                  var restorani = [];
+                  for(let k=0;k<allRestaurants.length;k++)
+                  {
+                    var restoranDostava = allRestaurants[k].distance;
+                    const adresa = allRestaurants[k].koordinate.replace("(", "").replace(")", "");
+                    const nova = adresa.split(",");
+                    let restoranLatitude = parseFloat(nova[0]);
+                    let restoranLongitude = parseFloat(nova[1]);
+                    var udaljenost = geolib.getDistance({latitude: userLatitude, longitude: userLongitude},
+                      {latitude: restoranLatitude, longitude: restoranLongitude}, accuracy = 1);
+                    if(udaljenost<=restoranDostava){
+                      restorani.push(allRestaurants[k]);
+                    }
+                  }
+                  Order.find({'customer': req.user._id, status: 1}).populate('food').populate('restaurant').exec(function (err, order) {
+                    res.render('user/dashboard', {
+                      user: req.user,
+                      food: food,
+                      foodtype: foodtype,
+                      restaurant: restorani,
+                      restoran: JSON.stringify(allRestaurants),
+                      order_len: order.length,
+                    });
+                  });
+                })
+              }else {
+                    res.render('user/dashboard', {
+                      user:req.user,
+                      food: food,
+                      foodtype: foodtype,
+                      restoran: JSON.stringify(allRestaurants),
+                      restaurant: allRestaurants
+                    });
+              }
             })
         })
     });
+});
+
+router.get('/getOrder',function(req,res,next){
+  Order.find({'customer': req.user._id, status: 1}).exec(function (err, order) {
+    let orderlen = order.length;
+    res.send({
+      orderLen: orderlen
+    });
+  });
 });
 
 router.post('/search',function(req,res,next){
@@ -252,6 +270,8 @@ router.post('/add-order/:foodID/restaurant/:restaurantID',function (req,res,next
         if (err) {
         console.log("Something wrong when updating data!");
       }
+        res.send(doc);
+
     });
 });
 

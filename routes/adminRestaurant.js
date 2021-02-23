@@ -270,35 +270,57 @@ router.post('/add-meni',upload.single('picture'),function (req,res,next){
 router.get('/add-restaurant-admin',function (req,res,next){
   res.render('AdminRestaurant/add-restaurant-admin',{user:req.user});
 });
+
 router.post('/add-restaurant-admin',function (req,res,next){
   const restaurant = req.user.restaurant;
-  const {adminName,adminEmail,password,address,koordinate} = req.body;
+  const { adminName, address, koordinate , adminEmail, password} = req.body;
   const status = true;
-  const newAdmin = new RestaurantAdmin({
-    name: adminName,
-    email: adminEmail,
-    restaurant : restaurant,
-    address: address,
-    status: status,
-    koordinate:koordinate
-  });
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(password, salt, (err, hash) => {
-      if (err) throw err;
-      newAdmin.password = hash;
-      newAdmin.save();
+  let errors = [];
+  if (!adminName || !adminEmail || !password || !address ) {
+    errors.push({msg: 'Please enter all fields'});
+  }
+  if (errors.length > 0) {
+    res.render('AdminRestaurant/add-restaurant-admin', {
+      errors,
+      adminName,
+      adminEmail,
+      user:req.user
     });
-  });
-  Restaurant.updateOne({ _id: restaurant}, {
-    $push: {
-      admin: {
-        _id : newAdmin._id
+  }else {
+    RestaurantAdmin.findOne({ email: adminEmail }).then(user => {
+      if (user) {
+        errors.push({ msg: 'Email already exists' });
+        res.render('AdminRestaurant/add-restaurant-admin', {
+          errors,
+          adminName,
+          adminEmail,
+          user:req.user
+        });
+      } else {
+        const newUser = new RestaurantAdmin({
+          name: adminName,
+          email: adminEmail,
+          password: password,
+          restaurant : restaurant,
+          address: address,
+          koordinate:koordinate,
+          status: status
+        });
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(user => {
+                res.redirect('/adminRestaurant/admin');
+              })
+              .catch(err => console.log(err));
+          });
+        });
       }
-    }},
-      function (error, success) {
-    res.redirect('/adminRestaurant/admin');
-  });
-
+    });
+  }
 });
 
 

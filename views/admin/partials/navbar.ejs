@@ -19,3 +19,38 @@
 
     </div>
 </nav>
+<script>
+    function addToCart(id,restaurantID) {
+        $.ajax({
+            url: "/users/add-order/" + id + "/restaurant/" + restaurantID,
+            method: "POST",
+            success: function (result) {
+                var order_len = Number($('#lblCartCount').html()) + 1;
+                $('#lblCartCount').html(order_len)
+            }
+        })
+    }
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1;
+    var yyyy = today.getFullYear();
+    if(dd<10){
+        dd='0'+dd
+    }
+    if(mm<10){
+        mm='0'+mm
+    }
+    today = yyyy+'-'+mm+'-'+dd;
+    document.getElementById("vrijeme").setAttribute("min", today);
+    $('.dropdown-toggle').dropdown();
+    function deleteFromOrder(orderID,foodID){
+        $.ajax({
+            url: "/users/order/" + orderID + "/"+foodID,
+            method: "DELETE",
+            success: function (result) {
+                $('#'+orderID+'').remove();
+            }
+        })
+    }
+
+</script>
