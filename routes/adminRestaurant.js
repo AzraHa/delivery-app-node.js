@@ -146,8 +146,8 @@ router.post('/admin/edit/:id',function(req,res,next){
 
 
 router.get('/food',function (req,res,next){
-  Food.find({})//sve restorane sa suppliers
-      .populate('type') // only works if we pushed refs to person.eventsAttended
+  Food.find({restaurant:req.user.restaurant})
+      .populate('type')
       .exec(function(err, food) {
         console.log(food);
         if (err) console.log(err);
@@ -342,7 +342,13 @@ router.get('/customers/:id',function (req,res,next){
   })
 });
 router.get('/orders',function (req,res,next){
-  TotalOrder.find({restaurant:req.user.restaurant}).populate('restaurant').populate('customer').populate('food').populate('supplier').
+  TotalOrder.find({restaurant:req.user.restaurant}).populate([{
+    path: 'orders',
+    populate: {
+      path: 'food',
+      model: 'Food'
+    }
+  }]).populate('restaurant').populate('customer').populate('supplier').
   exec(function (err,orders){
     res.render('AdminRestaurant/orders',{
       user:req.user,
@@ -613,7 +619,7 @@ router.delete('/sale/delete/:id',function (req,res,next){
   });
 });
 router.get('/menu',function(req,res,next){
-  Food.find({meni:true},function(err,menu){
+  Food.find({meni:true,restaurant:req.user.restaurant},function(err,menu){
     res.render('adminRestaurant/menu',{
       user:req.user,
       menu:menu

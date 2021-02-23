@@ -15,6 +15,7 @@ const nodemailer = require('nodemailer');
 const upload = require('../controllers/uploadController');
 const passport = require('passport');
 const jwt = require("jsonwebtoken");
+const bcrypt = require('bcryptjs');
 const createToken = (id) => {
   return jwt.sign({id},'strasno',{
     expiresIn: maxAge
@@ -180,15 +181,6 @@ router.get('/dashboard',function(req,res,next){
     });
 });
 
-router.get('/getOrder',function(req,res,next){
-  Order.find({'customer': req.user._id, status: 1}).exec(function (err, order) {
-    let orderlen = order.length;
-    res.send({
-      orderLen: orderlen
-    });
-  });
-});
-
 router.post('/search',function(req,res,next){
   Food.find({name:req.body.nazivArtikla},function(err,food){
     if(typeof food === "undefined" || food.length<1){
@@ -261,13 +253,12 @@ router.post('/add-order/:foodID/restaurant/:restaurantID',function (req,res,next
         status:1},
       { $inc: {quantity:1},date:date },
       { upsert: true, new: true }, (err, doc) => {
-        //console.log(doc);
         TotalOrder.findOneAndUpdate( { customer : userID,status:1}, {
           customer:userID,
           restaurant:restaurantID,
           $push: {
             orders:doc._id,
-          }},{ upsert : true,new:true },function(err, doc) {
+          }},{new:true ,upsert:true},function(err, doc) {
           if (err) throw err;
           User.updateOne({ _id: req.user._id},  {
             $push: {
@@ -278,7 +269,6 @@ router.post('/add-order/:foodID/restaurant/:restaurantID',function (req,res,next
         if (err) {
         console.log("Something wrong when updating data!");
       }
-        res.send(req.signedCookies.orders);
 
     });
 });

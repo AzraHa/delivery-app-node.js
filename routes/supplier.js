@@ -100,7 +100,7 @@ router.post('/order-confirm/:id/:customer',function (req,res,next){
     if (err) {
       console.log("Something wrong when updating data!");
     }
-    Supplier.findOne({_id: req.user._id}).populate({
+    Supplier.findOneAndUpdate({_id: req.user._id},{s_address:req.body.newAddress,koordinate:req.body.koordinate}).populate({
       path: 'restaurant',
       model: 'Restaurant'
     }).exec(function (err, supplier) {

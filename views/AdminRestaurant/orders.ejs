@@ -46,7 +46,7 @@
                                         <td><%= orders[i]._id%></td>
                                         <td><%= orders[i].orders[0].food[0].name%></td>
                                         <td><%= orders[i].status %></td>
-                                        <td><%= orders[i].supplier.name %></td>
+                                        <td><%= orders[i].supplier[0].name %></td>
                                         <td><%= orders[i].restaurant[0].name%></td>
                                     </tr>
                                 <%}%>

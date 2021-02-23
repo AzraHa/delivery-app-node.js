@@ -57,9 +57,9 @@
                         <div class="container__text">
                             <div class="container__image" style="width: 100%!important;">
                                 <label>Customer Name</label>
-                                <p class="form-control" ><%= order[0].customer.name%></p>
+                                <p class="form-control" ><%= user.name%></p>
                                 <label>Customer Email</label>
-                                <p class="form-control"> <%= order[0].customer.email%></p>
+                                <p class="form-control"> <%= user.email%></p>
                                 <label>Address</label>
                                 <div class="input-group mb-3">
                                     <input type="text"
@@ -67,10 +67,10 @@
                                            name="address"
                                            class="form-control"
                                            placeholder="Address"
-                                           value="<%= order[0].customer.address
+                                           value="<%= user.address
                                            %>">
                                     <div class="input-group-append" >
-                                        <input type="hidden" id="koordinate" name="koordinate" value="<%= order[0].customer.koordinate %>">
+                                        <input type="hidden" id="koordinate" name="koordinate" value="<%= user.koordinate %>">
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <% let totalPrice = 0; let total=0;%>
+                                    <% let totalPrice = 0; ;%>
                                     <% if (typeof order !== 'undefined' && order.length >= 0) {%>
                                         <% for(let i=0;i<order.length;i++){%>
                                             <% for(let j=0;j<order[i].orders.length;j++){%>
@@ -118,7 +118,8 @@
                                                     </td>
                                                     <td>
                                                         <p class="form-control">
-                                                            <% total+=Number(order[i].orders[j].food[0].price*((order[i].orders[j].quantity))) %>
+                                                            <% let total=0;
+                                                                total+=Number(order[i].orders[j].food[0].price*((order[i].orders[j].quantity))) %>
                                                             <%= total %>KM
                                                             <% totalPrice += total%>
                                                         </p>
