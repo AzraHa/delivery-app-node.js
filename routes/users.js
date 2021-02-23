@@ -124,6 +124,13 @@ router.get('/logout',function(req,res,next){
 });
 
 router.get('/dashboard',function(req,res,next){
+  let options = {
+    maxAge: 1000 * 60 * 15,
+    httpOnly: false,
+    signed: true
+  }
+  res.cookie('order', 0, options);
+
   Food.find({}).populate('restaurant').sort({"modified" : -1}).limit(6).exec(function(err,food){
         FoodType.find().exec(function (err,foodtype){
             Restaurant.find({}).exec(function (err,allRestaurants){
@@ -159,6 +166,7 @@ router.get('/dashboard',function(req,res,next){
                   });
                 })
               }else {
+
                     res.render('user/dashboard', {
                       user:req.user,
                       food: food,
@@ -187,7 +195,7 @@ router.post('/search',function(req,res,next){
       FoodType.find({name:req.body.nazivArtikla},function(err,types){
         Food.find({type:types[0]._id}).populate('restaurant').exec(function(err,food){
           console.log(food)
-          res.render('search', {
+          res.render('user/search', {
             user: req.user,
             food: food,
             tip:req.body.nazivArtikla
@@ -270,7 +278,7 @@ router.post('/add-order/:foodID/restaurant/:restaurantID',function (req,res,next
         if (err) {
         console.log("Something wrong when updating data!");
       }
-        res.send(doc);
+        res.send(req.signedCookies.orders);
 
     });
 });
@@ -304,13 +312,27 @@ router.get('/restaurant/:id',function (req,res,next){
        })
    })
 });
-
+router.get('/order',function(req,res,next){
+  TotalOrder.find({customer:req.user._id,status:1}).populate([{
+    path: 'orders',
+    populate: {
+      path: 'food',
+      model: 'Food'
+    }
+  }]).populate('restaurant').populate('customer').exec(function(err,order){
+    res.render('user/order',{
+      user:req.user,
+      order:order
+    })
+  });
+});
 router.delete('/order/:id/:food',function (req,res,next){
   Order.deleteOne({ _id: req.params.id , food:req.params.food }, function (err) {
     if (err) return err;
     else res.sendStatus(200);
   });
 });
+
 
 router.post('/send-order',function(req,res,next) {
   let dostavljacID;

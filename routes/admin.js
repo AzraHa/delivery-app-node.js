@@ -50,7 +50,7 @@ router.get('/logout',function(req,res,next){
 
 router.get('/dashboard',function (req,res,next) {
   TotalOrder.find({})
-    .populate('restaurant').populate('customer').limit(4)
+    .populate('restaurant').populate('customer').populate('supplier').limit(4)
     .exec(function (err, doc) {
       Supplier.find({})
         .populate('restaurant').populate('customer').limit(4)

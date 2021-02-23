@@ -30,7 +30,7 @@
                         <div class="container">
                             <div class="container__image">
                                 <label>Customer Name</label>
-                                <p class="form-control" ><%= order[0].customer.name%></p>
+                                <p class="form-control"style="height: 80px;" ><%= order[0].customer.name%></p>
                                 <label>Customer Email</label>
                                 <p class="form-control"> <%= order[0].customer.email%></p>
                                 <label>Customer Address</label>
@@ -42,7 +42,7 @@
                             </div>
                             <div class="container__image">
                                 <label>Supplier Name</label>
-                                <p class="form-control" ><%= order[0].supplier[0].name%></p>
+                                <p class="form-control" style="height: 80px;"><%= order[0].supplier[0].name%></p>
                                 <label>Supplier Email</label>
                                 <p class="form-control"> <%= order[0].supplier[0].email%></p>
                                 <label>Supplier Address</label>
@@ -56,7 +56,7 @@
                             </div>
                             <div class="container__image">
                                 <label>Restaurant Name</label>
-                                <p class="form-control" ><%= order[0].restaurant[0].name%></p>
+                                <p class="form-control" style="height: 80px;"><%= order[0].restaurant[0].name%></p>
                                 <label>Restaurant Email</label>
                                 <p class="form-control"> <%= order[0].restaurant[0].email%></p>
                                 <label>Restaurant Address</label>
@@ -70,23 +70,22 @@
                             </div>
 
                                 <div class="container" >
-                                    <% for(let j=0;j<order[n].orders.length;j++){%>
+                                    <% for(let j=0;j<order[0].orders.length;j++){%>
                                         <div class="container__image">
                                             <label>Order</label>
-                                            <p class="form-control" ><%= order[n].orders[j].food[0].name%></p>
+                                            <p class="form-control" ><%= order[0].orders[j].food[0].name%></p>
                                             <label>Quantity</label>
-                                            <p class="form-control"> <%= order[n].orders[j].quantity%></p>
+                                            <p class="form-control"> <%= order[0].orders[j].quantity%></p>
                                             <label>Price</label>
-                                            <p class="form-control"> <%= order[n].orders[j].food[0].price%></p>
+                                            <p class="form-control"> <%= order[0].orders[j].food[0].price%></p>
                                             <label>Total</label>
                                             <%let total = 0;%>
                                             <p class="form-control">
-                                                <%= total+=Number(order[n].orders[j].food[0].price*((order[n].orders[j].quantity)))%>
+                                                <%= total+=Number(order[0].orders[j].food[0].price*((order[0].orders[j].quantity)))%>
                                             </p>
                                         </div>
                                     <%}%>
                                 </div>
-                            <%}%>
                         </div>
                     </div>
                 </div>

@@ -71,7 +71,7 @@ app.use(passport.session());
 
 app.use(flash());
 
-app.use(cookieParser());
+app.use(cookieParser('strasno'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //global vars middleware

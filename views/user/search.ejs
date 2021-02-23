@@ -15,13 +15,44 @@
 </head>
 
 <body>
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top"style="border-bottom: 1px solid orange;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/users/dashboard"><i class="fa fa-home"></i> Dashboard</a>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav">
+            <%if(user){%>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/order"><i class="fa" id="kosara" style="font-size:24px">&#xf07a;</i>
+                        <span class='badge badge-warning' id='lblCartCount'></span></a>
+                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/users/logout"><i class="fa fa-user"></i> Logout</a>
+            </li>
+
+            <%}else{%>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/login"><i class="fa fa-user"></i> Login</a>
+                </li>
+            <%}%>
+        </ul>
+
+    </div>
+</nav>
 <div class="moja " style=" background:rgba(0, 0, 0, 0.5); ">
     <div class="naslovna" style="background:none !important;">
         <div class="naslovna1">
             <div class="naslovna-left">
                 <h1 style="color: #ffffff;text-shadow: 2px 2px #F9723D;">Search</h1>
                 <div>
-                    <form action="/users/search" method="Post">
+                    <form action="/users/search" method="POST">
                         <div class="input-group">
                             <input type="text" name="nazivArtikla" class="form-control form-control-lg " placeholder="Type your keywords here ">
                             <div class="input-group-append ">
@@ -52,7 +83,7 @@
                                     <div class="d-flex justify-content-between">
                                         <h6 class="card-price text-left" style="color: #F9723D;font-weight: bold;"><%=food[i].price%><span class="period">KM</span></h6>
                                         <div class="btn-group text-right">
-                                            <a class="btn btn-success btn-sm" href="#"  onclick="addToCart('<%= food[i]._id%>','<%= food[i].restaurant._id%>');">
+                                            <a class="btn btn-success btn-sm" href="javascript:void(0)"  onclick="addToCart('<%= food[i]._id%>','<%= food[i].restaurant._id%>');">
                                                 <i class="fa fa-plus">
                                                 </i>
                                                 Add to cart

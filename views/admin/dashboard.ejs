@@ -48,7 +48,7 @@
                                         <td><%= i+1 %></td>
                                         <td><a href="/admin/order/<%=order[i]._id %>"><%=order[i]._id %></a></td>
                                         <td><span class="badge badge-success"><%= order[i].status %></span></td>
-                                        <td><%= order[i].supplier %></td>
+                                        <td><%= order[i].supplier[0].name %></td>
                                         <%for(let j=0;j<order[i].restaurant.length;j++){%>
                                             <td><a href="#"><li class="list-group-item"><%= order[i].restaurant[j].name %></li></a> </td>
                                         <%}%>
