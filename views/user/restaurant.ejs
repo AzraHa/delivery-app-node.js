@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><%=rest[0].name%> </title>
+    <script src="/script/script.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/stylesheets/style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -15,12 +16,16 @@
 </head>
 <body>
 <% include partials/navigation %>
-<div class="naslovna" style=" background:rgba(255, 255, 255, 0.5);margin-top:60px;">
-    <div><img src="../../images/<%=rest[0].image%>" style="height:90%;margin: 10px;"></div>
-    <div id="googleMap" class="form-control " style="position: relative; overflow: hidden; width: 100%; height:90%;margin: 10px;"></div>
-    <input type="hidden" id="address" value="<%= rest[0].address %>">
-    <input type="hidden" id="restaurantName" value="<%= rest[0].name %>">
-    <input type="hidden" id="koordinate" name="koordinate" value="<%= rest[0].koordinate%>">
+<div class="restoran-naslovna">
+    <div class="restoran-img">
+        <img src="../../images/<%=rest[0].image%>" >
+    </div>
+    <div class="restoran-map">
+        <div id="googleMap" style=""></div>
+        <input type="hidden" id="address" value="<%= rest[0].address %>">
+        <input type="hidden" id="restaurantName" value="<%= rest[0].name %>">
+        <input type="hidden" id="koordinate" name="koordinate" value="<%= rest[0].koordinate%>">
+    </div>
 </div>
 <div class="moja " style=" background:rgba(0, 0, 0, 0.5); ">
     <section class="sticky-top offer-dedicated-nav bg-white border-top-0 shadow-sm ">
@@ -78,14 +83,12 @@
 
 <script>
 
-
     const adresa = document.getElementById("koordinate").value;
     const adres = adresa.replace("(","").replace(")","");
     const nova = adres.split(",");
     var latitude = parseFloat(nova[0]);
     var longitude = parseFloat(nova[1]);
     var addd = document.getElementById("address").value;
-    //console.log(latitude,longitude);
     const adrese =[];
     adrese.push([latitude,longitude,addd]);
 
@@ -99,16 +102,12 @@
         var x = document.getElementById("address");
         var y = document.getElementById("koordinate");
         var z = document.getElementById("restaurantName").value;
-        for (i = 0; i < adrese.length; i++) {
-            var icon = '';
+        for (let i = 0; i < adrese.length; i++) {
             if (adrese[i][0].length !== '' && adrese[i][1].length !== '') {
-
                 var marker = new google.maps.Marker({
                     position: new google.maps.LatLng(adrese[i][0], adrese[i][1]),
-                    map: map,
-                    title: "adresa"+i,
+                    map: map
                 });
-
                 var contentString = z +" "+ adrese[i][2];
                 var infowindow = new google.maps.InfoWindow({
                     content: contentString,
@@ -116,7 +115,6 @@
                 });
                 infowindow.open(map, marker);
 
-                // Event that closes the Info Window with a click on the map
                 google.maps.event.addListener(map, 'click', (function(infowindow) {
                     return function() {
                         infowindow.close();
@@ -125,65 +123,13 @@
 
                 google.maps.event.addListener(marker, 'click', (function(marker, i) {
                     return function() {
-                        var contentString = adrese[i][2];
+                        var contentString = z +" "+ adrese[i][2];
                         infowindow.setContent(contentString);
                         infowindow.open(map, marker);
                     }
                 })(marker, i));
-
             }
         }
-
-        var Mar;
-
-        function placeMarker(location) {
-            if ( Mar ) {
-                Mar.setPosition(location);
-                geocoder.geocode({ location}, (results, status) => {
-                    if (status === "OK") {
-                        if (results[0]) {
-                            infowindow.setContent(results[0].formatted_address);
-                            //console.log(results[0].formatted_address);
-                            x.value = results[0].formatted_address;
-                            infowindow.open(map, Mar);
-                        } else {
-                            window.alert("No results found");
-                        }
-                    } else {
-                        window.alert("Geocoder failed due to: " + status);
-                    }
-                });
-            } else {
-                Mar = new google.maps.Marker({
-                    position: location,
-                    map: map
-                });
-                Mar.setPosition(location);
-                geocoder.geocode({ location }, (results, status) => {
-                    if (status === "OK") {
-                        if (results[0]) {
-                            infowindow.setContent(results[0].formatted_address);
-                            //console.log(results[0].formatted_address);
-                            x.value = results[0].formatted_address;
-                            infowindow.open(map, Mar);
-                        } else {
-                            window.alert("No results found");
-                        }
-                    } else {
-                        window.alert("Geocoder failed due to: " + status);
-                    }
-                });
-            }
-        }
-
-        google.maps.event.addListener(map, 'click', function(event) {
-            placeMarker(event.latLng);
-            y.value = event.latLng;
-            console.log(y)
-        });
-
-
-
     }
 
 </script>

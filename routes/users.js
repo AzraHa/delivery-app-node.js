@@ -125,17 +125,16 @@ router.get('/logout',function(req,res,next){
 });
 
 router.get('/dashboard',function(req,res,next){
-  let options = {
+  /*let options = {
     maxAge: 1000 * 60 * 15,
     httpOnly: false,
     signed: true
   }
-  res.cookie('order', 0, options);
+  res.cookie('order', 0, options);*/
 
   Food.find({}).populate('restaurant').sort({"modified" : -1}).limit(6).exec(function(err,food){
         FoodType.find().exec(function (err,foodtype){
             Restaurant.find({}).exec(function (err,allRestaurants){
-              if(req.user){
                 User.findOne({_id: req.user._id}, function (err, user) {
                   const adresa = user.koordinate.replace("(", "").replace(")", "");
                   const nova = adresa.split(",");
@@ -166,19 +165,9 @@ router.get('/dashboard',function(req,res,next){
                     });
                   });
                 })
-              }else {
-
-                    res.render('user/dashboard', {
-                      user:req.user,
-                      food: food,
-                      foodtype: foodtype,
-                      restoran: JSON.stringify(allRestaurants),
-                      restaurant: allRestaurants
-                    });
-              }
+              })
             })
         })
-    });
 });
 
 router.post('/search',function(req,res,next){

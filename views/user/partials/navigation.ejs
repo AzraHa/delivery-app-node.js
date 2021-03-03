@@ -2,7 +2,6 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <%if(user){%>
         <ul class="navbar-nav mr-auto">
@@ -76,37 +75,6 @@
                     </li>
             </ul>
         <%}%>
-
     </div>
 </nav>
-
-<script>
-
-    function addToCart(id,restaurantID) {
-        $.ajax({
-            url: "/users/add-order/" + id + "/restaurant/" + restaurantID,
-            method: "POST",
-            success: function (result) {
-            }
-            }
-        )
-
-
-    }
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1;
-    var yyyy = today.getFullYear();
-    if(dd<10){
-        dd='0'+dd
-    }
-    if(mm<10){
-        mm='0'+mm
-    }
-    today = yyyy+'-'+mm+'-'+dd+'T'+'00:00';
-    document.getElementById("vrijeme").setAttribute("min", today);
-
-    $('.dropdown-toggle').dropdown();
-
-</script>
 

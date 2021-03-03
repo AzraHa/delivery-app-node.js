@@ -155,6 +155,28 @@ body{
   width:45%;
   margin: 0 auto;
 }
+.restoran-naslovna{
+  background:rgba(255, 255, 255, 0.5);
+  margin-top:60px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.restoran-img,.restoran-map{
+  width:50%;
+  margin: 0 auto;
+}
+
+.restoran-map #googleMap{
+  margin:10px 0px;
+  position: relative;
+  overflow: hidden;
+  height:90%;
+}
+.restoran-img img{
+  height:90%;
+  margin: 10px 0px;
+}
 .dugmici{
   display: flex;
   flex-direction: row;
@@ -173,15 +195,42 @@ body{
 }
 
 @media (max-width: 768px) {
-  .pocetna{
+  .pocetna,.restoran-naslovna{
     flex-direction: column;
-    margin-top: 50px;
   }
   .index-box{
     width: 90%;
     margin:0 auto;
     padding: 10px;
   }
+  .restoran-img{
+    width: 90%;
+    margin:0 auto;
+  }
+  .restoran-map{
+    width:90%;
+    margin:0 auto;
+    height: 500px;
+  }
+
+  .restoran-img img{
+    width:100%;
+
+  }
+  .restoran-map #googleMap{
+    width: 100%;
+  }
+}
+ul
+{
+  list-style-type: none;
+  counter-reset: section;
+  -moz-column-count: 3;
+  -moz-column-gap: 20px;
+  -webkit-column-count: 3;
+  -webkit-column-gap: 20px;
+  column-count: 3;
+  column-gap: 20px;
 }
 
 .card-primary.card-outline {
