@@ -358,7 +358,8 @@ router.post('/send-order',function(req,res,next) {
           console.log("NAJMANJA" + najmanja);
           console.log(dostavljacID, typeof dostavljacID);
         }
-        TotalOrder.findOneAndUpdate({_id:doc._id,status:1},{supplier:dostavljacID,status:2,date:vrijeme,payment:placanje},{upsert: true, new: true},function(err,totalOrder){
+        TotalOrder.findOneAndUpdate({_id:doc._id,status:1},{supplier:dostavljacID,status:2,date:vrijeme,payment:placanje},
+          {upsert: true, new: true},function(err,totalOrder){
             Supplier.findOneAndUpdate({_id:dostavljacID},{status:2,
               $push: {
                 orders:doc._id,
