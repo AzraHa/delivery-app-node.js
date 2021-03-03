@@ -144,12 +144,51 @@ body{
   width: 50%;
   margin-left: 15px;
 }
+.pocetna {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: stretch;
+  margin-top: 100px ;
+}
+.index-box{
+  width:45%;
+  margin: 0 auto;
+}
+.dugmici{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: stretch;
+}
+.dugmici a{
+  width: 50%;
+  background-color: #F9723D;
+  border-color: #386721;
+}
+.dugmici a:hover{
+  background-color: #fff;
+  border-color: #F9723D;
+  color:#F9723D;
+}
+
+@media (max-width: 768px) {
+  .pocetna{
+    flex-direction: column;
+    margin-top: 50px;
+  }
+  .index-box{
+    width: 90%;
+    margin:0 auto;
+    padding: 10px;
+  }
+}
 
 .card-primary.card-outline {
   border-top: 3px solid #F9723D;
 }
 a{
-  color:  #F9723D;
+  color: #f9723d;
 }
 .card-primary.card-outline a>.terms,
 .icheck-primary,
@@ -173,6 +212,18 @@ a.h1:hover {
   background-color: #fff;
   border-color: #F9723D;
   color:#F9723D;
+}
+.btn-primary{
+  background-color: #F9723D !important;
+  border-color: #fff !important;
+}
+.btn-primary:hover{
+  background-color: #fff !important;
+  border-color: #F9723D !important;
+  color:#F9723D !important;
+}
+.form-control{
+  border: 1px solid #F9723D !important;
 }
 
 .card {
