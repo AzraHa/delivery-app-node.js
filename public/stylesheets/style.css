@@ -232,102 +232,109 @@ ul
   column-count: 3;
   column-gap: 20px;
 }
+.input-group-text{
+  border: 1px solid #F9723D !important;
+}
+
+.table td, .table th {
+padding: 0.3rem !important;
+}
 
 .card-primary.card-outline {
-  border-top: 3px solid #F9723D;
+border-top: 3px solid #F9723D;
 }
 a{
-  color: #f9723d;
+color: #f9723d;
 }
 .card-primary.card-outline a>.terms,
 .icheck-primary,
 a.h1,
 a.h1:hover {
-  color: #f9723d;
-  text-decoration: none;
+color: #f9723d;
+text-decoration: none;
 }
 
 .card-body p {
-  color: #F9723D;
+color: #F9723D;
 }
 
 .col-6 .btn-primary,
 .col-4 .btn-primary {
-  background-color: #F9723D;
-  border-color: #386721;
+background-color: #F9723D;
+border-color: #386721;
 }
 .col-6 .btn-primary:hover,
 .col-4 .btn-primary:hover{
-  background-color: #fff;
-  border-color: #F9723D;
-  color:#F9723D;
+background-color: #fff;
+border-color: #F9723D;
+color:#F9723D;
 }
 .btn-primary{
-  background-color: #F9723D !important;
-  border-color: #fff !important;
+background-color: #F9723D !important;
+border-color: #fff !important;
 }
 .btn-primary:hover{
-  background-color: #fff !important;
-  border-color: #F9723D !important;
-  color:#F9723D !important;
+background-color: #fff !important;
+border-color: #F9723D !important;
+color:#F9723D !important;
 }
 .form-control{
-  border: 1px solid #F9723D !important;
+border: 1px solid #F9723D !important;
 }
 
 .card {
-  border-top:1px solid #F9723D ;
-  margin-bottom: 10px;
+border-top:1px solid #F9723D ;
+margin-bottom: 10px;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-  outline: none !important;
-  box-shadow: 0 0 3px #F9723D !important;
-  border: 0 !important;
+outline: none !important;
+box-shadow: 0 0 3px #F9723D !important;
+border: 0 !important;
 }
 
 .fa {
-  color: #F9723D;
+color: #F9723D;
 }
 
 .mb-0 a,
 .mb-1 a {
-  color: #F9723D;
+color: #F9723D;
 }
 
 @media screen and (max-width:776px) {
-  .naslovna2 {
-    display: none;
-  }
-  .login-box {
-    width: 70% !important;
-  }
-  .register-box {
-    width: 90%;
-  }
+.naslovna2 {
+display: none;
+}
+.login-box {
+width: 70% !important;
+}
+.register-box {
+width: 90%;
+}
 }
 
 
 .starter-template {
-  padding: 3rem 1.5rem;
-  text-align: center;
+padding: 3rem 1.5rem;
+text-align: center;
 }
 
 .feather {
-  width: 16px;
-  height: 16px;
-  vertical-align: text-bottom;
+width: 16px;
+height: 16px;
+vertical-align: text-bottom;
 }
 
 .sidebar {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 100;
-  /* Behind the navbar */
+position: fixed;
+top: 0;
+bottom: 0;
+left: 0;
+z-index: 100;
+/* Behind the navbar */
   padding: 48px 0 0;
   /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);

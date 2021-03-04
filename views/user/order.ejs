@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/stylesheets/style.css" rel="stylesheet">
     <script src="/script/script.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="/script/maps.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -19,13 +19,11 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="/users/dashboard"><i class="fa fa-home"></i> Dashboard</a>
                 </li>
-
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -36,7 +34,6 @@
                     <a class="nav-link" href="/users/logout"><i class="fa fa-user"></i> Logout</a>
                 </li>
             </ul>
-
         </div>
     </nav>
 
@@ -45,114 +42,109 @@
             <h1 class="h2">Dashboard</h1>
         </div>
         <div class="card">
-            <div class="card-body" style="width: 100%;border-top: 1px solid orange;">
-                <div class="card-header">
-                    <h3 class="card-title">Order</h3>
-                </div>
+            <div class="card-header">
+                <h3 class="card-title">Order</h3>
+            </div>
+            <div class="card-body" style="border-top: 1px solid orange;">
                 <form action="/users/send-order" method="post">
                     <div class="container">
-                        <div class="container__image">
-                            <div id="googleMap" class="form-control " style=" position: relative; overflow: hidden; width: 100%; margin: 5px; height: 400px;"></div>
-                        </div>
                         <div class="container__text">
                             <div class="container__image" style="width: 100%!important;">
                                 <label>Customer Name</label>
                                 <p class="form-control" ><%= user.name%></p>
                                 <label>Customer Email</label>
                                 <p class="form-control"> <%= user.email%></p>
-                                <label>Address</label>
-                                <div class="input-group mb-3">
+                                <label>Delivery Address</label>
+                                <div class="input-group mr-3">
                                     <input type="text"
                                            id="address"
                                            name="address"
                                            class="form-control"
                                            placeholder="Address"
-                                           value="<%= user.address
-                                           %>">
+                                           value="<%= user.address %>">
                                     <div class="input-group-append" >
+                                        <div class="input-group-text">
+                                            <span class="fa fa-map-marker" id="dugme"></span>
+                                        </div>
+                                        <div class="input-group-text">
+                                            <span class="fa fa-search" id="submit"></span>
+                                        </div>
                                         <input type="hidden" id="koordinate" name="koordinate" value="<%= user.koordinate %>">
                                     </div>
+                                    <div class="input-group">
+                                        <label for="inputEmail3 " class="col-sm-2 col-form-label mr-2 "></label>
+                                        <div id="googleMap" class="form-control " style="position: relative; overflow: hidden; width: 100%; margin: 5px; height: 300px; "></div>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="container__image" style="width: 100%!important;">
-                                <label>Restaurant</label>
-                                <p class="form-control" ><%= order[0].restaurant[0].name%></p>
-                                <label>Customer Email</label>
-                                <p class="form-control"> <%= order[0].restaurant[0].email%></p>
-                                <label>Restaurant Address</label>
-                                <p class="form-control" style="height: 80px;"><%= order[0].restaurant[0].address%></p>
+                                <label>Delivery Time</label>
+                                <input type="datetime-local" id="vrijeme" name="vrijeme" class="form-control select2" style="width: 100%;">
+                                <label>Payment method</label>
+                                <select id="placanje"  name="placanje" class="form-control select2" style="width: 100%;">
+                                    <option value="" disabled selected>Payment method</option>
+                                    <option  name ="" value="kartica">Card</option>
+                                    <option  name ="" value="gotovina">Cash</option>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <!-- TABLE: LATEST ORDERS -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Order</h3>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
-                                <table class="table m-0">
-                                    <thead>
-                                    <tr>
-                                        <th>No :</th>
-                                        <th>Food</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                        <th>Total</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <% let totalPrice = 0; ;%>
-                                    <% if (typeof order !== 'undefined' && order.length >= 0) {%>
-                                        <% for(let i=0;i<order.length;i++){%>
-                                            <% for(let j=0;j<order[i].orders.length;j++){%>
-                                                <tr id="<%= order[i].orders[j]._id%>">
-                                                    <td><%= j+1 %> </td>
-                                                    <td><p class="form-control"><%= order[i].orders[j].food[0].name%></p>
-                                                    </td>
-                                                    <td><p class="form-control"> <%= order[i].orders[j].quantity%></p>
-                                                    </td>
-                                                    <td><p class="form-control"> <%= order[i].orders[j].food[0].price%> KM </p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="form-control">
-                                                            <% let total=0;
-                                                                total+=Number(order[i].orders[j].food[0].price*((order[i].orders[j].quantity))) %>
-                                                            <%= total %>KM
-                                                            <% totalPrice += total%>
-                                                        </p>
-                                                    </td>
-
-                                                    <td class="project-actions">
-                                                        <a class="btn btn-danger btn-sm" onclick="deleteFromOrder('<%= order[i].orders[j]._id%>','<%= order[i].orders[j].food[0]._id%>');">
-                                                            <i class="fa fa-trash">
-                                                            </i>
-                                                            Delete
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                    <div class="container">
+                        <div class="container__text">
+                            <div class="card">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Food</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                            <th>Total</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <% let totalPrice = 0; %>
+                                        <% if (typeof order !== 'undefined' && order.length >= 0) {%>
+                                            <% for(let i=0;i<order.length;i++){%>
+                                                <% for(let j=0;j<order[i].orders.length;j++){%>
+                                                    <tr id="<%= order[i].orders[j]._id%>">
+                                                        <td><p><%= j+1 %> . </p></td>
+                                                        <td><p><%= order[i].orders[j].food[0].name%></p>
+                                                        </td>
+                                                        <td><p> <%= order[i].orders[j].quantity%></p>
+                                                        </td>
+                                                        <td><p> <%= order[i].orders[j].food[0].price%> KM </p>
+                                                        </td>
+                                                        <td>
+                                                            <p>
+                                                                <% let total=0;
+                                                                    total+=Number(order[i].orders[j].food[0].price*((order[i].orders[j].quantity))) %>
+                                                                <%= total %>KM
+                                                                <% totalPrice += total%>
+                                                            </p>
+                                                        </td>
+                                                        <td class="project-actions">
+                                                            <a class="btn btn-danger btn-sm" onclick="deleteFromOrder('<%= order[i].orders[j]._id%>','<%= order[i].orders[j].food[0]._id%>');">
+                                                                <i class="fa fa-trash">
+                                                                </i>
+                                                                Delete
+                                                            </a>
+                                                        </td>
+                                                    </tr>
                                                 <%}%>
-                                            <% }} %>
-                                    </tbody>
-                                </table>
-
-                            </div>
+                                        <% }} %>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Total: </th>
+                                            <th><p><%= totalPrice %> KM </p></th>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                         </div>
-                    </div >
-                    <div class="text-right">
-                        Total: <p class="form-control"><%=totalPrice%> KM </p>
-                        <select id="placanje"  name="placanje" class="form-control select2" style="width: 100%;">
-                            <option value="" disabled selected>Payment method</option>
-                            <option  name ="" value="kartica">Card</option>
-                            <option  name ="" value="gotovina">Cash</option>
-                        </select><label class="text-left" style="width: 100%;">Delivery time </label>
-                        <input type="datetime-local" id="vrijeme" name="vrijeme" class="form-control select2"
-                               style="width: 100%;">
-                        <button type="submit" class="btn btn-primary" >Send</button>
-                    </div>
-
+                        </div>
                 </form>
             </div>
         </div>
@@ -160,112 +152,9 @@
 </main>
 <script>
     datum();
-    const adresa = document.getElementById("koordinate").value;
-    const adres = adresa.replace("(","").replace(")","");
-    const nova = adres.split(",");
-    var latitude = parseFloat(nova[0]);
-    var longitude = parseFloat(nova[1]);
-    var addd = document.getElementById("address").value;
-    const adrese =[];
-    adrese.push([latitude,longitude,addd]);
-
-    function myMap() {
-        var mapProp= {
-            center:new google.maps.LatLng(latitude,longitude),
-            zoom:18,
-        };
-        var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-        const geocoder = new google.maps.Geocoder();
-        var x = document.getElementById("address");
-        var y = document.getElementById("koordinate");
-        for (let i = 0; i <= adrese.length; i++) {
-            var icon = '';
-            if (adrese[i][0].length !== '' && adrese[i][1].length !== '') {
-
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(adrese[i][0], adrese[i][1]),
-                    map: map
-                });
-
-                var contentString = adrese[i][2];
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString,
-                    maxWidth: 160
-                });
-                infowindow.open(map, marker);
-
-                google.maps.event.addListener(map, 'click', (function(infowindow) {
-                    return function() {
-                        infowindow.close();
-                    }
-                })(infowindow));
-
-                google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                    return function() {
-                        var contentString = adrese[i][2];
-                        infowindow.setContent(contentString);
-                        infowindow.open(map, marker);
-                    }
-                })(marker, i));
-
-            }
-        }
-
-
-        var Mar;
-
-        function placeMarker(location) {
-            if ( Mar ) {
-                Mar.setPosition(location);
-                geocoder.geocode({ location}, (results, status) => {
-                    if (status === "OK") {
-                        if (results[0]) {
-                            infowindow.setContent(results[0].formatted_address);
-                            //console.log(results[0].formatted_address);
-                            x.value = results[0].formatted_address;
-                            infowindow.open(map, Mar);
-                        } else {
-                            window.alert("No results found");
-                        }
-                    } else {
-                        window.alert("Geocoder failed due to: " + status);
-                    }
-                });
-            } else {
-                Mar = new google.maps.Marker({
-                    position: location,
-                    map: map
-                });
-                Mar.setPosition(location);
-                geocoder.geocode({ location }, (results, status) => {
-                    if (status === "OK") {
-                        if (results[0]) {
-                            infowindow.setContent(results[0].formatted_address);
-                            //console.log(results[0].formatted_address);
-                            x.value = results[0].formatted_address;
-                            infowindow.open(map, Mar);
-                        } else {
-                            window.alert("No results found");
-                        }
-                    } else {
-                        window.alert("Geocoder failed due to: " + status);
-                    }
-                });
-            }
-        }
-
-        google.maps.event.addListener(map, 'click', function(event) {
-            placeMarker(event.latLng);
-            y.value = event.latLng;
-            console.log(y)
-        });
-
-    }
-
-
 
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfOHwnQrFUSJ1CSq0-z2-mvUyeZM10ADg&callback=myMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfOHwnQrFUSJ1CSq0-z2-mvUyeZM10ADg&callback=korisnikMap"></script>
 </body>
 </html>

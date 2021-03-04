@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><%=rest[0].name%> </title>
     <script src="/script/script.js"></script>
+    <script src="/script/maps.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/stylesheets/style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -12,7 +13,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
 </head>
 <body>
 <% include partials/navigation %>
@@ -24,7 +24,7 @@
         <div id="googleMap" style=""></div>
         <input type="hidden" id="address" value="<%= rest[0].address %>">
         <input type="hidden" id="restaurantName" value="<%= rest[0].name %>">
-        <input type="hidden" id="koordinate" name="koordinate" value="<%= rest[0].koordinate%>">
+        <input type="hidden" id="koordinateRestorana" name="koordinate" value="<%= rest[0].koordinate%>">
     </div>
 </div>
 <div class="moja " style=" background:rgba(0, 0, 0, 0.5); ">
@@ -80,61 +80,7 @@
         <%}%>
     </div>
 </div>
-
-<script>
-
-    const adresa = document.getElementById("koordinate").value;
-    const adres = adresa.replace("(","").replace(")","");
-    const nova = adres.split(",");
-    var latitude = parseFloat(nova[0]);
-    var longitude = parseFloat(nova[1]);
-    var addd = document.getElementById("address").value;
-    const adrese =[];
-    adrese.push([latitude,longitude,addd]);
-
-    function myMap() {
-        var mapProp= {
-            center:new google.maps.LatLng(latitude,longitude),
-            zoom:18,
-        };
-        var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-        const geocoder = new google.maps.Geocoder();
-        var x = document.getElementById("address");
-        var y = document.getElementById("koordinate");
-        var z = document.getElementById("restaurantName").value;
-        for (let i = 0; i < adrese.length; i++) {
-            if (adrese[i][0].length !== '' && adrese[i][1].length !== '') {
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(adrese[i][0], adrese[i][1]),
-                    map: map
-                });
-                var contentString = z +" "+ adrese[i][2];
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString,
-                    maxWidth: 160
-                });
-                infowindow.open(map, marker);
-
-                google.maps.event.addListener(map, 'click', (function(infowindow) {
-                    return function() {
-                        infowindow.close();
-                    }
-                })(infowindow));
-
-                google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                    return function() {
-                        var contentString = z +" "+ adrese[i][2];
-                        infowindow.setContent(contentString);
-                        infowindow.open(map, marker);
-                    }
-                })(marker, i));
-            }
-        }
-    }
-
-</script>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfOHwnQrFUSJ1CSq0-z2-mvUyeZM10ADg&callback=myMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfOHwnQrFUSJ1CSq0-z2-mvUyeZM10ADg&callback=restoranMap"></script>
 </body>
 </html>
 

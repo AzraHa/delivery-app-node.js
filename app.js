@@ -7,18 +7,6 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var flash = require('connect-flash');
 var session = require('express-session');
-var jwt = require('jsonwebtoken');
-
-var NodeGeocoder = require('node-geocoder');
-
-var options = {
-  provider: 'google',
-  httpAdapter: 'https',
-  apiKey: 'AIzaSyCVWoPIcc1pz1z5p_Ja6_CD7Ed9MzWN_ko',
-  formatter: null
-};
-
-var geocoder = NodeGeocoder(options);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');

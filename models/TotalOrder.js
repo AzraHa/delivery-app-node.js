@@ -8,7 +8,8 @@ const TotalOrderSchema = new mongoose.Schema({
   supplier: [{ type: mongoose.Schema.Types.ObjectId, ref: "Supplier" }],
   status:{type:Number,required:true},
   payment:{type:String},
-  date: {type: Date,  default: moment(new Date).format("MM/DD/YYYY, hh:mm:ss")}
+  date: {type: Date,  default: moment(new Date).format("MM/DD/YYYY, hh:mm:ss")},
+  delivery_address:{type:String,required:true}
 });
 
 const TotalOrder = mongoose.model('TotalOrder', TotalOrderSchema);

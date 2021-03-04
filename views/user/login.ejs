@@ -5,17 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <!-- Custom styles for this template -->
     <link href="/stylesheets/style.css" rel="stylesheet">
-    <!-- Fontawesome-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <!-- Fontawesome-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <!-- Fontawesome-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
 
@@ -23,64 +16,54 @@
 <div class="pocetak">
     <div class="naslovna-login-register">
         <div class="login-box">
-            <!-- /.login-logo -->
             <div class="card card-outline card-primary">
                 <div class="card-header text-center">
-                    <a href="" class="h1"><b>Login</b></a>
+                    <a href="#" class="h1"><b>Login</b></a>
                 </div>
                 <div class="card-body">
                     <p class="login-box-msg">Sign in to start your session</p>
-
                     <% include ../partials/messages %>
-                <form action="/users/login" method="POST">
-                    <div class="input-group mb-3">
-                        <input type="email"
-                               id="email"
-                               name="email"
-                               class="form-control"
-                               placeholder="Enter Email">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fa fa-envelope"></span>
+                    <form action="/users/login" method="POST">
+                        <div class="input-group mb-3">
+                            <input type="email"
+                                   id="email"
+                                   name="email"
+                                   class="form-control"
+                                   placeholder="Enter Email">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fa fa-envelope"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="password"
-                               id="password"
-                               name="password"
-                               class="form-control"
-                               placeholder="Enter Password">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fa fa-lock"></span>
+                        <div class="input-group mb-3">
+                            <input type="password"
+                                   id="password"
+                                   name="password"
+                                   class="form-control"
+                                   placeholder="Enter Password">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fa fa-lock"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md">
-                            <div class="col-md-8 icheck-primary">
-
+                        <div class="row">
+                            <div class="col-md">
+                                <div class="col-md-8 icheck-primary">
+                                </div>
+                            </div>
+                            <div class="col-6 submit">
+                                <button type="submit" class="btn btn-primary btn-block">Login</button>
                             </div>
                         </div>
-                        <!-- /.col -->
-                        <div class="col-6 submit">
-                            <button type="submit" class="btn btn-primary btn-block">Login</button>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-            </form>
-            <p class="lead mt-4">
-                No Account? <a href="/users/register">Register</a>
-            </p>
+                    </form>
+                    <p class="lead mt-4">No Account?<a href="/users/register">Register</a></p>
+                </div>
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
+        <div class="naslovna2 "></div>
     </div>
-
-    <div class="naslovna2 ">
-
-    </div>
-
 </div>
+</body>
+</html>
