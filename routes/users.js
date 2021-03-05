@@ -239,8 +239,7 @@ router.post('/add-order/:foodID/restaurant/:restaurantID',function (req,res,next
     Order.findOneAndUpdate({customer:userID,
         restaurant:restaurantID,
         food:foodID,
-        status:1},
-      { $inc: {quantity:1},date:date },
+        status:1,date:date },{},
       { upsert: true, new: true }, (err, doc) => {
         TotalOrder.findOneAndUpdate( { customer : userID,status:1}, {
           customer:userID,
@@ -314,13 +313,24 @@ router.delete('/order/:id/:food',function (req,res,next){
 
 
 router.post('/send-order',function(req,res,next) {
-  let dostavljacID;
-  let najmanja = 100000000000;
-  let vrijeme = req.body.vrijeme;
-  const placanje = req.body.placanje;
-  if(vrijeme==="undefined"){
-    vrijeme = moment(new Date).format("MM/DD/YYYY, hh:mm:ss");
+  var dostavljacID;
+  var najmanja = 100000000000;
+  var vrijeme = req.body.vrijeme;
+  console.log(vrijeme,typeof vrijeme)
+  if(vrijeme === ""){
+    vrijeme = moment().add(45, 'minutes').format("MM/DD/YYYY hh:mm:ss");
+  }else{
+    vrijeme = moment(vrijeme).format("MM/DD/YYYY hh:mm:ss");
   }
+  console.log(vrijeme,typeof vrijeme)
+  var placanje = req.body.placanje;
+  var delivery_address = req.body.address;
+  var koordinate = req.body.koordinate;
+
+  if(placanje==="undefined"){
+    placanje = "gotovina";
+  }
+
   TotalOrder.findOne({customer: req.user._id,status: 1}, function(error, doc)  {
     if (error) {
       console.log("Something wrong when updating data!");
@@ -347,17 +357,31 @@ router.post('/send-order',function(req,res,next) {
           console.log("NAJMANJA" + najmanja);
           console.log(dostavljacID, typeof dostavljacID);
         }
-        TotalOrder.findOneAndUpdate({_id:doc._id,status:1},{supplier:dostavljacID,status:2,date:vrijeme,payment:placanje},
-          {upsert: true, new: true},function(err,totalOrder){
-            Supplier.findOneAndUpdate({_id:dostavljacID},{status:2,
-              $push: {
-                orders:doc._id,
-              }},{new: true},function(err,supplier){
-              if (err) {
-                console.log("Something wrong when updating data!");
-              }
-          })
-        });
+        TotalOrder.findOneAndUpdate({_id:doc._id,status:1},
+            {
+              supplier:dostavljacID,
+              status:2,
+              date:vrijeme,
+              payment:placanje,
+              delivery_address:delivery_address,
+              delivery_latlang:koordinate,
+            },
+          {upsert: true, new: true},
+            function(err,totalOrder){
+                Supplier.findOneAndUpdate({_id:dostavljacID},
+                    {status:2,
+                            $push: {
+                              orders:doc._id,
+                            },
+                            s_address:delivery_address,
+                            koordinate:koordinate
+                    },{new: true},
+                    function(err,supplier){
+                          if (err) {
+                            console.log("Something wrong when updating data!");
+                          }
+                    })
+            });
         })
       });
     })
@@ -404,6 +428,7 @@ router.get('/profile',function(req,res,next){
         model: 'Food'
       }
     }]).populate('restaurant').populate('customer').exec(function(err,orders){
+      console.log(orders)
       res.render('user/profile',{
         user:user,
         orders:orders

@@ -110,14 +110,14 @@
                                                         <td><p><%= j+1 %> . </p></td>
                                                         <td><p><%= order[i].orders[j].food[0].name%></p>
                                                         </td>
-                                                        <td><p> <%= order[i].orders[j].quantity%></p>
+                                                        <td><p> 1</p>
                                                         </td>
                                                         <td><p> <%= order[i].orders[j].food[0].price%> KM </p>
                                                         </td>
                                                         <td>
                                                             <p>
                                                                 <% let total=0;
-                                                                    total+=Number(order[i].orders[j].food[0].price*((order[i].orders[j].quantity))) %>
+                                                                    total+=Number(order[i].orders[j].food[0].price) %>
                                                                 <%= total %>KM
                                                                 <% totalPrice += total%>
                                                             </p>
@@ -138,13 +138,15 @@
                                             <th></th>
                                             <th></th>
                                             <th>Total: </th>
-                                            <th><p><%= totalPrice %> KM </p></th>
+                                            <th><p><%= totalPrice %> KM </p>
+                                                <button type="submit" class="btn btn-success">Submit</button>
+                                            </th>
                                         </tr>
                                         </tbody>
                                     </table>
-                                </div>
+                            </div>
                         </div>
-                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -152,9 +154,7 @@
 </main>
 <script>
     datum();
-
 </script>
-
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfOHwnQrFUSJ1CSq0-z2-mvUyeZM10ADg&callback=korisnikMap"></script>
 </body>
 </html>
