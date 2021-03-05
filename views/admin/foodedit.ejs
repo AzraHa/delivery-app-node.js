@@ -75,14 +75,7 @@
                                                                value="<%= food[i].price %>">
                                                         <label>Restaurant</label>
                                                         <div class="input-group mb-3">
-                                                            <select id="restaurant"  name="restaurant" class="form-control select2" style="width: 100%;">
-                                                                <% if (typeof restaurants !== 'undefined' && restaurants.length > 0) {%>
-                                                                    <option name="restaurant" value="<%= food[i].restaurant._id %>" selected><%= food[i].restaurant.name %></option>
-                                                                <%for (var k = 0; k < restaurants.length; k++) { %>
-                                                                    <option  name ="restaurant" value="<%= restaurants[k]._id%>"><%= restaurants[k].name %></option>
-                                                                <%}%>
-                                                                <%}%>
-                                                            </select>
+                                                            <p class="form-control"><%= food[i].restaurant.name %></p>
                                                         </div>
                                                         <p class="project-actions text-right">
                                                             <button type="submit" class="btn btn-success">Submit</button>

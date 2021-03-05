@@ -15,11 +15,12 @@ const Order = require("../models/Order");
 const TotalOrder = require("../models/TotalOrder");
 const geolib = require('geolib');
 const {ObjectId} = require("bson");
+const {isAuthenticatedAdmin} = require('../config/auth');
 
 router.get('/',function (req,res,next){
   res.render('AdminRestaurant/login',{user:req.user});
 });
-router.get('/dashboard',function (req,res,next){
+router.get('/dashboard',isAuthenticatedAdmin,function (req,res,next){
   TotalOrder.find({'restaurant':req.user.restaurant})
     .populate('customer').populate('supplier')
     .exec(function (err, doc) {
@@ -48,13 +49,13 @@ router.get('/logout',function (req,res,next){
   res.redirect('/adminRestaurant/login');
 });
 
-router.get('/admin',function (req,res,next){
+router.get('/admin',isAuthenticatedAdmin,function (req,res,next){
   RestaurantAdmin.find({restaurant:req.user.restaurant}).populate('restaurant').exec(function(err,restAdmin){
     //console.log(restAdmin);
     res.render('AdminRestaurant/admin',{user:req.user,restAdmin:restAdmin});
   });
 });
-router.get('/admin/:id',function(req,res,next){
+router.get('/admin/:id',isAuthenticatedAdmin,function(req,res,next){
   const adminID = req.params.id;
   RestaurantAdmin.find({_id:adminID},function(err,admin){
     res.render('adminRestaurant/restAdmin',{
@@ -64,7 +65,7 @@ router.get('/admin/:id',function(req,res,next){
   })
 });
 
-router.get('/administrator',function(req,res,next){
+router.get('/administrator',isAuthenticatedAdmin,function(req,res,next){
   RestaurantAdmin.find({_id: req.user._id}).populate('restaurant').exec(function (err,admin){
     res.render('adminRestaurant/administrator',{
       user:req.user,
@@ -73,7 +74,7 @@ router.get('/administrator',function(req,res,next){
   });
 });
 
-router.post('/administrator/:id',upload.single('picture'),function(req,res,next){
+router.post('/administrator/:id',isAuthenticatedAdmin,upload.single('picture'),function(req,res,next){
   const adminID = req.params.id;
   const {name,email,address} = req.body;
   const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
@@ -101,7 +102,7 @@ router.post('/administrator/:id',upload.single('picture'),function(req,res,next)
   }
 });
 
-router.post('/admin/edit/:id',function(req,res,next){
+router.post('/admin/edit/:id',isAuthenticatedAdmin,function(req,res,next){
   const adminID = req.params.id;
   const restaurant = req.user.restaurant;
   const adminName = req.body.adminName;
@@ -145,7 +146,7 @@ router.post('/admin/edit/:id',function(req,res,next){
 });
 
 
-router.get('/food',function (req,res,next){
+router.get('/food',isAuthenticatedAdmin,function (req,res,next){
   Food.find({restaurant:req.user.restaurant})
       .populate('type')
       .exec(function(err, food) {
@@ -157,7 +158,7 @@ router.get('/food',function (req,res,next){
         });
       });
 });
-router.get('/food/:id',function(req,res,next){
+router.get('/food/:id',isAuthenticatedAdmin,function(req,res,next){
   const foodID = req.params.id;
   Food.find({_id: foodID}).populate('type').exec(function(err,food){
     FoodType.find({},function (err,ftype){
@@ -170,7 +171,7 @@ router.get('/food/:id',function(req,res,next){
 
   });
 });
-router.post('/food/edit/:id',upload.single('picture'),function (req,res,next){
+router.post('/food/edit/:id',isAuthenticatedAdmin,upload.single('picture'),function (req,res,next){
   const foodID = req.params.id;
   const {name,description,type,price} = req.body;
   const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
@@ -200,7 +201,7 @@ router.post('/food/edit/:id',upload.single('picture'),function (req,res,next){
   }
 });
 
-router.delete('/food/delete/:id',function (req,res,next){
+router.delete('/food/delete/:id',isAuthenticatedAdmin,function (req,res,next){
   Food.deleteOne({ _id: req.params.id }, function (err) {
     if (err) return err;
     else res.sendStatus(200);
@@ -208,7 +209,7 @@ router.delete('/food/delete/:id',function (req,res,next){
 });
 
 
-router.get('/add-food-item',function (req,res,next){
+router.get('/add-food-item',isAuthenticatedAdmin,function (req,res,next){
   FoodType.find({},function (err,foodtype){
     if(err) console.log(err);
     else{
@@ -219,7 +220,7 @@ router.get('/add-food-item',function (req,res,next){
     }
   })
 });
-router.post('/add-food-item',upload.single('picture'),function (req,res,next){
+router.post('/add-food-item',isAuthenticatedAdmin,upload.single('picture'),function (req,res,next){
   const {name,type,price} = req.body;
   const restaurant = req.user.restaurant;
   const picture = req.file.filename;
@@ -236,7 +237,7 @@ router.post('/add-food-item',upload.single('picture'),function (req,res,next){
       res.redirect('/adminRestaurant/food');
     });
 });
-router.get('/add-meni',function (req,res,next){
+router.get('/add-meni',isAuthenticatedAdmin,function (req,res,next){
   FoodType.find({},function (err,foodtype){
     if(err) console.log(err);
     else{
@@ -247,7 +248,7 @@ router.get('/add-meni',function (req,res,next){
     }
   })
 });
-router.post('/add-meni',upload.single('picture'),function (req,res,next){
+router.post('/add-meni',isAuthenticatedAdmin,upload.single('picture'),function (req,res,next){
   const {name,type,price} = req.body;
   const picture = req.file.filename;
   const restaurant = req.user.restaurant;
@@ -267,11 +268,11 @@ router.post('/add-meni',upload.single('picture'),function (req,res,next){
 });
 
 
-router.get('/add-restaurant-admin',function (req,res,next){
+router.get('/add-restaurant-admin',isAuthenticatedAdmin,function (req,res,next){
   res.render('AdminRestaurant/add-restaurant-admin',{user:req.user});
 });
 
-router.post('/add-restaurant-admin',function (req,res,next){
+router.post('/add-restaurant-admin',isAuthenticatedAdmin,function (req,res,next){
   const restaurant = req.user.restaurant;
   const { adminName, address, koordinate , adminEmail, password} = req.body;
   const status = true;
@@ -324,14 +325,14 @@ router.post('/add-restaurant-admin',function (req,res,next){
 });
 
 
-router.get('/customers',function (req,res,next){
+router.get('/customers',isAuthenticatedAdmin,function (req,res,next){
   const restaurant = req.user.restaurant;
   User.find({status:1,restaurants:restaurant},function(err,customers){
     console.log(customers)
       res.render('AdminRestaurant/customers',{user:req.user._id,customers:customers});
     })
 });
-router.get('/customers/:id',function (req,res,next){
+router.get('/customers/:id',isAuthenticatedAdmin,function (req,res,next){
   const user = req.params.id;
   User.find({_id:user}).populate('orders').exec(function(err,customer){
    Order.find({customer:user,restaurant:req.user.restaurant}).sort([['status', 'descending']]).populate('food').exec(function(err,totalOrder){
@@ -341,7 +342,7 @@ router.get('/customers/:id',function (req,res,next){
     })
   })
 });
-router.get('/orders',function (req,res,next){
+router.get('/orders',isAuthenticatedAdmin,function (req,res,next){
   TotalOrder.find({restaurant:req.user.restaurant}).populate([{
     path: 'orders',
     populate: {
@@ -356,7 +357,7 @@ router.get('/orders',function (req,res,next){
     });
   })
 });
-router.get('/order-confirm',function (req,res,next){
+router.get('/order-confirm',isAuthenticatedAdmin,function (req,res,next){
   TotalOrder.find({restaurant:req.user.restaurant,status:2})
     .populate([{
       path: 'orders',
@@ -375,7 +376,7 @@ router.get('/order-confirm',function (req,res,next){
   })
 
 });
-router.get('/order-confirm/:id',function (req,res,next) {
+router.get('/order-confirm/:id',isAuthenticatedAdmin,function (req,res,next) {
   let dostavljacID = [];
   let najmanja = 500000;
   Restaurant.findOne({_id:req.user.restaurant},function(err,restaurant){
@@ -423,7 +424,7 @@ router.get('/order-confirm/:id',function (req,res,next) {
   });
 
 });
-router.post('/order-confirm/:id',function (req,res,next){
+router.post('/order-confirm/:id',isAuthenticatedAdmin,function (req,res,next){
   const supplierID = req.body.supplier;
   TotalOrder.findOneAndUpdate({_id:req.params.id},{status:3},{new:true},function(err,order) {
     if (err) {
@@ -434,17 +435,17 @@ router.post('/order-confirm/:id',function (req,res,next){
     })
   });
 });
-router.get('/assign-order',function (req,res,next){
+router.get('/assign-order',isAuthenticatedAdmin,function (req,res,next){
   res.render('AdminRestaurant/admin',{user:req.user});
 });
 
 
-router.get('/suppliers',function (req,res,next){
+router.get('/suppliers',isAuthenticatedAdmin,function (req,res,next){
   Supplier.find({restaurant:req.user.restaurant},function (err,suppliers){
     res.render('AdminRestaurant/suppliers',{user:req.user,suppliers:suppliers});
   });
 });
-router.get('/suppliers/:id',function (req,res,next){
+router.get('/suppliers/:id',isAuthenticatedAdmin,function (req,res,next){
   const supplierID = req.params.id;
   Supplier.find({_id:supplierID},function(err,supplier){
     res.render('AdminRestaurant/supplier',{
@@ -453,7 +454,7 @@ router.get('/suppliers/:id',function (req,res,next){
     })
   })
 });
-router.post('/suppliers/edit/:id',function (req,res,next){
+router.post('/suppliers/edit/:id',isAuthenticatedAdmin,function (req,res,next){
   const supplierID = req.params.id;
   const {name,address,email,status,password} = req.body;
   const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
@@ -491,7 +492,7 @@ router.post('/suppliers/edit/:id',function (req,res,next){
 });
 
 
-router.delete('/suppliers/delete/:id',function (req,res,next){
+router.delete('/suppliers/delete/:id',isAuthenticatedAdmin,function (req,res,next){
   Supplier.deleteOne({ _id: req.params.id }, function (err) {
     if (err) return err;
     else res.sendStatus(200);
@@ -499,10 +500,10 @@ router.delete('/suppliers/delete/:id',function (req,res,next){
 });
 
 
-router.get('/add-supplier',function (req,res,next){
+router.get('/add-supplier',isAuthenticatedAdmin,function (req,res,next){
   res.render('AdminRestaurant/add-suppliers',{user:req.user});
 });
-router.post('/add-supplier',function (req,res,next){
+router.post('/add-supplier',isAuthenticatedAdmin,function (req,res,next){
   const {name,email,address,password,koordinate} = req.body;
   const status = true;
   const newSupplier = new Supplier({
@@ -532,7 +533,7 @@ router.post('/add-supplier',function (req,res,next){
 });
 
 
-router.get('/add-sale',function (req,res,next){
+router.get('/add-sale',isAuthenticatedAdmin,function (req,res,next){
     Food.find({restaurant:req.user.restaurant},function(err,food){
       res.render('AdminRestaurant/add-sale',{
         user:req.user,
@@ -540,7 +541,7 @@ router.get('/add-sale',function (req,res,next){
       });
   });
 });
-router.post('/add-sale',upload.single('picture'),function (req,res,next){
+router.post('/add-sale',isAuthenticatedAdmin,upload.single('picture'),function (req,res,next){
   const {name,desc,price,date_from,date_to,food } = req.body;
   const picture = req.file.filename;
   const status = true;
@@ -560,7 +561,7 @@ router.post('/add-sale',upload.single('picture'),function (req,res,next){
     res.redirect('/adminRestaurant/sale');
   });
 });
-router.get('/sale',function (req,res,next){
+router.get('/sale',isAuthenticatedAdmin,function (req,res,next){
   Sale.find({restaurant:req.user.restaurant}).populate('food').exec(function(err,sale){
     res.render('AdminRestaurant/sale',{
       user:req.user,
@@ -568,7 +569,7 @@ router.get('/sale',function (req,res,next){
     });
   })
 });
-router.get('/sale/:id',function (req,res,next){
+router.get('/sale/:id',isAuthenticatedAdmin,function (req,res,next){
   const saleID = req.params.id;
   Sale.find({_id: saleID}).populate('food').exec(function(err,sale) {
       res.render('adminRestaurant/saleItem', {
@@ -578,7 +579,7 @@ router.get('/sale/:id',function (req,res,next){
   });
 });
 
-router.post('/sale/edit/:id',upload.single('picture'),function (req,res,next){
+router.post('/sale/edit/:id',isAuthenticatedAdmin,upload.single('picture'),function (req,res,next){
   const saleID = req.params.id;
   const {name,food,date_from,date_to,price,status} = req.body;
   const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
@@ -612,13 +613,13 @@ router.post('/sale/edit/:id',upload.single('picture'),function (req,res,next){
       });
   }
 });
-router.delete('/sale/delete/:id',function (req,res,next){
+router.delete('/sale/delete/:id',isAuthenticatedAdmin,function (req,res,next){
   Sale.deleteOne({ _id: req.params.id }, function (err) {
     if (err) return err;
     else res.sendStatus(200);
   });
 });
-router.get('/menu',function(req,res,next){
+router.get('/menu',isAuthenticatedAdmin,function(req,res,next){
   Food.find({meni:true,restaurant:req.user.restaurant},function(err,menu){
     res.render('adminRestaurant/menu',{
       user:req.user,
@@ -626,7 +627,7 @@ router.get('/menu',function(req,res,next){
     })
   })
 });
-router.delete('/menu/delete/:id',function (req,res,next){
+router.delete('/menu/delete/:id',isAuthenticatedAdmin,function (req,res,next){
   Food.deleteOne({ _id: req.params.id }, function (err) {
     if (err) return err;
     else res.sendStatus(200);

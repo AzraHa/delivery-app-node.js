@@ -1,22 +1,50 @@
 module.exports = {
-    ensureAuthenticated: function(req, res, next) {
-        if (req.isAuthenticated()) { //passport
-            return next();
+    isAuthenticatedSuperAdmin : function (req, res, next) {
+        if (req.isAuthenticated()){
+            if(req.user.role === 'superAdmin'){
+                return next();
+            }else{
+                res.redirect('back');
+            }
+        }else{
+            res.redirect('back');
         }
-        req.flash('error_msg', 'Please log in to view that resource');
-        res.redirect('/users/login');
     },
-    forwardAuthenticated: function(req, res, next) {
-        if (!req.isAuthenticated()) {
-            return next();
+    isAuthenticatedAdmin : function (req, res, next) {
+        if (req.isAuthenticated()){
+            if(req.user.role === 'adminadminrestaurant'){
+                return next();
+            }else{
+                res.redirect('back');
+            }
+        }else{
+            res.redirect('back');
         }
-        res.redirect('/dashboard');
     },
-  ensureAuthenticatedAdmin: function(req, res, next) {
-    if (req.isAuthenticated()) { //passport
-      return next();
+    isAuthenticatedSupplier : function (req, res, next) {
+        if (req.isAuthenticated()){
+            if(req.user.role === 'supplier'){
+                return next();
+            }else{
+                res.redirect('back');
+            }
+        }else{
+            res.redirect('back');
+        }
+    },
+    isLoggedIN : function(req,res,next){
+        if (req.isAuthenticated()){
+            if(req.user.role === 'supplier'){
+                res.redirect('/supplier/dashboard');
+            }else if(req.user.role === 'superAdmin'){
+                res.redirect('/adminRestaurant/dashboard');
+            }else if(req.user.role === 'superAdmin'){
+                res.redirect('/admin/dashboard');
+            }else if(req.user.role === 'customer'){
+                res.redirect('/users/dashboard');
+            }
+        }else{
+            res.render('index');
+        }
     }
-    req.flash('error_msg', 'Please log in to view that resource');
-    res.redirect('/admin/login');
-  }
 };

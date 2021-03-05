@@ -56,6 +56,16 @@
                                         </div>
                                     </div>
                                     <div class="input-group mb-3">
+                                        <select id="tip"  name="tip" class="form-control select2" style="width: 100%;">
+                                            <option value="" disabled selected>Restaurant Type</option>
+                                            <% if (typeof tip !== 'undefined' && tip.length > 0) {%>
+                                                <%for (var i = 0; i < tip.length; i++) { %>
+                                                    <option  name ="tip" value="<%= tip[i]._id%>"><%= tip[i].name %></option>
+                                                <%}%>
+                                            <%}%>
+                                        </select>
+                                    </div>
+                                    <div class="input-group mb-3">
                                         <input type="number"
                                                id="distance"
                                                name="distance"

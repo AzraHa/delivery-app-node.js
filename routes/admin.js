@@ -13,12 +13,15 @@ const TotalOrder = require("../models/TotalOrder");
 const Food = require("../models/Food");
 const Admin = require("../models/Admin");
 const bcrypt = require('bcryptjs');
+const RestaurantType = require("../models/RestaurantType");
 const maxAge = 3 *24 *60 *60 ;
 const createToken = (id) => {
   return jwt.sign({id},'strasno',{
     expiresIn: maxAge
   });
 }
+const {isAuthenticatedSuperAdmin} = require('../config/auth');
+
 
 router.get('/login',function(req,res,next){
   res.render('admin/login');
@@ -48,7 +51,7 @@ router.get('/logout',function(req,res,next){
   res.redirect('/admin/login');
 });
 
-router.get('/dashboard',function (req,res,next) {
+router.get('/dashboard',isAuthenticatedSuperAdmin,function (req,res,next) {
   TotalOrder.find({})
     .populate('restaurant').populate('customer').populate('supplier').limit(4)
     .exec(function (err, doc) {
@@ -67,7 +70,7 @@ router.get('/dashboard',function (req,res,next) {
     });
 });
 
-router.get('/customers/:status',function (req,res,next){
+router.get('/customers/:status',isAuthenticatedSuperAdmin,function (req,res,next){
   const st = req.params.status;
   let status = true;
   if(st==="false") status = false;
@@ -86,7 +89,7 @@ router.get('/customers/:status',function (req,res,next){
   });
 });
 
-router.get('/add-restaurant-admin',function(req,res,next){
+router.get('/add-restaurant-admin',isAuthenticatedSuperAdmin,function(req,res,next){
   Restaurant.find({})
     .exec(function(err, restaurant) {
       console.log(restaurant);
@@ -98,7 +101,7 @@ router.get('/add-restaurant-admin',function(req,res,next){
     });
 });
 
-router.post('/add-restaurant-admin',function(req,res,next){
+router.post('/add-restaurant-admin',isAuthenticatedSuperAdmin,function(req,res,next){
   const {restaurantName, adminName, address, koordinate , adminEmail, password} = req.body;
   const status = true;
   let errors = [];
@@ -147,7 +150,7 @@ router.post('/add-restaurant-admin',function(req,res,next){
   }
 });
 
-router.get('/customers/active/:id',function (req,res,next) {
+router.get('/customers/active/:id',isAuthenticatedSuperAdmin,function (req,res,next) {
   User.find({_id: req.params.id,status:true}, function(err, user){
     if(err) res.json(err);
     else{
@@ -159,7 +162,7 @@ router.get('/customers/active/:id',function (req,res,next) {
   });
 });
 
-router.get('/admins',function(req,res,next){
+router.get('/admins',isAuthenticatedSuperAdmin,function(req,res,next){
   RestaurantAdmin.find({status:true})
     .populate('restaurant')
     .exec(function(err, resAdmin) {
@@ -172,7 +175,7 @@ router.get('/admins',function(req,res,next){
     });
 });
 
-router.delete('/suppliers/delete/:id',function(req,res,next){
+router.delete('/suppliers/delete/:id',isAuthenticatedSuperAdmin,function(req,res,next){
   const supplierID = req.params.id;
   Supplier.deleteOne({ _id: supplierID }, function (err) {
     if (err) return err;
@@ -180,7 +183,8 @@ router.delete('/suppliers/delete/:id',function(req,res,next){
   });
 });
 
-router.get('/admins/:id',function (req,res,next){
+
+router.get('/admins/:id',isAuthenticatedSuperAdmin,function (req,res,next){
   const adminID = req.params.id;
   RestaurantAdmin.find({_id:adminID})
       .populate('restaurant')
@@ -197,7 +201,7 @@ router.get('/admins/:id',function (req,res,next){
       });
 });
 
-router.post('/admins/:id',function (req,res,next){
+router.post('/admins/:id',isAuthenticatedSuperAdmin,function (req,res,next){
   const AdminID = req.params.id;
   const {name,email,address} = req.body;
   const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
@@ -213,7 +217,7 @@ router.post('/admins/:id',function (req,res,next){
     });
 });
 
-router.delete('/admins/delete/:id',function (req,res,next){
+router.delete('/admins/delete/:id',isAuthenticatedSuperAdmin,function (req,res,next){
   const AdminID = req.params.id;
   RestaurantAdmin.deleteOne({ _id: AdminID }, function (err) {
     if (err) return err;
@@ -222,7 +226,7 @@ router.delete('/admins/delete/:id',function (req,res,next){
 
 });
 
-router.get('/suppliers',function(req,res,next){
+router.get('/suppliers',isAuthenticatedSuperAdmin,function(req,res,next){
   Supplier.find({})
     .populate('restaurant')
     .exec(function(err, person) {
@@ -235,12 +239,7 @@ router.get('/suppliers',function(req,res,next){
     });
 });
 
-router.get('/user',function (req,res,next){
-  res.send(req.user);
-})
-
-
-router.get('/food',function (req,res,next){
+router.get('/food',isAuthenticatedSuperAdmin,function (req,res,next){
   Food.find({},function(err,food){
     res.render('admin/food',{
       user:req.user,
@@ -249,7 +248,7 @@ router.get('/food',function (req,res,next){
   });
 });
 
-router.get('/food/:id',function (req,res,next){
+router.get('/food/:id',isAuthenticatedSuperAdmin,function (req,res,next){
   Food.find({_id:req.params.id}).populate('type').populate('restaurant').exec(function(err,food){
     FoodType.find({},function(err,FoodTypeArray){
       Restaurant.find({},function(err,restaurants){
@@ -264,18 +263,15 @@ router.get('/food/:id',function (req,res,next){
   });
 });
 
-router.post('/food/:id',upload.single('picture'),function (req,res,next) {
-  const {name, type, price, restaurant, picture} = req.body;
-  //const image = req.file.filename;
+router.post('/food/:id',isAuthenticatedSuperAdmin,upload.single('picture'),function (req,res,next) {
+  const {name, type, price} = req.body;
   const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
-  //console.log("name: " + name + " type: " + type + " price: " + price + " restaurant: " + restaurant + " picture " );
   if (!req.file) {
     Food.updateOne({_id: req.params.id},
       {
         name: name,
         type: type,
         price: price,
-        restaurant: restaurant,
         modified: modified,
       },
       function (error, success) {
@@ -287,7 +283,6 @@ router.post('/food/:id',upload.single('picture'),function (req,res,next) {
         name: name,
         type: type,
         price: price,
-        restaurant: restaurant,
         modified: modified,
         picture:req.file.filename
       },
@@ -295,22 +290,29 @@ router.post('/food/:id',upload.single('picture'),function (req,res,next) {
         res.redirect('/admin/food');
       });
   }
-
 });
 
-router.delete('/food/delete/:id',function(req,res,next){
+router.delete('/food/delete/:id',isAuthenticatedSuperAdmin,function(req,res,next){
    Food.deleteOne({ _id: req.params.id }, function (err) {
       if (err) return err;
       else res.sendStatus(200);
     });
 });
-
-router.get('/add-restaurant',function (req,res,next){
-  res.render('admin/add-restaurant',{user:req.user});
+router.delete('/restaurant/delete/:id',isAuthenticatedSuperAdmin,function(req,res,next){
+  Restaurant.deleteOne({ _id: req.params.id }, function (err) {
+    if (err) return err;
+    else res.sendStatus(200);
+  });
 });
 
-router.post('/add-restaurant',upload.single('picture'),function (req,res,next){
-  const {name, email, address,koordinate,distance} = req.body;
+router.get('/add-restaurant',isAuthenticatedSuperAdmin,function (req,res,next){
+  RestaurantType.find({},function(err,tip){
+    res.render('admin/add-restaurant',{user:req.user,tip:tip});
+  })
+});
+
+router.post('/add-restaurant',isAuthenticatedSuperAdmin,upload.single('picture'),function (req,res,next){
+  const {name, email, address,koordinate,tip,distance} = req.body;
   let errors = [];
   const status = true;
   if (!name || !email || !address ) {
@@ -326,7 +328,6 @@ router.post('/add-restaurant',upload.single('picture'),function (req,res,next){
       user:req.user
     });
   }else {
-
     if (!req.file) {
       Restaurant.findOne({name: name, email: email}).then(rest => {
         if (rest) {
@@ -364,7 +365,7 @@ router.post('/add-restaurant',upload.single('picture'),function (req,res,next){
           });
         } else {
           const newRestaurant = new Restaurant({
-            name, email, address, status, image: req.file.filename, koordinate, distance
+            name, email, address, status, image: req.file.filename, koordinate, distance,tip
           });
           newRestaurant
             .save()
@@ -377,7 +378,7 @@ router.post('/add-restaurant',upload.single('picture'),function (req,res,next){
   }
 });
 
-router.get('/restaurants',function (req,res,next){
+router.get('/restaurants',isAuthenticatedSuperAdmin,function (req,res,next){
   Restaurant.find({status:true},function (err,Restaurant){
     if (err)
       return done(err);
@@ -392,7 +393,7 @@ router.get('/restaurants',function (req,res,next){
   });
 });
 
-router.get('/add-suppliers',function (req,res,next){
+router.get('/add-suppliers',isAuthenticatedSuperAdmin,function (req,res,next){
   Restaurant.find({status:true},function (err,restaurant){
     if (err)
       return done(err);
@@ -406,7 +407,7 @@ router.get('/add-suppliers',function (req,res,next){
   });
 });
 
-router.post('/add-suppliers',function (req,res,next){
+router.post('/add-suppliers',isAuthenticatedSuperAdmin,function (req,res,next){
   const {name, restaurantName,email,address,koordinate,password} = req.body;
   const status = 1;
   let errors = [];
@@ -464,7 +465,7 @@ router.post('/add-suppliers',function (req,res,next){
 
 });
 
-router.get('/suppliers/:id',function(req,res,next){
+router.get('/suppliers/:id',isAuthenticatedSuperAdmin,function(req,res,next){
   const supp_id = req.params.id;
   Supplier.find({ _id: supp_id})//sve restorane sa suppliers
     .populate('restaurant') // only works if we pushed refs to person.eventsAttended
@@ -487,7 +488,7 @@ router.get('/suppliers/:id',function(req,res,next){
     });
 });
 
-router.post('/suppliers/:id',function(req,res,next){
+router.post('/suppliers/:id',isAuthenticatedSuperAdmin,function(req,res,next){
   const {name,email,address,restaurant,koordinate} = req.body;
   const supplierID = req.params.id;
   const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
@@ -527,10 +528,10 @@ router.post('/suppliers/:id',function(req,res,next){
 });
 
 
-router.get('/restaurants/:id',function(req,res,next){
+router.get('/restaurants/:id',isAuthenticatedSuperAdmin,function(req,res,next){
   const rest_id = req.params.id;
   Restaurant.find({ _id: rest_id})
-      .populate('suppliers')
+      .populate('suppliers').populate('tip')
       .exec(function(err, rest) {
         //console.log(rest);
         if (err) console.log(err);
@@ -538,19 +539,21 @@ router.get('/restaurants/:id',function(req,res,next){
           if (err)
             return done(err);
           if (supplier) {
-           // console.log(supplier);
-            res.render('admin/restaurant', {
-              user: req.user,
-              supplier: supplier,
-              restaurant:rest
-            });
+            RestaurantType.find({},function(err,tip){
+              res.render('admin/restaurant', {
+                user: req.user,
+                supplier: supplier,
+                restaurant:rest,
+                tip:tip
+              });
+            })
           }
         });
       });
 });
 
-router.post('/restaurants/:id',upload.single('picture'),function(req,res,next){
-  const {address,email,type} = req.body;
+router.post('/restaurants/:id',isAuthenticatedSuperAdmin,upload.single('picture'),function(req,res,next){
+  const {address,email,tip} = req.body;
   const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
   if(req.file){
     Restaurant.findOneAndUpdate({_id: req.params.id}, {
@@ -558,7 +561,7 @@ router.post('/restaurants/:id',upload.single('picture'),function(req,res,next){
       modified: modified,
       email: email,
       address: address,
-      type:type
+      tip:tip
     }, (err, sucess) => {
       if (err) {
         console.log("Something wrong when updating data! " + err);
@@ -573,7 +576,7 @@ router.post('/restaurants/:id',upload.single('picture'),function(req,res,next){
       modified: modified,
       email: email,
       address: address,
-      type: type
+      tip: tip
     }, (err, sucess) => {
       if (err) {
         console.log("Something wrong when updating data! " + err);
@@ -586,7 +589,7 @@ router.post('/restaurants/:id',upload.single('picture'),function(req,res,next){
   }
 });
 
-router.get('/orders',function (req,res,next) {
+router.get('/orders',isAuthenticatedSuperAdmin,function (req,res,next) {
   TotalOrder.find({})
     .populate('restaurant').populate('customer').populate('supplier')
     .exec(function (err, doc) {
@@ -597,7 +600,7 @@ router.get('/orders',function (req,res,next) {
     })
 });
 
-router.get('/order/:id',function (req,res,next) {
+router.get('/order/:id',isAuthenticatedSuperAdmin,function (req,res,next) {
   let orderID = req.params.id;
   TotalOrder.find({_id:orderID})
     .populate([{
@@ -617,7 +620,7 @@ router.get('/order/:id',function (req,res,next) {
     })
 });
 
-router.get('/profile',function (req,res,next){
+router.get('/profile',isAuthenticatedSuperAdmin,function (req,res,next){
   Admin.findOne({_id:req.user._id},function(err,admin){
     res.render('admin/profile',{
       user:req.user,
@@ -626,7 +629,7 @@ router.get('/profile',function (req,res,next){
   });
 });
 
-router.post('/profile',upload.single('picture'),async function (req,res,next){
+router.post('/profile',isAuthenticatedSuperAdmin,upload.single('picture'),async function (req,res,next){
     let {name, address, email, password,adminID} = req.body;
     let newPassword;
     const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
@@ -714,11 +717,11 @@ router.post('/profile',upload.single('picture'),async function (req,res,next){
 });
 
 
-router.get('/add-food-type',function (req,res,next){
+router.get('/add-food-type',isAuthenticatedSuperAdmin,function (req,res,next){
   res.render('admin/add-food-type',{user:req.user});
 });
 
-router.get('/foodType',function (req,res,next){
+router.get('/foodType',isAuthenticatedSuperAdmin,function (req,res,next){
   FoodType.find({},function (err,type){
     res.render('admin/foodType',{
       user:req.user,
@@ -727,15 +730,22 @@ router.get('/foodType',function (req,res,next){
   });
 });
 
-router.delete('/foodType/:id',function (req,res,next){
+router.delete('/foodType/:id',isAuthenticatedSuperAdmin,function (req,res,next){
   const foodTypeID = req.params.id;
   FoodType.deleteOne({ _id: foodTypeID }, function (err) {
     if (err) return err;
     else res.sendStatus(200);
   });
 });
+router.delete('/restaurantType/:id',isAuthenticatedSuperAdmin,function (req,res,next){
+  const restaurantType = req.params.id;
+  RestaurantType.deleteOne({ _id: restaurantType }, function (err) {
+    if (err) return err;
+    else res.sendStatus(200);
+  });
+});
 
-router.post('/add-food-type',function (req,res,next){
+router.post('/add-food-type',isAuthenticatedSuperAdmin,function (req,res,next){
   const name = req.body.name;
   const status = true;
   const comm = new FoodType({
@@ -744,6 +754,33 @@ router.post('/add-food-type',function (req,res,next){
   });
   comm.save();
   res.redirect('/admin/foodType');
+});
+router.get('/restaurantType',isAuthenticatedSuperAdmin,function(req,res,next){
+  RestaurantType.find({},function (err,type){
+    Restaurant.find({}).populate('tip').exec(function(err,restaurants){
+      console.log(restaurants)
+      res.render('admin/restaurantType',{
+        user:req.user,
+        types:type,
+        restaurants:restaurants
+      });
+    })
+  });
+});
+router.get('/add-restaurantType',isAuthenticatedSuperAdmin,function(req,res,next){
+    res.render('admin/add-restaurantType',{
+      user:req.user
+  });
+});
+router.post('/add-restaurantType',isAuthenticatedSuperAdmin,function(req,res,next){
+  const name = req.body.name;
+  const status = true;
+  const comm = new RestaurantType({
+    name:name,
+    status:status
+  });
+  comm.save();
+  res.redirect('/admin/restaurantType');
 });
 
 

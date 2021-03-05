@@ -137,3 +137,12 @@ function deleteSupplierAdmin(id){
     }
   });
 }
+function deleteRestaurant(id){
+  $.ajax({
+    url:"/admin/restaurant/delete/" + id,
+    method: "DELETE",
+    success: function(result){
+      $('#'+id+'').remove();
+    }
+  });
+}

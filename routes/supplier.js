@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 const upload = require('../controllers/uploadController');
 const nodemailer = require('nodemailer');
 const User = require("../models/User");
+const {isAuthenticatedSupplier} = require("../config/auth");
 
 const router = express.Router();
 
@@ -31,7 +32,7 @@ router.post('/login',function(req,res,next){
   res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
 });
 
-router.get('/dashboard',function (req,res,next){
+router.get('/dashboard',isAuthenticatedSupplier,function (req,res,next){
   TotalOrder.find({status: 2,supplier:req.user._id})
     .populate([{
       path: 'orders',
@@ -72,14 +73,14 @@ router.get('/dashboard',function (req,res,next){
   })
 });
 
-router.get('/logout',function (req,res,next){
+router.get('/logout',isAuthenticatedSupplier,function (req,res,next){
   res.cookie('jwt','',{maxAge: 1 });
   req.logout();
   req.flash('success_msg', 'You are logged out');
   res.redirect('/supplier/login');
 });
 
-router.get('/order-confirm/:id',function (req,res,next){
+router.get('/order-confirm/:id',isAuthenticatedSupplier,function (req,res,next){
   TotalOrder.findOne({_id: req.params.id})
     .populate([{
       path: 'orders',
@@ -92,7 +93,7 @@ router.get('/order-confirm/:id',function (req,res,next){
       res.render('supplier/confirm-order',{user:req.user,order:order})
     });
 });
-router.post('/order-confirm/:id/:customer',function (req,res,next){
+router.post('/order-confirm/:id/:customer',isAuthenticatedSupplier,function (req,res,next){
   //status 3 narudzba potvrđena od strane dostavljaca
   TotalOrder.updateOne({ _id: req.params.id},  {status: 3}, {new: true}).
   populate({path:'restaurant', model: 'Restaurant' }).populate({path:'customer', model: 'User' })
@@ -154,14 +155,14 @@ router.post('/order-confirm/:id/:customer',function (req,res,next){
     });
   });
 });
-router.get('/profile',function(req,res,next){
+router.get('/profile',isAuthenticatedSupplier,function(req,res,next){
   Supplier.findOne({_id:req.user._id},function(err,supplier){
     res.render('supplier/profile',
       {user:req.user,
       supplier:supplier})
   })
 });
-router.post('/active-order/:id',function(req,res,next){
+router.post('/active-order/:id',isAuthenticatedSupplier,function(req,res,next){
   TotalOrder.findOneAndUpdate({_id:req.params.id},{status:5},{new:true},function(err,supplier) {
     Supplier.findOneAndUpdate({_id: req.user._id},{status:1},{new:true}).populate({
       path: 'restaurant',
@@ -194,7 +195,7 @@ router.post('/active-order/:id',function(req,res,next){
     })
   });
 });
-router.post('/profile',upload.single('picture'),async function (req,res,next){
+router.post('/profile',isAuthenticatedSupplier,upload.single('picture'),async function (req,res,next){
   let {name, address, email, password,supplierID} = req.body;
   let newPassword;
   const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");

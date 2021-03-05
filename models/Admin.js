@@ -28,6 +28,10 @@ const AdminSchema = new mongoose.Schema({
     status:{
         type: Boolean,
         default: 1
+    },
+    role:{
+        type:String,
+        default:"superAdmin"
     }
 });
 

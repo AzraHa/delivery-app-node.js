@@ -34,6 +34,10 @@ const RestaurantAdminSchema = new mongoose.Schema({
   modified:{
     type:String,
     default: moment(new Date).format("MM/DD/YYYY, h:mm:ss a")
+  },
+  role:{
+    type:String,
+    default:"adminrestaurant"
   }
 });
 

@@ -16,30 +16,31 @@ const upload = require('../controllers/uploadController');
 const passport = require('passport');
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
-const createToken = (id) => {
+/*const createToken = (id) => {
   return jwt.sign({id},'strasno',{
     expiresIn: maxAge
   });
-}
+}*/
 //const {ensureAuthenticated} = require('../config/auth');
 
 router.get('/login',function(req,res,next){
   res.render('user/login');
 });
+
 router.post('/login',function (req,res,next){
   passport.authenticate('userLocal', {
     successRedirect: '/users/dashboard',
     failureRedirect: '/users/login',
     failureFlash: true
   })(req, res, next);
-  const maxAge = 3 *24 *60 *60 ;
+  /*const maxAge = 3 *24 *60 *60 ;
   const createToken = (id) => {
     return jwt.sign({id},'strasno',{
       expiresIn: maxAge
     });
   }
   const token = createToken(User._id);
-  res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+  res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });*/
 });
 
 router.get('/register',function(req,res,next){
@@ -155,7 +156,10 @@ router.get('/dashboard',function(req,res,next){
                     }
                   }
                   Order.find({'customer': req.user._id, status: 1}).populate('food').populate('restaurant').exec(function (err, order) {
-                    res.render('user/dashboard', {
+                      console.log(req.session);
+                      console.log(req.session.cookie);
+
+                      res.render('user/dashboard', {
                       user: req.user,
                       food: food,
                       foodtype: foodtype,
