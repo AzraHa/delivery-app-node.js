@@ -5,32 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/models/RestaurantType.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/admin/add-restaurantType.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/admin/typeFood.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/passport.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/passport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Restaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Restaurant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/RestaurantAdmin.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/RestaurantAdmin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Supplier.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/script/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/script/script.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/adminRestaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/adminRestaurant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/supplier.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/add-restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/add-restaurant.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/dashboard.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/admin/food.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/food.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/admin/foodType.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/foodType.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/foodedit.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/foodedit.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/partials/sidebar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/partials/sidebar.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/admin/restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurant.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/admin/restaurantType.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurantType.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/restaurants.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurants.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/suppliers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/suppliers.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,6 +182,7 @@
       <workItem from="1614867931209" duration="131000" />
       <workItem from="1614936316646" duration="9225000" />
       <workItem from="1614949101283" duration="10173000" />
+      <workItem from="1615034938721" duration="6241000" />
     </task>
     <servers />
   </component>

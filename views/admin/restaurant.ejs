@@ -76,12 +76,19 @@
                                                                value="<%= restaurant[i].email%>">
                                                         <label>Type</label>
                                                         <select id="tip"  name="tip" class="form-control select2" style="width: 100%;">
-                                                            <option value="<%= restaurant[i].tip._id%>" disabled selected><%= restaurant[i].tip.name%></option>
-                                                            <% if (typeof tip !== 'undefined' && tip.length > 0) {%>
-                                                            <%for (var j = 0; j < tip.length; j++) { %>
-                                                                <option  name ="tip" value="<%= tip[j]._id%>"><%= tip[j].name %></option>
-                                                            <%}%>
-                                                            <%}%>
+                                                            <%if(restaurant[i].tip==="undefined" || restaurant[i].tip == null){ %>
+                                                                <option value="undefined" disabled selected>Undefined</option>
+                                                                <%for (var k = 0; k < tip.length; k++) { %>
+                                                                    <option  name ="tip" value="<%= tip[k]._id%>"><%= tip[k].name %></option>
+                                                                <%}%>
+                                                            <%}else{%>
+                                                                    <option value="<%= restaurant[i].tip._id%>" disabled selected><%= restaurant[i].tip.name%></option>
+                                                                    <% if (typeof tip !== 'undefined' && tip.length > 0) {%>
+                                                                        <%for (var k = 0; k < tip.length; k++) { %>
+                                                                            <option  name ="tip" value="<%= tip[k]._id%>"><%= tip[k].name %></option>
+                                                                        <%}%>
+                                                                    <%}%>
+                                                                <%}%>
                                                         </select>
                                                         <p class="project-actions text-right">
                                                             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Food Type</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <script src="/script/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+<body>
+<main role="main">
+    <% include partials/navbar %>
+    <div class="container-fluid">
+        <div class="row">
+            <%include partials/sidebar %>
+            <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                    <h1 class="h2">Orders</h1>
+                </div>
+                <div class="album">
+                    <div class="container">
+                        <div class="row">
+                            <% for(let i=0;i<food.length;i++){%>
+                                <div class="col-md-4" style=" margin-top: 35px;">
+                                    <div class="card" id="<%=food[i]._id %>"style="border:1px solid #F9723D;height:500px;">
+                                        <img class="bd-placeholder-img card-img-top" style="border-bottom:1px solid #F9723D;"width="450" height="300" src="../../images/<%= food[i].picture%>">
+                                        <div class="card-body">
+                                            <h5 class="card-text" style="color: #F9723D;font-weight: bold;"><%= food[i].name%></h5>
+                                            <p class="card-text"><%=food[i].description%></p>
+                                            <div class="d-flex justify-content-between">
+                                                <h6 class="card-price text-left" style="color: #F9723D;font-weight: bold;"><%=food[i].price%><span class="period">KM</span></h6>
+                                                <div class="btn-group text-right">
+                                                    <a class="btn btn-danger btn-sm" href="#" onclick="deleteFoodAdmin('<%= food[i]._id%>')";><i class="fa fa-trash"></i>Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <%}%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
+

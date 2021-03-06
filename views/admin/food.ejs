@@ -32,7 +32,7 @@
                             <table class="table m-0">
                             <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Restaurant</th>
                                 <th>Item</th>
                                 <th>Picture</th>
                                 <th>Status</th>
@@ -44,7 +44,7 @@
                             <% if (typeof food !== 'undefined' && food.length > 0) {%>
                                 <%for(let i=0;i < food.length;i++){%>
                                     <tr id="<%= food[i]._id %>">
-                                        <td><%= i+1 %></td>
+                                        <td><%= food[i].restaurant.name %></td>
                                         <td><a href="#"><%= food[i].name%></a></td>
                                         <td><img src="../images/<%= food[i].picture%>" style="width: 50px;"></td>
                                         <%if(food[i].status === true){%>

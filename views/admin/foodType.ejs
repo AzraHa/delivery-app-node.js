@@ -9,6 +9,7 @@
     <script src="/script/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
@@ -23,7 +24,6 @@
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
                     <h1 class="h2">Orders</h1>
                 </div>
-                <!-- TABLE: LATEST ORDERS -->
                 <div class="card">
                     <div class="card-header border-transparent">
                         <h3 class="card-title">Food Type</h3>
@@ -34,7 +34,6 @@
                                 <thead>
                                 <tr>
                                     <th>No:</th>
-                                    <th>ID</th>
                                     <th>Name</th>
                                     <th>Modified</th>
                                     <th>Status</th>
@@ -46,8 +45,7 @@
                                 <%for(let i=0;i<types.length;i++){%>
                                     <tr id="<%= types[i]._id %>">
                                         <td><%= i+1 %></td>
-                                        <td><%=types[i]._id %></td>
-                                        <td><%= types[i].name %></td>
+                                        <td><a href="/admin/foodType/<%=types[i]._id%>"><%= types[i].name %></a></td>
                                         <td><%= types[i].modified %></td>
                                         <% if(types[i].status === true){%>
                                             <td>Active</td>

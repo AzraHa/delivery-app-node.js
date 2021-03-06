@@ -729,6 +729,15 @@ router.get('/foodType',isAuthenticatedSuperAdmin,function (req,res,next){
     });
   });
 });
+router.get('/foodType/:id',isAuthenticatedSuperAdmin,function (req,res,next){
+  const foodType = req.params.id;
+  Food.find({type:foodType}).populate('restaurant').populate('type').exec(function(err,food){
+    res.render('admin/typeFood',{
+      user:req.user,
+      food:food
+    })
+  })
+});
 
 router.delete('/foodType/:id',isAuthenticatedSuperAdmin,function (req,res,next){
   const foodTypeID = req.params.id;
@@ -740,8 +749,17 @@ router.delete('/foodType/:id',isAuthenticatedSuperAdmin,function (req,res,next){
 router.delete('/restaurantType/:id',isAuthenticatedSuperAdmin,function (req,res,next){
   const restaurantType = req.params.id;
   RestaurantType.deleteOne({ _id: restaurantType }, function (err) {
-    if (err) return err;
-    else res.sendStatus(200);
+    if (err) {
+      return err;
+    }
+    else {
+      Restaurant.updateMany({tip:restaurantType}, {$unset: {tip: 1 }},function(err,restoran){
+        if(err) return err;
+        else{
+          res.sendStatus(200);
+        }
+      });
+    }
   });
 });
 
@@ -758,7 +776,7 @@ router.post('/add-food-type',isAuthenticatedSuperAdmin,function (req,res,next){
 router.get('/restaurantType',isAuthenticatedSuperAdmin,function(req,res,next){
   RestaurantType.find({},function (err,type){
     Restaurant.find({}).populate('tip').exec(function(err,restaurants){
-      console.log(restaurants)
+      console.log(restaurants[0].tip,typeof restaurants[0].tip)
       res.render('admin/restaurantType',{
         user:req.user,
         types:type,
