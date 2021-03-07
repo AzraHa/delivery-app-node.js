@@ -17,6 +17,7 @@ const AdminSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    koordinate:{type:String},
   picture:{
       type:String,
       default:""

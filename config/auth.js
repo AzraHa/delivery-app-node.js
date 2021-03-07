@@ -12,7 +12,7 @@ module.exports = {
     },
     isAuthenticatedAdmin : function (req, res, next) {
         if (req.isAuthenticated()){
-            if(req.user.role === 'adminadminrestaurant'){
+            if(req.user.role === 'adminrestaurant'){
                 return next();
             }else{
                 res.redirect('back');

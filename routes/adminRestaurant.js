@@ -66,7 +66,7 @@ router.get('/admin/:id',isAuthenticatedAdmin,function(req,res,next){
 });
 
 router.get('/administrator',isAuthenticatedAdmin,function(req,res,next){
-  RestaurantAdmin.find({_id: req.user._id}).populate('restaurant').exec(function (err,admin){
+  RestaurantAdmin.findOne({_id: req.user._id}).populate('restaurant').exec(function (err,admin){
     res.render('adminRestaurant/administrator',{
       user:req.user,
       admin: admin
@@ -76,14 +76,14 @@ router.get('/administrator',isAuthenticatedAdmin,function(req,res,next){
 
 router.post('/administrator/:id',isAuthenticatedAdmin,upload.single('picture'),function(req,res,next){
   const adminID = req.params.id;
-  const {name,email,address} = req.body;
-  const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+  const {name,email,address,koordinate} = req.body;
+  const modified = moment().format("MM/DD/YYYY, h:mm:ss");
   if(!req.file){
     RestaurantAdmin.updateOne({ _id: adminID},  {
         modified:modified,
         name:name,
         email:email,
-        address:address
+        address:address, koordinate:koordinate
       },
       function (error, success) {
         res.redirect('/adminRestaurant/administrator');
@@ -94,7 +94,8 @@ router.post('/administrator/:id',isAuthenticatedAdmin,upload.single('picture'),f
         name:name,
         email:email,
         address:address,
-        picture:req.file.filename
+        picture:req.file.filename,
+            koordinate:koordinate
       },
       function (error, success) {
         res.redirect('/adminRestaurant/administrator');

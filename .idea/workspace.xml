@@ -5,13 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/views/admin/typeFood.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/food.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/food.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/foodType.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/foodType.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/adminRestaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/adminRestaurant.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/administrator.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/administrator.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/RestaurantAdmin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/RestaurantAdmin.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/profile.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/profile.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/admin/restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurant.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/restaurantType.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurantType.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/users.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/users.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,6 +186,7 @@
       <workItem from="1614936316646" duration="9225000" />
       <workItem from="1614949101283" duration="10173000" />
       <workItem from="1615034938721" duration="6241000" />
+      <workItem from="1615109568266" duration="6098000" />
     </task>
     <servers />
   </component>

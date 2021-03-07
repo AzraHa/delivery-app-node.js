@@ -33,19 +33,9 @@ router.post('/login',function(req,res,next){
     failureRedirect: '/admin/login',
     failureFlash: true
   })(req, res, next);
-  const maxAge = 3 *24 *60 *60 ;
-  const createToken = (id) => {
-    return jwt.sign({id},'strasno',{
-      expiresIn: maxAge
-    });
-  }
-  const token = createToken(Admin._id);
-  res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
 });
 
-
 router.get('/logout',function(req,res,next){
-  res.cookie('jwt','',{maxAge: 1 });
   req.logout();
   req.flash('success_msg', 'You are logged out');
   res.redirect('/admin/login');
@@ -77,9 +67,7 @@ router.get('/customers/:status',isAuthenticatedSuperAdmin,function (req,res,next
   User.find({status:status}, function(err, Users){
     if (err)
       return done(err);
-
     if (Users) {
-      console.log(Users);
       res.render('admin/users', {
         user: req.user,
         usersArray: Users,
@@ -92,7 +80,6 @@ router.get('/customers/:status',isAuthenticatedSuperAdmin,function (req,res,next
 router.get('/add-restaurant-admin',isAuthenticatedSuperAdmin,function(req,res,next){
   Restaurant.find({})
     .exec(function(err, restaurant) {
-      console.log(restaurant);
       if (err) console.log(err);
       res.render('admin/add-restaurant-admin', {
         user: req.user,
@@ -186,31 +173,29 @@ router.delete('/suppliers/delete/:id',isAuthenticatedSuperAdmin,function(req,res
 
 router.get('/admins/:id',isAuthenticatedSuperAdmin,function (req,res,next){
   const adminID = req.params.id;
-  RestaurantAdmin.find({_id:adminID})
-      .populate('restaurant')
-      .exec(function(err, resAdmin) {
-        console.log(resAdmin);
-        if (err) console.log(err);
-        Restaurant.find({status: true}, function (err, restaurant) {
+  RestaurantAdmin.find({_id:adminID}).populate('restaurant').exec(function(err, resAdmin) {
+      if (err) console.log(err);
+      Restaurant.find({status: true}, function (err, restaurant) {
           res.render('admin/RestaurantAdmin', {
             user: req.user,
             resAdminArray: resAdmin,
             restaurant: restaurant
           });
-        });
       });
+  });
 });
 
 router.post('/admins/:id',isAuthenticatedSuperAdmin,function (req,res,next){
   const AdminID = req.params.id;
-  const {name,email,address} = req.body;
-  const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+  const {name,email,address,koordinate} = req.body;
+  const modified = moment().format("MM/DD/YYYY h:mm:ss");
   console.log(AdminID,name,email,modified,address);
     RestaurantAdmin.updateOne({ _id: AdminID},  {
       modified:modified,
       name:name,
       email:email,
-      address:address
+      address:address,
+      koordinate:koordinate
       },
       function (error, success) {
           res.redirect('/admin/admins');
@@ -223,14 +208,10 @@ router.delete('/admins/delete/:id',isAuthenticatedSuperAdmin,function (req,res,n
     if (err) return err;
     else res.sendStatus(200);
   });
-
 });
 
 router.get('/suppliers',isAuthenticatedSuperAdmin,function(req,res,next){
-  Supplier.find({})
-    .populate('restaurant')
-    .exec(function(err, person) {
-      console.log(person);
+  Supplier.find({}).populate('restaurant').exec(function(err, person) {
       if (err) console.log(err);
       res.render('admin/suppliers', {
         user: req.user,
@@ -300,8 +281,16 @@ router.delete('/food/delete/:id',isAuthenticatedSuperAdmin,function(req,res,next
 });
 router.delete('/restaurant/delete/:id',isAuthenticatedSuperAdmin,function(req,res,next){
   Restaurant.deleteOne({ _id: req.params.id }, function (err) {
-    if (err) return err;
-    else res.sendStatus(200);
+      if (err) return err;
+      else {
+          Food.deleteMany({restaurant: req.params.id}, function (err, res) {
+              if (err) return err;
+          });
+          RestaurantAdmin.deleteOne({restaurant:req.params.id},function (err,admin){
+              if(err) return err;
+          })
+        res.sendStatus(200);
+      }
   });
 });
 
@@ -344,11 +333,9 @@ router.post('/add-restaurant',isAuthenticatedSuperAdmin,upload.single('picture')
           const newRestaurant = new Restaurant({
             name, email, address, status, koordinate, distance
           });
-          newRestaurant
-            .save()
-            .then(user => {
+          newRestaurant.save().then(user => {
               res.redirect('/admin/restaurants');
-            })
+          })
         }
       });
     } else {
@@ -367,11 +354,9 @@ router.post('/add-restaurant',isAuthenticatedSuperAdmin,upload.single('picture')
           const newRestaurant = new Restaurant({
             name, email, address, status, image: req.file.filename, koordinate, distance,tip
           });
-          newRestaurant
-            .save()
-            .then(user => {
+          newRestaurant.save().then(user => {
               res.redirect('/admin/restaurants');
-            })
+          })
         }
       });
     }
@@ -382,9 +367,7 @@ router.get('/restaurants',isAuthenticatedSuperAdmin,function (req,res,next){
   Restaurant.find({status:true},function (err,Restaurant){
     if (err)
       return done(err);
-
     if (Restaurant) {
-      console.log(Restaurant);
       res.render('admin/restaurants', {
         user: req.user,
         RestaurantArray: Restaurant
@@ -398,7 +381,6 @@ router.get('/add-suppliers',isAuthenticatedSuperAdmin,function (req,res,next){
     if (err)
       return done(err);
     if (restaurant) {
-      console.log(restaurant);
       res.render('admin/add-suppliers', {
         user: req.user,
         restaurantArray: restaurant
@@ -446,13 +428,13 @@ router.post('/add-suppliers',isAuthenticatedSuperAdmin,function (req,res,next){
           bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) throw err;
             newUser.password = hash;
-            newUser
-              .save().then(user => {
-              Restaurant.updateOne({ _id: restaurantName}, { $push: {
+            newUser.save().then(user => {
+              Restaurant.updateOne({ _id: restaurantName}, {
+                  $push: {
                     suppliers: {
                       _id : newUser._id
                     }
-                  }  },
+                  }},
                 function (error, success) {
                   res.redirect('/admin/suppliers');
                 });
@@ -467,16 +449,12 @@ router.post('/add-suppliers',isAuthenticatedSuperAdmin,function (req,res,next){
 
 router.get('/suppliers/:id',isAuthenticatedSuperAdmin,function(req,res,next){
   const supp_id = req.params.id;
-  Supplier.find({ _id: supp_id})//sve restorane sa suppliers
-    .populate('restaurant') // only works if we pushed refs to person.eventsAttended
-    .exec(function(err, supplier) {
-      console.log(supplier);
+  Supplier.find({ _id: supp_id}).populate('restaurant').exec(function(err, supplier) {
       if (err) console.log(err);
       Restaurant.find({status:true},function (err,restaurant){
         if (err)
           return done(err);
         if (restaurant) {
-          console.log(restaurant);
           res.render('admin/supplier', {
             user: req.user,
             supplier: supplier,
@@ -484,7 +462,6 @@ router.get('/suppliers/:id',isAuthenticatedSuperAdmin,function(req,res,next){
           });
         }
       });
-
     });
 });
 
@@ -503,7 +480,6 @@ router.post('/suppliers/:id',isAuthenticatedSuperAdmin,function(req,res,next){
       if (err) {
         console.log("Something wrong when updating data! " + err);
       }
-      //console.log(doc);
       res.redirect('/admin/suppliers');
     });
   }else{
@@ -521,7 +497,6 @@ router.post('/suppliers/:id',isAuthenticatedSuperAdmin,function(req,res,next){
       if (err) {
         console.log("Something wrong when updating data! " + err);
       }
-      //console.log(doc);
       res.redirect('/admin/suppliers');
     });
   }
@@ -530,17 +505,14 @@ router.post('/suppliers/:id',isAuthenticatedSuperAdmin,function(req,res,next){
 
 router.get('/restaurants/:id',isAuthenticatedSuperAdmin,function(req,res,next){
   const rest_id = req.params.id;
-  Restaurant.find({ _id: rest_id})
-      .populate('suppliers').populate('tip')
-      .exec(function(err, rest) {
-        //console.log(rest);
-        if (err) console.log(err);
-        Supplier.find({restaurant:rest_id},function (err,supplier){
+  Restaurant.find({ _id: rest_id}).populate('suppliers').populate('tip').exec(function(err, rest) {
+      if (err) console.log(err);
+      Supplier.find({restaurant:rest_id},function (err,supplier){
           if (err)
             return done(err);
           if (supplier) {
             RestaurantType.find({},function(err,tip){
-              res.render('admin/restaurant', {
+                res.render('admin/restaurant', {
                 user: req.user,
                 supplier: supplier,
                 restaurant:rest,
@@ -548,20 +520,21 @@ router.get('/restaurants/:id',isAuthenticatedSuperAdmin,function(req,res,next){
               });
             })
           }
-        });
       });
+  });
 });
 
 router.post('/restaurants/:id',isAuthenticatedSuperAdmin,upload.single('picture'),function(req,res,next){
-  const {address,email,tip} = req.body;
-  const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+  const {address,email,tip,koordinate} = req.body;
+  const modified = moment().format("MM/DD/YYYY h:mm:ss");
   if(req.file){
     Restaurant.findOneAndUpdate({_id: req.params.id}, {
       image:req.file.filename,
       modified: modified,
       email: email,
       address: address,
-      tip:tip
+      tip:tip,
+      koordinate:koordinate
     }, (err, sucess) => {
       if (err) {
         console.log("Something wrong when updating data! " + err);
@@ -576,7 +549,9 @@ router.post('/restaurants/:id',isAuthenticatedSuperAdmin,upload.single('picture'
       modified: modified,
       email: email,
       address: address,
-      tip: tip
+      tip: tip,
+      koordinate:koordinate
+
     }, (err, sucess) => {
       if (err) {
         console.log("Something wrong when updating data! " + err);
@@ -590,9 +565,7 @@ router.post('/restaurants/:id',isAuthenticatedSuperAdmin,upload.single('picture'
 });
 
 router.get('/orders',isAuthenticatedSuperAdmin,function (req,res,next) {
-  TotalOrder.find({})
-    .populate('restaurant').populate('customer').populate('supplier')
-    .exec(function (err, doc) {
+  TotalOrder.find({}).populate('restaurant').populate('customer').populate('supplier').exec(function (err, doc) {
       res.render('admin/orders', {
         user: req.user,
         order: doc
@@ -602,17 +575,13 @@ router.get('/orders',isAuthenticatedSuperAdmin,function (req,res,next) {
 
 router.get('/order/:id',isAuthenticatedSuperAdmin,function (req,res,next) {
   let orderID = req.params.id;
-  TotalOrder.find({_id:orderID})
-    .populate([{
+  TotalOrder.find({_id:orderID}).populate([{
     path: 'orders',
     populate: {
       path: 'food',
       model: 'Food'
     }
-  }])
-    .populate('restaurant').populate('customer').populate('supplier')
-    .exec(function (err, doc) {
-      console.log(doc);
+  }]).populate('restaurant').populate('customer').populate('supplier').exec(function (err, doc) {
       res.render('admin/order', {
         user: req.user,
         order: doc
@@ -630,9 +599,9 @@ router.get('/profile',isAuthenticatedSuperAdmin,function (req,res,next){
 });
 
 router.post('/profile',isAuthenticatedSuperAdmin,upload.single('picture'),async function (req,res,next){
-    let {name, address, email, password,adminID} = req.body;
+    let {name, address, email, password,adminID,koordinate} = req.body;
     let newPassword;
-    const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+    const modified = moment().format("MM/DD/YYYY h:mm:ss");
     if (!req.file && password === "") {
       Admin.updateOne({_id: adminID},
         {
@@ -640,6 +609,7 @@ router.post('/profile',isAuthenticatedSuperAdmin,upload.single('picture'),async 
           address: address,
           email: email,
           date: modified,
+          koordinate:koordinate
         },
         function (error, success) {
         if(error) console.log("Error "+error.message);
@@ -661,7 +631,8 @@ router.post('/profile',isAuthenticatedSuperAdmin,upload.single('picture'),async 
                   address: address,
                   email: email,
                   date: modified,
-                  password:newPassword
+                  password:newPassword,
+                  koordinate:koordinate
                 },
                 function (error, success) {
                   res.redirect('/admin/profile');
@@ -672,14 +643,14 @@ router.post('/profile',isAuthenticatedSuperAdmin,upload.single('picture'),async 
       });
     }
     else if(req.file && password === ""){
-      console.log("slika"+req.file.filename)
       Admin.updateOne({_id: adminID},
         {
           picture:req.file.filename,
           name: name,
           address: address,
           email: email,
-          date: modified
+          date: modified,
+          koordinate:koordinate
         },
         function (error, success) {
           res.redirect('/admin/profile');
@@ -703,6 +674,7 @@ router.post('/profile',isAuthenticatedSuperAdmin,upload.single('picture'),async 
                   email: email,
                   date: modified,
                   password:newPassword,
+                  koordinate:koordinate
                 },
                 function (error, success) {
                   if(error)console.log("error"+error+error.message);
