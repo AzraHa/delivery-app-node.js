@@ -146,3 +146,13 @@ function deleteRestaurant(id){
     }
   });
 }
+function removeItem(id,food){
+  $.ajax({
+    url:"/adminRestaurant/menu/deleteItem/" + id +"/"+ food,
+    method: "DELETE",
+    success: function(result){
+      $('#'+food+'').remove();
+    }
+  });
+}
+

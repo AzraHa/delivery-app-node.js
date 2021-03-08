@@ -3,10 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title><%= food[0].name %></title>
+    <title><%= menu.name %></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/stylesheets/style.css" rel="stylesheet">
+    <script src="/script/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
@@ -21,45 +23,65 @@
                     <h1 class="h2">Dashboard</h1>
                 </div>
                 <div class="card" style="border: 1px solid orange;">
-                    <div class="card-body" style="border: 1px solid orange;">
-                        <div class="card-header">
-                            <% for(let i=0;i<food.length;i++){%>
-                                <h3 class="card-title"><%= food[0].name %></h3>
-                        </div>
+                    <div class="card-body" style="border-top: 1px solid orange;">
+                            <div class="card-header">
+                                <h3 class="card-title"><%= menu.name  %></h3>
+                            </div>
                         <div class="card-body">
-                            <form action="/adminRestaurant/food/edit/<%= food[0]._id %>" method="POST" enctype="multipart/form-data">
+                            <form action="/adminRestaurant/menu/edit/<%= menu._id %>" method="POST" enctype="multipart/form-data">
+                                <p>Modified : <%= menu.modified %> </p>
                                 <div class="container">
                                     <div class="container__text">
                                         <div class="container__image" style="width: 100%!important;">
                                             <div class="container__image" style="margin:0 auto;">
                                                 <input type="image" class="container__image"
-                                                       src="../../images/<%= food[i].picture%>"
+                                                       src="../../images/<%= menu.picture%>"
                                                        id="picture"
-                                                       name="img">
+                                                       name="picture">
                                                 <input type="file" accept="image/*" class="container__image"
                                                        id="picture"
                                                        name="picture">
                                             </div>
                                             <div class="container__text">
-                                                <label>Food</label>
+                                                <label>Menu name</label>
                                                 <input type="text"
                                                        id="name"
                                                        name="name"
                                                        class="form-control"
-                                                       value="<%= food[i].name%>">
+                                                       value="<%= menu.name%>">
                                                 <label>Description</label>
                                                 <input type="text"
                                                        id="description"
                                                        name="description"
                                                        class="form-control"
-                                                       value="<%= food[i].description%>">
+                                                       value="<%= menu.description%>">
                                                 <label>Food Type</label>
                                                 <div class="input-group mb-3">
                                                     <select id="type"  name="type" class="form-control select2" style="width: 100%;" placehp>
                                                         <% if (typeof FoodTypeArray !== 'undefined' && FoodTypeArray.length > 0) {%>
-                                                            <option name="type" value="<%= food[i].type._id %>"selected><%= food[i].type.name %></option>
+                                                            <option name="type" value="<%= menu.type._id %>"selected><%= menu.type.name %></option>
                                                             <%for (var j = 0; j < FoodTypeArray.length; j++) { %>
                                                                 <option  name ="type" value="<%= FoodTypeArray[j]._id%>"><%= FoodTypeArray[j].name %></option>
+                                                            <%}%>
+                                                        <%}%>
+                                                    </select>
+                                                </div>
+                                                <label>Food</label>
+                                                <input type="hidden" name="food" value="<%=menu.food%>">
+                                                <%for(let i=0;i<menu.food.length;i++){%>
+                                                    <div class="input-group mb-3" id="<%= menu.food[i]._id%>">
+                                                        <p class="form-control" ><%= menu.food[i].name %></p>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text"><span class="fa fa-close" onclick="removeItem('<%= menu._id%>','<%= menu.food[i]._id%>');"></span></div>
+                                                        </div>
+                                                    </div>
+                                                <% } %>
+                                                <label>Add food</label>
+                                                <div class="input-group mb-3">
+                                                    <select id="menuItems" name="menuItems" class="form-control select2" multiple = "multiple" style="width: 100%;">
+                                                        <% if (typeof food !== 'undefined' && food.length > 0) {%>
+                                                            <%for (var i = 0; i < food.length; i++) { %>
+                                                                <option value="<%= food[i]._id%>"><%= food[i].name %></option>
                                                             <%}%>
                                                         <%}%>
                                                     </select>
@@ -69,7 +91,7 @@
                                                        id="price"
                                                        name="price"
                                                        class="form-control"
-                                                       value="<%= food[i].price %>">
+                                                       value="<%= menu.price %>">
                                                 <p class="project-actions text-right">
                                                     <button type="submit" class="btn btn-success">Submit</button>
                                                 </p>
@@ -84,7 +106,6 @@
             </div>
         </div>
     </div>
-    <%}%>
 </main>
 </body>
 </html>

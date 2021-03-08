@@ -14,6 +14,7 @@ const moment = require('moment');
 const Order = require("../models/Order");
 const TotalOrder = require("../models/TotalOrder");
 const geolib = require('geolib');
+const Menu = require("../models/Menu");
 const {ObjectId} = require("bson");
 const {isAuthenticatedAdmin} = require('../config/auth');
 
@@ -239,32 +240,47 @@ router.post('/add-food-item',isAuthenticatedAdmin,upload.single('picture'),funct
     });
 });
 router.get('/add-meni',isAuthenticatedAdmin,function (req,res,next){
-  FoodType.find({},function (err,foodtype){
-    if(err) console.log(err);
+  Food.find({restaurant:req.user.restaurant},function (err,food){
+    if(err) return (err);
     else{
-      res.render('AdminRestaurant/add-meni',{
-        user:req.user,
-        FoodTypeArray:foodtype
-      });
+        FoodType.find({},function (err,types){
+            if(err) return err;
+            else{
+                res.render('AdminRestaurant/add-meni',{
+                    user:req.user,
+                    FoodTypeArray:types,
+                    food:food
+                });
+            }
+        });
     }
   })
 });
 router.post('/add-meni',isAuthenticatedAdmin,upload.single('picture'),function (req,res,next){
-  const {name,type,price} = req.body;
+  const {name,type,price,desc} = req.body;
   const picture = req.file.filename;
   const restaurant = req.user.restaurant;
   const status = true;
-  const meni = true;
-  const description = req.body.desc;
-  console.log(name,type,picture,status,meni,description);
-  const newFoodItem = new Food(
-      {
-        name, type, price,picture,status,meni,description,restaurant
-      }
-  );
-  newFoodItem.save().then(user =>
+  const modified = moment().format("MM/DD/YYYY h:mm:ss");
+  let data = req.body.menuItems;
+  const food = [];
+  for(let i = 0; i<data.length;i++){
+      food.push(ObjectId(data[i]));
+  }
+  const newMenu = new Menu({
+      name:name,
+      type:type,
+      price:price,
+      picture:picture,
+      status:status,
+      description:desc,
+      restaurant:restaurant,
+      modified: modified,
+      food:food
+  });
+  newMenu.save().then(user =>
   {
-    res.redirect('/adminRestaurant/food');
+      res.redirect('/adminRestaurant/menu');
   });
 });
 
@@ -621,18 +637,135 @@ router.delete('/sale/delete/:id',isAuthenticatedAdmin,function (req,res,next){
   });
 });
 router.get('/menu',isAuthenticatedAdmin,function(req,res,next){
-  Food.find({meni:true,restaurant:req.user.restaurant},function(err,menu){
+  Menu.find({restaurant:req.user.restaurant}).populate('food').populate('type').exec(function(err,menu){
     res.render('adminRestaurant/menu',{
       user:req.user,
       menu:menu
     })
   })
 });
+router.get('/menu/:id',isAuthenticatedAdmin,function(req,res,next){
+    const menuID = req.params.id;
+    Menu.findOne({_id: menuID}).populate('food').populate('type').exec(function(err,menu){
+        if(err) return err;
+        else{
+            FoodType.find({},function(err,foodtype){
+                if(err) return err;
+                else{
+                    Food.find({restaurant:req.user.restaurant},function(err,food){
+                        if(err) return err;
+                        else{
+                            res.render('adminRestaurant/menuItem',{
+                                user:req.user,
+                                menu:menu,
+                                FoodTypeArray:foodtype,
+                                food:food
+                            });
+                        }
+                    })
+
+                }
+            })
+        }
+    });
+});
+router.post('/menu/edit/:id',isAuthenticatedAdmin,upload.single('picture'),function(req,res,next){
+    const menuID = req.params.id;
+    const {name,description,type,price} = req.body;
+    const restaurant = req.user.restaurant;
+    const status = true;
+    const modified = moment().format("MM/DD/YYYY, h:mm:ss");
+    let data = req.body.menuItems;
+    const food = [];
+    //console.log(data,typeof data,data.length,data[0].length)
+
+    if (!req.file && data === undefined) {
+        Menu.updateOne({_id: menuID}, {
+                name:name,
+                status:status,
+                restaurant:restaurant,
+                modified: modified,
+                type: type,
+                description: description,
+                price: price
+            },
+            function (error, success) {
+                res.redirect('/adminRestaurant/menu');
+            });
+    }else if(!req.file && data!==undefined){
+        for(let i = 0; i<data.length;i++){
+            food.push(ObjectId(data[i]));
+        }
+        Menu.updateOne({_id: menuID}, {
+                name:name,
+                status:status,
+                restaurant:restaurant,
+                modified: modified,
+                type: type,
+                description: description,
+                price: price,
+                $push: {
+                    food: food
+                }
+            },
+            function (error, success) {
+                res.redirect('/adminRestaurant/menu');
+            });
+    }else if(req.file && data===undefined){
+        Menu.updateOne({_id: menuID}, {
+                name:name,
+                status:status,
+                restaurant:restaurant,
+                modified: modified,
+                type: type,
+                description: description,
+                price: price,
+                picture:req.file.filename,
+                $push: {
+                    food: food
+                }
+            },
+            function (error, success) {
+                res.redirect('/adminRestaurant/menu');
+            });
+    }else if(req.file && data !==undefined){
+        for(let i = 0; i<data.length;i++){
+            food.push(ObjectId(data[i]));
+        }
+        Menu.updateOne({_id: menuID}, {
+                name:name,
+                status:status,
+                restaurant:restaurant,
+                modified: modified,
+                type: type,
+                description: description,
+                price: price,
+                picture:req.file.filename,
+                $push: {
+                    food: food
+                }
+            },
+            function (error, success) {
+                res.redirect('/adminRestaurant/menu');
+            });
+    }
+});
 router.delete('/menu/delete/:id',isAuthenticatedAdmin,function (req,res,next){
-  Food.deleteOne({ _id: req.params.id }, function (err) {
-    if (err) return err;
-    else res.sendStatus(200);
-  });
+    Menu.deleteOne({ _id: req.params.id }, function (err) {
+        if (err) return err;
+        else res.sendStatus(200);
+    });
+});
+router.delete('/menu/deleteItem/:id/:food',isAuthenticatedAdmin,function (req,res,next){
+    Menu.updateOne({ _id: req.params.id },
+        {$pull : {food : req.params.food}},
+        {new:true},function(err,r){
+        if(err) return err;
+        else{
+            res.sendStatus(200);
+        }
+    });
+
 });
 
 
