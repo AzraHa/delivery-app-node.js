@@ -510,10 +510,16 @@ router.post('/suppliers/edit/:id',isAuthenticatedAdmin,function (req,res,next){
 
 
 router.delete('/suppliers/delete/:id',isAuthenticatedAdmin,function (req,res,next){
-  Supplier.deleteOne({ _id: req.params.id }, function (err) {
-    if (err) return err;
-    else res.sendStatus(200);
-  });
+    Restaurant.updateMany({}, {$pull : {suppliers : req.params.id}},{new:true},function(err,res){
+        if(err) return err;
+        else{
+            Supplier.deleteOne({ _id: req.params.id }, function (err) {
+                if (err) return err;
+                else res.sendStatus(200);
+            });
+        }
+    })
+
 });
 
 

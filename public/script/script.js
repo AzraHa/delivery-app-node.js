@@ -137,6 +137,15 @@ function deleteSupplierAdmin(id){
     }
   });
 }
+function removeSupplierAdmin(restoran,id){
+  $.ajax({
+    url:"/admin/suppliers/remove/" + id+"/"+restoran,
+    method: "POST",
+    success: function(result){
+      $('#'+id+'').remove();
+    }
+  });
+}
 function deleteRestaurant(id){
   $.ajax({
     url:"/admin/restaurant/delete/" + id,

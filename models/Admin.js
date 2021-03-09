@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const moment = require('moment');
 const AdminSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -18,13 +18,13 @@ const AdminSchema = new mongoose.Schema({
         required: true
     },
     koordinate:{type:String},
-  picture:{
+    picture:{
       type:String,
       default:""
-  },
+    },
     date: {
         type: Date,
-        default: Date.now
+        default: moment().format("MM/DD/YYYY, h:mm:ss ")
     },
     status:{
         type: Boolean,

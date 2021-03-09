@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/models/Menu.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/AdminRestaurant/menuItem.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Food.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Food.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/FoodType.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/FoodType.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Restaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Restaurant.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Sale.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Sale.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Supplier.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/User.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/bson/HISTORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/bson/HISTORY.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/bson/LICENSE.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/bson/LICENSE.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/bson/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/bson/README.md" afterDir="false" />
@@ -36,12 +42,16 @@
       <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/symbol.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/timestamp.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/bson/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/bson/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/script/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/script/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/adminRestaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/adminRestaurant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/add-meni.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/add-meni.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/foodItem.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/foodItem.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/menu.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/menu.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/saleItem.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/saleItem.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/supplier.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/supplier.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/suppliers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/suppliers.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurant.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/supplier.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/supplier.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,6 +225,8 @@
       <workItem from="1615034938721" duration="6241000" />
       <workItem from="1615109568266" duration="6098000" />
       <workItem from="1615194216927" duration="17848000" />
+      <workItem from="1615215842979" duration="156000" />
+      <workItem from="1615276189124" duration="8748000" />
     </task>
     <servers />
   </component>
@@ -245,13 +257,11 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/routes/adminRestaurant.js</url>
           <line>258</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/routes/adminRestaurant.js</url>
-          <line>671</line>
-          <properties lambdaOrdinal="-1" />
+          <line>677</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>

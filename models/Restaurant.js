@@ -14,7 +14,7 @@ const RestaurantSchema = new mongoose.Schema({
   food: [{ type: mongoose.Schema.Types.ObjectId, ref: "Food"}],
   date: {type: Date, default: Date.now},
   status:{type: Boolean, required:true},
-  modified:{type:String, default: moment(new Date).format("MM/DD/YYYY, h:mm:ss a")}
+  modified:{type:String, default: moment().format("MM/DD/YYYY, h:mm:ss ")}
 });
 
 const Restaurant = mongoose.model('Restaurant', RestaurantSchema);

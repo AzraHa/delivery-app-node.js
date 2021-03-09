@@ -20,18 +20,18 @@
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
                     <h1 class="h2">Dashboard</h1>
                 </div>
-                <div class="naslovna-login-register">
-                    <div class="login-box">
-                        <% for(let i=0;i<sale.length;i++){%>
-                            <div class="card card-outline card-primary">
-                                <div class="card-header text-center">
-                                    <h1><b><%= sale[i].name%></b></h1>
-                                </div>
-                                <div class="card-body">
-                                    <form action="/adminRestaurant/sale/edit/<%= sale[i]._id%>" method="post" enctype="multipart/form-data">
-                                        <p>Modified : <%= sale[i].modified %> </p>
-                                        <div class="container">
-                                            <div class="container__image">
+                <div class="card" style="border: 1px solid orange;">
+                    <% for(let i=0;i<sale.length;i++){ %>
+                    <div class="card-body" style="border-top: 1px solid orange;">
+                        <div class="card-header">
+                            <h3 class="card-title"><%= sale[i].name  %></h3>
+                        </div>
+                        <div class="card-body">
+                            <form action="/adminRestaurant/sale/edit/<%= sale[i]._id%>" method="post" enctype="multipart/form-data">
+                                <div class="container">
+                                    <div class="container__text">
+                                        <div class="container__image" style="width: 100%!important;">
+                                            <div class="container__image" style="margin:0 auto;">
                                                 <input type="image" class="container__image"
                                                        src="../../images/<%= sale[i].picture%>"
                                                        id="picture"
@@ -72,18 +72,17 @@
                                                     <option value="true">Active</option>
                                                     <option value="false">Inactive</option>
                                                 </select>
-
-
                                                 <p class="project-actions text-right">
                                                     <button type="submit" class="btn btn-success">Submit</button>
                                                 </p>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
-                            </div>
-                        <%}%>
+                            </form>
+                        </div>
                     </div>
+                    <%}%>
                 </div>
             </div>
         </div>

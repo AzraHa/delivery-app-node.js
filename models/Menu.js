@@ -6,7 +6,7 @@ const MenuSchema = new mongoose.Schema({
     price: {type: String},
     restaurant: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" },
     status:{type: Boolean, required:true},
-    modified:{type:String, default: moment().format("MM/DD/YYYY h:mm:ss a")},
+    modified:{type:String, default: moment().format("MM/DD/YYYY, h:mm:ss ")},
     type:{ type: mongoose.Schema.Types.ObjectId, ref: "FoodType" },
     picture:{type:String},
     description:{type:String}

@@ -27,7 +27,7 @@ const SupplierSchema = new mongoose.Schema({
   restaurant: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }],
   date: {
     type: Date,
-    default: Date.now
+    default: moment().format("MM/DD/YYYY, h:mm:ss ")
   },
   status:{
     type: Number,
@@ -35,7 +35,7 @@ const SupplierSchema = new mongoose.Schema({
   },
   modified:{
     type:String,
-    default: moment(new Date).format("MM/DD/YYYY, h:mm:ss ")
+    default: moment().format("MM/DD/YYYY, h:mm:ss ")
   },
   role:{
     type:String,

@@ -164,10 +164,16 @@ router.get('/admins',isAuthenticatedSuperAdmin,function(req,res,next){
 
 router.delete('/suppliers/delete/:id',isAuthenticatedSuperAdmin,function(req,res,next){
   const supplierID = req.params.id;
-  Supplier.deleteOne({ _id: supplierID }, function (err) {
-    if (err) return err;
-    else res.sendStatus(200);
-  });
+  Restaurant.updateMany({}, {$pull : {suppliers : supplierID}},{new:true},function(err,res){
+    if(err) return err;
+    else{
+      Supplier.deleteOne({ _id: req.params.id },
+        function(err) {
+          if(err) return res.send(err);
+          res.sendStatus(200);
+      });
+    }
+  })
 });
 
 
@@ -468,7 +474,7 @@ router.get('/suppliers/:id',isAuthenticatedSuperAdmin,function(req,res,next){
 router.post('/suppliers/:id',isAuthenticatedSuperAdmin,function(req,res,next){
   const {name,email,address,restaurant,koordinate} = req.body;
   const supplierID = req.params.id;
-  const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+  const modified = moment().format("MM/DD/YYYY h:mm:ss");
   if(typeof restaurant === 'undefined') {
     Supplier.findOneAndUpdate({_id: supplierID}, {
       name:name,
@@ -492,16 +498,37 @@ router.post('/suppliers/:id',isAuthenticatedSuperAdmin,function(req,res,next){
       name:name,
       modified: modified,
       email: email,
-      s_address: address
+      s_address: address,
+      koordinate:koordinate
     }, {new: true}, (err, doc) => {
       if (err) {
         console.log("Something wrong when updating data! " + err);
+      }else{
+        Restaurant.findOneAndUpdate({_id:restaurant},{$push:{suppliers:supplierID}},{new:true},function(err,res){
+          if(err) return err;
+        })
+        res.redirect('/admin/suppliers');
       }
-      res.redirect('/admin/suppliers');
     });
   }
 });
-
+router.post('/suppliers/remove/:id/:restoran',function(req,res,next){
+  Restaurant.findOneAndUpdate({_id: req.params.restoran},
+      {$pull: { suppliers: req.params.id}},{new:true},
+      function(err) {
+        if (err) {
+          res.send(err);
+          return;
+        }
+        Supplier.findOneAndUpdate({_id: req.params.id},
+            {
+              $pull: { restaurant: req.params.restoran }},{new:true},
+            function(err) {
+                if(err) return res.send(err);
+                res.sendStatus(200);
+            });
+      });
+});
 
 router.get('/restaurants/:id',isAuthenticatedSuperAdmin,function(req,res,next){
   const rest_id = req.params.id;

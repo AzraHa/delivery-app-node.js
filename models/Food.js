@@ -28,7 +28,7 @@ const FoodSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    default: Date.now
+    default: moment().format("MM/DD/YYYY, h:mm:ss ")
   },
   status:{
     type: Boolean,
@@ -36,7 +36,7 @@ const FoodSchema = new mongoose.Schema({
   },
   modified:{
     type:String,
-    default: moment(new Date).format("MM/DD/YYYY, h:mm:ss a")
+    default: moment().format("MM/DD/YYYY, h:mm:ss ")
   }
 });
 

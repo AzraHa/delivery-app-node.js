@@ -16,7 +16,7 @@ const FoodTypeSchema = new mongoose.Schema({
   },
   modified:{
     type:String,
-    default: moment(new Date).format("MM/DD/YYYY, h:mm:ss a")
+    default: moment().format("MM/DD/YYYY, h:mm:ss ")
   }
 });
 
