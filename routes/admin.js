@@ -164,16 +164,15 @@ router.get('/admins',isAuthenticatedSuperAdmin,function(req,res,next){
 
 router.delete('/suppliers/delete/:id',isAuthenticatedSuperAdmin,function(req,res,next){
   const supplierID = req.params.id;
-  Restaurant.updateMany({}, {$pull : {suppliers : supplierID}},{new:true},function(err,res){
-    if(err) return err;
-    else{
-      Supplier.deleteOne({ _id: req.params.id },
-        function(err) {
-          if(err) return res.send(err);
-          res.sendStatus(200);
+  Restaurant.updateMany({},{$pull : {suppliers : supplierID}},{new:true}, function (err) {
+    if (err) return err;
+    else {
+      Supplier.deleteOne({_id: req.params.id}, function (err) {
+        if (err) return res.send(err);
+        res.sendStatus(200);
       });
     }
-  })
+  });
 });
 
 
