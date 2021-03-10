@@ -238,30 +238,36 @@ router.post('/add-order/:foodID/restaurant/:restaurantID',function (req,res,next
     const foodID = req.params.foodID;
     const userID = req.user._id;
     const restaurantID = req.params.restaurantID;
-    const date = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+    const date = moment().format("MM/DD/YYYY, h:mm:ss");
 
     Order.findOneAndUpdate({customer:userID,
         restaurant:restaurantID,
         food:foodID,
-        status:1,date:date },{},
-      { upsert: true, new: true }, (err, doc) => {
-        TotalOrder.findOneAndUpdate( { customer : userID,status:1}, {
-          customer:userID,
-          restaurant:restaurantID,
-          $push: {
-            orders:doc._id,
-          }},{new:true ,upsert:true},function(err, doc) {
-          if (err) throw err;
-          User.updateOne({ _id: req.user._id},  {
-            $push: {
-              orders:doc._id
-            }
-          });
-        });
-        if (err) {
-        console.log("Something wrong when updating data!");
-      }
-
+        status:1,date:date },{}, { upsert: true, new: true }, (err, doc) => {
+          if (err) {
+            console.log("Something wrong when updating data!");
+          }else{
+            TotalOrder.findOneAndUpdate( { customer : userID,status:1}, {
+              customer:userID,
+              restaurant:restaurantID,
+              $push: {
+                orders:doc._id,
+              }},{new:true ,upsert:true},function(err, doc) {
+              if (err) throw err;
+              else{
+                Food.updateOne({_id:foodID},{$inc: { ordered: 1 }},{new:true},function(err,res){
+                  if(err) throw err;
+                  else{
+                    User.updateOne({ _id: req.user._id},  {
+                      $push: {
+                        orders:doc._id
+                      }
+                    });
+                  }
+                })
+              }
+            });
+          }
     });
 });
 

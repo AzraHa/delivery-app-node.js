@@ -37,6 +37,9 @@ const FoodSchema = new mongoose.Schema({
   modified:{
     type:String,
     default: moment().format("MM/DD/YYYY, h:mm:ss ")
+  },
+  ordered:{
+    type:Number
   }
 });
 
