@@ -27,65 +27,95 @@
                             <h3 class="card-title">Order: <%= order[0]._id %></h3>
                         </div>
                         <div class="container">
-                            <div class="container__image">
-                                <label>Customer Name</label>
-                                <p class="form-control"style="height: 80px;" ><%= order[0].customer.name%></p>
-                                <label>Customer Email</label>
-                                <p class="form-control"> <%= order[0].customer.email%></p>
-                                <label>Customer Address</label>
-                                <p class="form-control" style="height: 150px;"><%= order[0].customer.address%></p>
-                                <label>Customer Status</label>
-                                <%if(order[0].customer.status === 1){ %>
-                                    <p class="form-control">Active</p>
-                                <%}%>
-                            </div>
-                            <div class="container__image">
-                                <label>Supplier Name</label>
-                                <p class="form-control" style="height: 80px;"><%= order[0].supplier[0].name%></p>
-                                <label>Supplier Email</label>
-                                <p class="form-control"> <%= order[0].supplier[0].email%></p>
-                                <label>Supplier Address</label>
-                                <p class="form-control" style="height: 150px;"><%= order[0].supplier[0].s_address%></p>
-                                <label>Supplier Status</label>
-                                <%if(order[0].supplier[0].status === true){ %>
-                                    <p class="form-control">Active</p>
-                                <%}else{%>
-                                    <p class="form-control">Inactive</p>
-                                <%}%>
-                            </div>
-                            <div class="container__image">
-                                <label>Restaurant Name</label>
-                                <p class="form-control" style="height: 80px;"><%= order[0].restaurant[0].name%></p>
-                                <label>Restaurant Email</label>
-                                <p class="form-control"> <%= order[0].restaurant[0].email%></p>
-                                <label>Restaurant Address</label>
-                                <p class="form-control" style="height: 150px;"><%= order[0].restaurant[0].address%></p>
-                                <label>Restaurant Status</label>
-                                <%if(order[0].restaurant[0].status === true){ %>
-                                    <p class="form-control">Active</p>
-                                <%}else{%>
-                                    <p class="form-control">Inactive</p>
-                                <%}%>
-                            </div>
-                        </div>
-
-                                <div class="container" >
-                                    <% for(let j=0;j<order[0].orders.length;j++){%>
-                                        <div class="container__image">
-                                            <label>Order</label>
-                                            <p class="form-control" ><%= order[0].orders[j].food[0].name%></p>
-                                            <label>Quantity</label>
-                                            <p class="form-control"> <%= order[0].orders[j].quantity%></p>
-                                            <label>Price</label>
-                                            <p class="form-control"> <%= order[0].orders[j].food[0].price%></p>
-                                            <label>Total</label>
-                                            <%let total = 0;%>
-                                            <p class="form-control">
-                                                <%= total+=Number(order[0].orders[j].food[0].price*((order[0].orders[j].quantity)))%>
-                                            </p>
-                                        </div>
+                            <div class="container__text">
+                                <div class="container__text" style="margin:0 auto;">
+                                    <label>Customer Name</label>
+                                    <p class="form-control"style="height: 80px;" ><%= order[0].customer.name%></p>
+                                    <label>Customer Email</label>
+                                    <p class="form-control"> <%= order[0].customer.email%></p>
+                                    <label>Customer Address</label>
+                                    <p class="form-control" style="height: 150px;"><%= order[0].customer.address%></p>
+                                    <label>Customer Status</label>
+                                    <%if(order[0].customer.status === 1){ %>
+                                        <p class="form-control">Active</p>
                                     <%}%>
                                 </div>
+                                <% if (order[0].supplier !== null) {%>
+                                    <div class="container__text">
+                                        <label>Supplier Name</label>
+                                        <p class="form-control" style="height: 80px;"><%= order[0].supplier[0].name%></p>
+                                        <label>Supplier Email</label>
+                                        <p class="form-control"> <%= order[0].supplier[0].email%></p>
+                                        <label>Supplier Address</label>
+                                        <p class="form-control" style="height: 150px;"><%= order[0].supplier[0].s_address%></p>
+                                        <label>Supplier Status</label>
+                                        <%if(order[0].supplier[0].status === true){ %>
+                                            <p class="form-control">Active</p>
+                                        <%}else{%>
+                                            <p class="form-control">Inactive</p>
+                                        <%}%>
+                                    </div>
+                                <%}%>
+                                <div class="container__text">
+                                    <label>Restaurant Name</label>
+                                    <p class="form-control" style="height: 80px;"><%= order[0].restaurant[0].name%></p>
+                                    <label>Restaurant Email</label>
+                                    <p class="form-control"> <%= order[0].restaurant[0].email%></p>
+                                    <label>Restaurant Address</label>
+                                    <p class="form-control" style="height: 150px;"><%= order[0].restaurant[0].address%></p>
+                                    <label>Restaurant Status</label>
+                                    <%if(order[0].restaurant[0].status === true){ %>
+                                        <p class="form-control">Active</p>
+                                    <%}else{%>
+                                        <p class="form-control">Inactive</p>
+                                    <%}%>
+                                </div>
+                                <div class="container_text" >
+                                    <div class="container__text">
+                                        <div class="card">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Food</th>
+                                                        <th>Quantity</th>
+                                                        <th>Price</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <% let totalPrice = 0; %>
+                                                <% if (typeof order !== 'undefined' && order.length >= 0) {%>
+                                                    <% for(let j=0;j<order[0].orders.length;j++){%>
+                                                        <tr>
+                                                            <td><p><%= j+1 %> . </p></td>
+                                                            <td><p><%= order[0].orders[j].food[0].name%></p></td>
+                                                            <td><p> 1</p></td>
+                                                            <td><p> <%= order[0].orders[j].food[0].price%> KM </p></td>
+                                                            <td>
+                                                                <p>
+                                                                    <% let total=0;
+                                                                    total+=Number(order[0].orders[j].food[0].price) %>
+                                                                    <%= total %>KM
+                                                                    <% totalPrice += total%>
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+                                                    <%}%>
+                                                <% } %>
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>Total: </th>
+                                                    <th><p><%= totalPrice %> KM </p></th>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

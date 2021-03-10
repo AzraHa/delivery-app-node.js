@@ -48,8 +48,20 @@
                                     <tr>
                                         <td><%= i+1 %></td>
                                         <td><a href="/admin/order/<%=order[i]._id %>"><%=order[i]._id %></a></td>
-                                        <td><span class="badge badge-success"><%= order[i].status %></span></td>
-                                        <td><%= order[i].supplier[0].name %></td>
+                                        <td>
+                                            <%if(order[i].status === 2){%>
+                                                <p>Waiting for confirmation of supplier </p>
+                                            <%}else if(order[i].status === 3){%>
+                                                <p>Delivering</p>
+                                            <%}else if(order[i].status === 5){%>
+                                                <p>Delivered</p>
+                                            <%}%>
+                                        </td>
+                                        <% if (order[i].supplier !== null) {%>
+                                            <td><%= order[i].supplier[0].name %></td>
+                                        <%}else{%>
+                                            <td></td>
+                                        <%}%>
                                         <%for(let j=0;j<order[i].restaurant.length;j++){%>
                                             <td><a href="#"><li class="list-group-item"><%= order[i].restaurant[j].name %></li></a> </td>
                                         <%}%>

@@ -47,8 +47,8 @@
                                         <td><%= i+1 %></td>
                                         <td><a href="/admin/order/<%= order[i]._id %>"><%=order[i]._id %></a></td>
                                         <td><span class="badge badge-success"><%= order[i].status %></span></td>
-                                        <%if(typeof supplier!=="undefined"){%>
-                                            <td><%= order[i].supplier.name %></td>
+                                        <% if (order[i].supplier !== null) {%>
+                                            <td><%= order[i].supplier[0].name %></td>
                                         <%}else{%>
                                             <td></td>
                                         <%}%>

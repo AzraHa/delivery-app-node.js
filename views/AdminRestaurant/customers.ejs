@@ -29,7 +29,6 @@
                         </button>
                     </div>
                 </div>
-                <!-- TABLE: LATEST ORDERS -->
                 <div class="card">
                     <div class="card-header">
                             <h3 class="card-title">Customers</h3>
@@ -44,7 +43,6 @@
                                     <th>Email</th>
                                     <th>Adress</th>
                                     <th>Last modified</th>
-                                    <th>Status</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -58,11 +56,6 @@
                                                 <td><%= customers[i].address %></td>
                                                 <% let opis = ""+(customers[i].modified) %>
                                                 <td><%= opis.slice(4,25)%></td>
-                                                <%if(customers[i].status=== 1){%>
-                                                    <td>Active</td>
-                                                <%}else{%>
-                                                    <td>Inactive</td>
-                                                <%}%>
                                             <td class="project-actions text-right">
                                                 <a class="btn btn-primary btn-sm" href="/adminRestaurant/customers/<%= customers[i]._id%>">
                                                     <i class="fa fa-folder">

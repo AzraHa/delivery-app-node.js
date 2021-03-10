@@ -351,10 +351,21 @@ router.get('/customers',isAuthenticatedAdmin,function (req,res,next){
 });
 router.get('/customers/:id',isAuthenticatedAdmin,function (req,res,next){
   const user = req.params.id;
-  User.find({_id:user}).populate('orders').exec(function(err,customer){
-   Order.find({customer:user,restaurant:req.user.restaurant}).sort([['status', 'descending']]).populate('food').exec(function(err,totalOrder){
+  User.find({_id:user}).exec(function(err,customer){
+   TotalOrder.find({customer:user,restaurant:req.user.restaurant}).populate('supplier')
+       .populate([{
+           path: 'orders',
+           populate: {
+               path: 'food',
+               model: 'Food'
+           }
+       }])
+       .exec(function(err,totalOrder){
      console.log(totalOrder);
-     res.render('AdminRestaurant/customer',{user:req.user._id,customer:customer,totalOrder:totalOrder});
+     res.render('AdminRestaurant/customer',{
+         user:req.user._id,
+         customer:customer,
+         totalOrder:totalOrder});
 
     })
   })
@@ -375,23 +386,19 @@ router.get('/orders',isAuthenticatedAdmin,function (req,res,next){
   })
 });
 router.get('/order-confirm',isAuthenticatedAdmin,function (req,res,next){
-  TotalOrder.find({restaurant:req.user.restaurant,status:2})
+  TotalOrder.find({restaurant:req.user.restaurant,status:2,supplier:null})
     .populate([{
       path: 'orders',
       populate: {
         path: 'food',
         model: 'Food'
       }
-    }])
+    }]).populate('customer')
     .exec(function (err,orders){
-     // console.log(orders[0].orders[0])
-   // console.log(orders[0].orders[0].food[0].name)
     res.render('AdminRestaurant/order-confirm',
       {user:req.user,
         orders:orders});
-
   })
-
 });
 router.get('/order-confirm/:id',isAuthenticatedAdmin,function (req,res,next) {
   let dostavljacID = [];
@@ -401,7 +408,6 @@ router.get('/order-confirm/:id',isAuthenticatedAdmin,function (req,res,next) {
     const nova = adresa.split(",");
     let RestoranLatitude = parseFloat(nova[0]);
     let RestoranLongitude = parseFloat(nova[1]);
-    //console.log("LATR :"+RestoranLatitude+" LONGR: "+RestoranLongitude);
     Supplier.find({restaurant:req.user.restaurant,status:2},function(err,supplier){
         //Trazi najmanju udaljenost između dostavljača i restorana
         for(let s=0;s<supplier.length;s++){
@@ -409,45 +415,44 @@ router.get('/order-confirm/:id',isAuthenticatedAdmin,function (req,res,next) {
           const nova = adres.split(",");
           var latitude1 = parseFloat(nova[0]);
           var longitude1 = parseFloat(nova[1]);
-          var minimalna = geolib.getDistance( { latitude: latitude1, longitude:longitude1},
-            { latitude: RestoranLatitude, longitude: RestoranLongitude },accuracy = 1);
-          console.log("MINIMALNA: "+minimalna)
+          var minimalna = geolib.getDistance( { latitude: latitude1, longitude:longitude1}, { latitude: RestoranLatitude, longitude: RestoranLongitude },accuracy = 1);
           if(minimalna<najmanja){
             najmanja = minimalna;
             dostavljacID.push(ObjectId(supplier[s]._id));
           }
-          console.log("NAJMANJA"+najmanja);
-          console.log(dostavljacID, typeof dostavljacID);
         }
-      TotalOrder.find({_id: req.params.id})
-        .populate([{
-          path: 'orders',
-          populate: {
-            path: 'food',
-            model: 'Food'
-          }
-        }]).populate('customer')
-        .exec(function (err, order) {
-          Supplier.findOne({_id:dostavljacID},function (err,supplier){
-              res.render('AdminRestaurant/confirm-order',
-                {
-                  user: req.user,
-                  order: order,
-                  supplier:supplier
-                });
-            })
-          });
-        });
+       TotalOrder.find({_id: req.params.id}).populate([{path: 'orders', populate: {path: 'food', model: 'Food'}}]).populate('customer').exec(function (err, order) {
+          Supplier.findOne({_id:dostavljacID,orders:req.params.id},function (err,supplier){
+              if(supplier === null){
+                  Supplier.find({status:1},function(err,sup){
+                      res.render('AdminRestaurant/confirm-order',
+                          {
+                              user: req.user,
+                              order: order,
+                              supplier:supplier,
+                              suppliers:sup
+                          });
+                  });
+              }else{
+                  res.render('AdminRestaurant/confirm-order',
+                      {
+                          user: req.user,
+                          order: order,
+                          supplier:supplier
+                      });
+              }
+          })
+       });
+    });
   });
-
 });
 router.post('/order-confirm/:id',isAuthenticatedAdmin,function (req,res,next){
   const supplierID = req.body.supplier;
-  TotalOrder.findOneAndUpdate({_id:req.params.id},{status:3},{new:true},function(err,order) {
+  TotalOrder.findOneAndUpdate({_id:req.params.id},{status:3,supplier:supplierID},{new:true},function(err,order) {
     if (err) {
       console.log("Something wrong when updating data!");
     }
-    Supplier.findOneAndUpdate({_id:supplierID},{status:3},{new:true},function (err,supplie){
+    Supplier.findOneAndUpdate({_id:supplierID},{status:3,$push:{orders:order._id}},{new:true},function (err,supplie){
       res.redirect('/adminRestaurant/dashboard');
     })
   });
@@ -464,7 +469,7 @@ router.get('/suppliers',isAuthenticatedAdmin,function (req,res,next){
 });
 router.get('/suppliers/:id',isAuthenticatedAdmin,function (req,res,next){
   const supplierID = req.params.id;
-  Supplier.find({_id:supplierID},function(err,supplier){
+  Supplier.find({_id:supplierID}).populate('restaurant').exec(function(err,supplier){
     res.render('AdminRestaurant/supplier',{
       user: req.user,
       supplier: supplier
@@ -528,7 +533,7 @@ router.get('/add-supplier',isAuthenticatedAdmin,function (req,res,next){
 });
 router.post('/add-supplier',isAuthenticatedAdmin,function (req,res,next){
   const {name,email,address,password,koordinate} = req.body;
-  const status = true;
+  const status = 1;
   const newSupplier = new Supplier({
     name:name,
     email:email,

@@ -11,7 +11,6 @@ const RestaurantSchema = new mongoose.Schema({
   suppliers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Supplier" }],
   image:{type: String},
   distance:{type:Number},
-  food: [{ type: mongoose.Schema.Types.ObjectId, ref: "Food"}],
   date: {type: Date, default: Date.now},
   status:{type: Boolean, required:true},
   modified:{type:String, default: moment().format("MM/DD/YYYY, h:mm:ss ")}

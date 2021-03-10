@@ -22,14 +22,6 @@ router.post('/login',function(req,res,next){
     failureRedirect: '/supplier/login',
     failureFlash: true
   })(req, res, next);
-  const maxAge = 3 *24 *60 *60 ;
-  const createToken = (id) => {
-    return jwt.sign({id},'strasno',{
-      expiresIn: maxAge
-    });
-  }
-  const token = createToken(Supplier._id);
-  res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
 });
 
 router.get('/dashboard',isAuthenticatedSupplier,function (req,res,next){
@@ -74,21 +66,13 @@ router.get('/dashboard',isAuthenticatedSupplier,function (req,res,next){
 });
 
 router.get('/logout',isAuthenticatedSupplier,function (req,res,next){
-  res.cookie('jwt','',{maxAge: 1 });
   req.logout();
   req.flash('success_msg', 'You are logged out');
   res.redirect('/supplier/login');
 });
 
 router.get('/order-confirm/:id',isAuthenticatedSupplier,function (req,res,next){
-  TotalOrder.findOne({_id: req.params.id})
-    .populate([{
-      path: 'orders',
-      populate: {
-        path: 'food',
-        model: 'Food'
-      }
-    }]).populate('customer').populate('restaurant')
+  TotalOrder.findOne({_id: req.params.id}).populate([{path: 'orders', populate: {path: 'food', model: 'Food'}}]).populate('customer').populate('restaurant')
     .exec(function (err, order) {
       res.render('supplier/confirm-order',{user:req.user,order:order})
     });
@@ -101,7 +85,7 @@ router.post('/order-confirm/:id/:customer',isAuthenticatedSupplier,function (req
     if (err) {
       console.log("Something wrong when updating data!");
     }
-    Supplier.findOneAndUpdate({_id: req.user._id},{s_address:req.body.newAddress,koordinate:req.body.koordinate}).populate({
+    Supplier.findOneAndUpdate({_id: req.user._id},{s_address:req.body.newAddress,koordinate:req.body.newKoordinate}).populate({
       path: 'restaurant',
       model: 'Restaurant'
     }).exec(function (err, supplier) {

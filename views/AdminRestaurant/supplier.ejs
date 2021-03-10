@@ -79,12 +79,21 @@
                                                         <div id="googleMap" class="form-control " style="position: relative; overflow: hidden; width: 100%; margin: 5px; height: 300px; "></div>
                                                     </div>
                                                 </div>
+
                                                 <label>Password</label>
                                                 <input type="password"
                                                        id="password"
                                                        name="password"
                                                        class="form-control"
                                                        value="">
+                                                <%if(supplier[i].restaurant !== "undefined"){%>
+                                                    <label>Restaurants</label>
+                                                    <%for(let j=0;j<supplier[i].restaurant.length;j++){%>
+                                                        <div class="input-group mb-3" id="<%= supplier[i]._id%>">
+                                                            <p class="form-control" ><%=  supplier[i].restaurant[j].name %></p>
+                                                        </div>
+                                                    <%}%>
+                                                <%}%>
                                                 <p class="project-actions text-right mt-3">
                                                     <button type="submit" class="btn btn-success">Submit</button>
                                                 </p>

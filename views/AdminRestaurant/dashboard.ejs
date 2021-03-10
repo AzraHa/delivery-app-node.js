@@ -29,7 +29,7 @@
                             <table class="table m-0">
                                 <thead>
                                 <tr>
-                                    <th>No:</th>
+                                    <th></th>
                                     <th>Order ID</th>
                                     <th>Status</th>
                                     <th>Supplier</th>
@@ -42,8 +42,20 @@
                                     <tr>
                                         <td><%= i+1 %></td>
                                         <td><%=order[i]._id %></td>
-                                        <td><span class="badge badge-success"><%= order[i].status %></span></td>
-                                        <td><%= order[i].supplier[0].name %></td>
+                                        <td>
+                                            <%if(order[i].status === 2){%>
+                                                <p>Waiting for confirmation of supplier </p>
+                                            <%}else if(order[i].status === 3){%>
+                                                <p>Delivering</p>
+                                            <%}else if(order[i].status === 5){%>
+                                                <p>Delivered</p>
+                                            <%}%>
+                                        </td>
+                                        <%if (order[i].supplier !== null) {%>
+                                            <td><%= order[i].supplier[0].name %></td>
+                                        <%}else{%>
+                                            <td></td>
+                                        <%}%>
                                         <td><%= order[i].customer.name %></td>
                                     </tr>
                                 <%}%>

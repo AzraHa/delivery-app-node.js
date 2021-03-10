@@ -22,36 +22,51 @@
                 </div>
                 <div class="card">
                     <div class="card-header border-transparent">
-                        <h3 class="card-title">Latest Orders</h3>
+                        <h3 class="card-title">Orders</h3>
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
                             <table class="table m-0">
                                 <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Order ID</th>
                                     <th>Item</th>
                                     <th>Status</th>
                                     <th>Supplier</th>
-                                    <th>Restaurant</th>
+                                    <th>Customer</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <%for(let i=0;i<orders.length;i++){%>
                                     <tr>
-                                        <td><%= orders[i]._id%></td>
-                                        <td><%= orders[i].orders[0].food[0].name%></td>
-                                        <td><%= orders[i].status %></td>
-                                        <td><%= orders[i].supplier[0].name %></td>
-                                        <td><%= orders[i].restaurant[0].name%></td>
+                                        <td></td>
+                                        <td><p><%= orders[i]._id%></p></td>
+                                        <td>
+                                        <%for(let j = 0; j< orders[i].orders.length;j++){%>
+                                            <p><%= orders[i].orders[j].food[0].name%></p>
+                                        <%}%>
+                                        </td>
+                                        <td>
+                                            <%if(orders[i].status === 2){%>
+                                                <p>Waiting for confirmation of supplier </p>
+                                            <%}else if(orders[i].status === 3){%>
+                                                <p>Delivering</p>
+                                            <%}else if(orders[i].status === 5){%>
+                                                <p>Delivered</p>
+                                            <%}%>
+                                        </td>
+                                        <% if (orders[i].supplier !== null) {%>
+                                            <td><p><%= orders[i].supplier[0].name %></p></td>
+                                        <%}else{%>
+                                            <td></td>
+                                        <%}%>
+                                        <td><p><%= orders[i].customer.name%></p></td>
                                     </tr>
                                 <%}%>
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div class="card-footer clearfix">
-                        <a href="/adminRestaurant/orders" class="btn btn-sm btn-secondary float-right">View All Orders</a>
                     </div>
                 </div>
             </div>

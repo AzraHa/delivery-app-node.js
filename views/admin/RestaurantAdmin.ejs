@@ -23,19 +23,20 @@
                     <h1 class="h2">Dashboard</h1>
                 </div>
                 <div class="card" style="border: 1px solid orange;">
-                    <div class="card-body" style="border: 1px solid orange;">
-                        <div class="card-header">
-                            <% for(let i=0;i<resAdminArray.length;i++){%>
-                                <h3 class="card-title">Admin: <%= resAdminArray[i].name %></h3>
-                        </div>
+                    <div class="card-body" style="border-top: 1px solid orange;">
+                        <% for(let i=0;i<resAdminArray.length;i++){ %>
+                            <div class="card-header">
+                                <h3 class="card-title"><%= resAdminArray[i].name  %></h3>
+                            </div>
                         <div class="card-body">
-                            <div class="e-profile">
-                                <div class="tab-content pt-3">
-                                    <div class="tab-pane active">
-                                        <form action="/admin/admins/<%=resAdminArray[0]._id%>" method="post">
-                                            <div class="container">
-                                                <div class="container__image">
-                                                    <div id="googleMap" class="form-control " style=" position: relative; overflow: hidden; width: 100%; margin: 5px; height: 400px;"></div>
+                            <form action="/admin/admins/<%=resAdminArray[0]._id%>" method="post">
+                                <div class="container">
+                                    <div class="container">
+                                        <div class="container__text">
+                                            <div class="container__image" style="width: 100%!important;">
+                                                <div class="container__image" style="margin:0 auto;">
+                                                    <input type="image" class="container__image" id="picture" name="img" src="../../images/<%= resAdminArray[i].image %>">
+                                                    <input type="file" accept="image/*" class="container__image" name="picture">
                                                 </div>
                                                 <div class="container__text">
                                                     <label>Name</label>
@@ -51,7 +52,7 @@
                                                            class="form-control"
                                                            value="<%= resAdminArray[i].email%>">
                                                     <label>Address</label>
-                                                    <div class="input-group mb-3">
+                                                    <div class="input-group mr-3">
                                                         <input type="text"
                                                                id="address"
                                                                name="address"
@@ -65,9 +66,12 @@
                                                             <div class="input-group-text">
                                                                 <span class="fa fa-search" id="submit"></span>
                                                             </div>
-                                                            <input type="hidden" id="koordinate" name="koordinate" value="<%= resAdminArray[i].koordinate%>">
+                                                            <input type="hidden" id="koordinate" name="koordinate" value="<%= resAdminArray[i].koordinate %>">
                                                         </div>
-
+                                                        <div class="input-group">
+                                                            <label for="inputEmail3 " class="col-sm-2 col-form-label mr-2 "></label>
+                                                            <div id="googleMap" class="form-control " style="position: relative; overflow: hidden; width: 100%; margin: 5px; height: 300px; "></div>
+                                                        </div>
                                                     </div>
                                                     <label>Restaurant</label>
                                                     <p class="form-control" ><%= resAdminArray[i].restaurant.name%></p>
@@ -76,11 +80,11 @@
                                                     </p>
                                                 </div>
                                             </div>
-                                        </form>
-                                        <%}%>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
+                            <%}%>
                         </div>
                     </div>
                 </div>
