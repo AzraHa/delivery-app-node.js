@@ -147,7 +147,7 @@ router.get('/profile',isAuthenticatedSupplier,function(req,res,next){
   })
 });
 router.post('/active-order/:id',isAuthenticatedSupplier,function(req,res,next){
-  TotalOrder.findOneAndUpdate({_id:req.params.id},{status:5},{new:true},function(err,supplier) {
+  TotalOrder.findOneAndUpdate({_id:req.params.id},{status:5,rated:false},{new:true},function(err,supplier) {
     Supplier.findOneAndUpdate({_id: req.user._id},{status:1},{new:true}).populate({
       path: 'restaurant',
       model: 'Restaurant'

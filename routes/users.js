@@ -321,7 +321,33 @@ router.delete('/order/:id/:food',function (req,res,next){
   });
 });
 
-
+router.get('/rate',function(req,res,next){
+  TotalOrder.find({customer:req.user._id,status:5,rated:false}, { sort: { 'date' : -1 } }).populate([{
+    path: 'orders',
+    populate: {
+      path: 'restaurant',
+      model: 'Restaurant'
+    }
+  }]).exec(function(err,order){
+    if(err) throw  err;
+    console.log(order)
+    res.render('user/rate',{
+      user:req.user,
+      order:order
+    })
+  })
+});
+router.post('/rate/:restaurant/:star',function(req,res,next) {
+  Restaurant.findOneAndUpdate({_id: req.params.restaurant}, {
+    $inc: {rated: 1,star: req.params.star}},
+      {new: true}, function (err, r) {
+    TotalOrder.findOneAndUpdate({restaurant:req.params.restaurant,customer:req.user._id,status:5,rated:false},{rated:true},{new:true},
+        function (err,total){
+          if(err) throw err;
+          res.sendStatus(200);
+    })
+  });
+});
 router.post('/send-order',function(req,res,next) {
   var dostavljacID;
   var najmanja = 100000000000;

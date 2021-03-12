@@ -9,7 +9,8 @@ const TotalOrderSchema = new mongoose.Schema({
   payment:{type:String,required:true},
   date: {type: String,required:true},
   delivery_address:{type:String,required:true},
-  delivery_latlang:{type:String,required:true}
+  delivery_latlang:{type:String,required:true},
+  rated:{type:Boolean}
 });
 
 const TotalOrder = mongoose.model('TotalOrder', TotalOrderSchema);

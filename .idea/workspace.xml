@@ -5,35 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/HISTORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/bson/HISTORY.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/LICENSE.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/bson/LICENSE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/bson/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/bower.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/bson/bower.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/browser_build/bson.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/browser_build/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/binary.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/bson.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/code.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/db_ref.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/decimal128.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/double.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/float_parser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/int_32.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/long.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/map.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/max_key.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/min_key.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/objectid.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/parser/calculate_size.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/parser/deserializer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/parser/serializer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/parser/utils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/regexp.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/symbol.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/lib/bson/timestamp.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/bson/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/bson/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/user/rate.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/user/recommendation.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Restaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Restaurant.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/TotalOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/TotalOrder.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/stylesheets/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/supplier.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/user/partials/navigation.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/partials/navigation.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +50,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="14.16.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="14.14.34" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/views/user" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -78,11 +58,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Acer\WebstormProjects\projekat\views\user" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views\AdminRestaurant" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views\admin" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views\user" />
-      <recent name="C:\Users\USER\WebstormProjects\projekat\views\supplier" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\USER\WebstormProjects\projekat\views\partials" />
@@ -213,7 +193,8 @@
       <workItem from="1615367602855" duration="12006000" />
       <workItem from="1615387779548" duration="527000" />
       <workItem from="1615388909781" duration="1209000" />
-      <workItem from="1615569402570" duration="74000" />
+      <workItem from="1615569402570" duration="744000" />
+      <workItem from="1615572267404" duration="5672000" />
     </task>
     <servers />
   </component>

@@ -13,7 +13,9 @@ const RestaurantSchema = new mongoose.Schema({
   distance:{type:Number},
   date: {type: Date, default: Date.now},
   status:{type: Boolean, required:true},
-  modified:{type:String, default: moment().format("MM/DD/YYYY, h:mm:ss ")}
+  modified:{type:String, default: moment().format("MM/DD/YYYY, h:mm:ss ")},
+  rated:{type:Number},
+  star:{type:Number}
 });
 
 const Restaurant = mongoose.model('Restaurant', RestaurantSchema);
