@@ -45,8 +45,13 @@
                             <div class="card-body">
                                 <a href="/users/restaurant/<%=recommended[i]._id%>"><h3><%=recommended[i].name%></h3></a>
                                 <p><%= recommended[i].address %></p>
+                                <% let ocjena = recommended[i].star/recommended[i].rated %>
+                                <%for(let i=0;i<parseInt(ocjena);i++){%>
+                                    <span class="fa fa-star checked"></span>
+                                <%}%>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
+
                                         <a class="btn btn-primary btn-block" href="/users/restaurant/<%=recommended[i]._id%>">View</a>
                                     </div>
                                 </div>

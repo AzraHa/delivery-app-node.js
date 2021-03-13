@@ -16,12 +16,6 @@ const upload = require('../controllers/uploadController');
 const passport = require('passport');
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
-/*const createToken = (id) => {
-  return jwt.sign({id},'strasno',{
-    expiresIn: maxAge
-  });
-}*/
-//const {ensureAuthenticated} = require('../config/auth');
 
 router.get('/login',function(req,res,next){
   res.render('user/login');
@@ -33,14 +27,7 @@ router.post('/login',function (req,res,next){
     failureRedirect: '/users/login',
     failureFlash: true
   })(req, res, next);
-  /*const maxAge = 3 *24 *60 *60 ;
-  const createToken = (id) => {
-    return jwt.sign({id},'strasno',{
-      expiresIn: maxAge
-    });
-  }
-  const token = createToken(User._id);
-  res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });*/
+
 });
 
 router.get('/register',function(req,res,next){
@@ -126,13 +113,6 @@ router.get('/logout',function(req,res,next){
 });
 
 router.get('/dashboard',function(req,res,next){
-  /*let options = {
-    maxAge: 1000 * 60 * 15,
-    httpOnly: false,
-    signed: true
-  }
-  res.cookie('order', 0, options);*/
-
   Food.find({}).populate('restaurant').sort({"modified" : -1}).limit(6).exec(function(err,food){
         FoodType.find().exec(function (err,foodtype){
             Restaurant.find({}).exec(function (err,allRestaurants){
@@ -156,9 +136,6 @@ router.get('/dashboard',function(req,res,next){
                     }
                   }
                   Order.find({'customer': req.user._id, status: 1}).populate('food').populate('restaurant').exec(function (err, order) {
-                      console.log(req.session);
-                      console.log(req.session.cookie);
-
                       res.render('user/dashboard', {
                       user: req.user,
                       food: food,
@@ -173,13 +150,21 @@ router.get('/dashboard',function(req,res,next){
             })
         })
 });
+router.get('/recommended',function(req,res,next){
+  Restaurant.find({}).sort([['rated', -1]]).exec(function (err,recommended){
+    if(err)throw err;
+    res.render('user/recommendation',{
+      user:req.user,
+      recommended:recommended
+    })
+  })
+});
 
 router.post('/search',function(req,res,next){
   Food.find({name:req.body.nazivArtikla},function(err,food){
     if(typeof food === "undefined" || food.length<1){
       FoodType.find({name:req.body.nazivArtikla},function(err,types){
         Food.find({type:types[0]._id}).populate('restaurant').exec(function(err,food){
-          console.log(food)
           res.render('user/search', {
             user: req.user,
             food: food,
@@ -188,7 +173,6 @@ router.post('/search',function(req,res,next){
         });
       })
     }else{
-      console.log(food)
       res.render('user/search', {
         user: req.user,
         food: food,
@@ -330,7 +314,6 @@ router.get('/rate',function(req,res,next){
     }
   }]).exec(function(err,order){
     if(err) throw  err;
-    console.log(order)
     res.render('user/rate',{
       user:req.user,
       order:order
@@ -352,21 +335,17 @@ router.post('/send-order',function(req,res,next) {
   var dostavljacID;
   var najmanja = 100000000000;
   var vrijeme = req.body.vrijeme;
-  console.log(vrijeme,typeof vrijeme)
   if(vrijeme === ""){
     vrijeme = moment().add(45, 'minutes').format("MM/DD/YYYY hh:mm:ss");
   }else{
     vrijeme = moment(vrijeme).format("MM/DD/YYYY hh:mm:ss");
   }
-  console.log(vrijeme,typeof vrijeme)
   var placanje = req.body.placanje;
   var delivery_address = req.body.address;
   var koordinate = req.body.koordinate;
-
   if(placanje==="undefined"){
     placanje = "gotovina";
   }
-
   TotalOrder.findOne({customer: req.user._id,status: 1}, function(error, doc)  {
     if (error) {
       console.log("Something wrong when updating data!");
@@ -385,13 +364,10 @@ router.post('/send-order',function(req,res,next) {
           var longitude1 = parseFloat(nova[1]);
           var minimalna = geolib.getDistance({latitude: latitude1, longitude: longitude1},
             {latitude: RestoranLatitude, longitude: RestoranLongitude}, accuracy = 1);
-          console.log("MINIMALNA: " + minimalna)
           if (minimalna < najmanja) {
             najmanja = minimalna;
             dostavljacID = (ObjectId(suppliers[s]._id));
           }
-          console.log("NAJMANJA" + najmanja);
-          console.log(dostavljacID, typeof dostavljacID);
         }
         TotalOrder.findOneAndUpdate({_id:doc._id,status:1},
             {
@@ -443,16 +419,17 @@ router.post('/send-order',function(req,res,next) {
       console.log(error);
     } else {
       console.log('Email sent: ' + info.response);
+      Order.updateMany({status: 1, customer: req.user._id}, {
+            "$set": {"status": 2}},
+          {multi: true}, function (err, doc) {
+            if (err) throw err;
+            else {
+              res.redirect("/users/dashboard");
+            }
+      });
     }
   });
-  Order.updateMany({status: 1, customer: req.user._id}, {
-    "$set": {"status": 2}},
-    {multi: true}, function (err, doc) {
-    if (err) throw err;
-    else {
-      res.redirect("/users/dashboard");
-    }
-  });
+
 });
 
 router.get('/profile',function(req,res,next){
@@ -464,7 +441,6 @@ router.get('/profile',function(req,res,next){
         model: 'Food'
       }
     }]).populate('restaurant').populate('customer').exec(function(err,orders){
-      console.log(orders)
       res.render('user/profile',{
         user:user,
         orders:orders
