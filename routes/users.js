@@ -151,13 +151,40 @@ router.get('/dashboard',function(req,res,next){
         })
 });
 router.get('/recommended',function(req,res,next){
-  Restaurant.find({}).sort([['rated', -1]]).exec(function (err,recommended){
-    if(err)throw err;
-    res.render('user/recommendation',{
-      user:req.user,
-      recommended:recommended
+  //Food,foodtype,restaurant,order
+  Restaurant.find({}).exec(function (err,allRestaurants){
+    User.findOne({_id: req.user._id}, function (err, user) {
+      const adresa = user.koordinate.replace("(", "").replace(")", "");
+      const nova = adresa.split(",");
+      let userLatitude = parseFloat(nova[0]);
+      let userLongitude = parseFloat(nova[1]);
+      var restorani = [];
+      for(let k=0;k<allRestaurants.length;k++)
+      {
+        var restoranDostava = allRestaurants[k].distance;
+        const adresa = allRestaurants[k].koordinate.replace("(", "").replace(")", "");
+        const nova = adresa.split(",");
+        let restoranLatitude = parseFloat(nova[0]);
+        let restoranLongitude = parseFloat(nova[1]);
+        var udaljenost = geolib.getDistance({latitude: userLatitude, longitude: userLongitude},
+            {latitude: restoranLatitude, longitude: restoranLongitude}, accuracy = 1);
+        if(udaljenost<=restoranDostava){
+          restorani.push(allRestaurants[k]);
+        }
+      }
+      Restaurant.find({}).sort([['rated', -1]]).exec(function (err,recommended){
+        if(err)throw err;
+        FoodType.find({},function (err,foodtype){
+          res.render('user/recommendation',{
+            user:req.user,
+            recommended:recommended,
+            foodtype:foodtype,
+            restaurant:restorani
+          })
+        })
+      })
+      });
     })
-  })
 });
 
 router.post('/search',function(req,res,next){
