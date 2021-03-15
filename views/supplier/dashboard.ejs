@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <!-- Custom styles for this template -->
     <link href="/stylesheets/style.css" rel="stylesheet">
     <script src="/script/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <!-- Fontawesome-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
 
@@ -47,13 +45,12 @@
                                     <td><%= i+1 %></td>
                                     <td><%= orders[i].restaurant[0].name%></td>
                                     <td><%= orders[i].restaurant[0].address%></td>
-                                    <td><%= orders[i].customer.address %></td>
+                                    <td><%= orders[i].delivery_address %></td>
                                     <td><% let total=Number(0);%>
                                         <ul class="list-group">
                                             <% for(let j=0;j<orders[i].orders.length;j++){%>
-                                                <li><%= orders[i].orders[j].food[0].name%> : <%= orders[i].orders[j].quantity %> </li>
-
-                                                <%total+=Number(orders[i].orders[j].food[0].price* ((orders[i].orders[j].quantity)))%>
+                                                <li><%= orders[i].orders[j].food[0].name%></li>
+                                                <%total+=Number(orders[i].orders[j].food[0].price)%>
                                             <%}%>
                                         </ul>
                                     </td>
@@ -105,8 +102,8 @@
                                         <td><% let total=Number(0);%>
                                             <ul class="list-group">
                                                 <% for(let j=0;j<ordersA[i].orders.length;j++){%>
-                                                    <li><%= ordersA[i].orders[j].food[0].name%> : <%= ordersA[i].orders[j].quantity %> </li>
-                                                    <%total+=Number(ordersA[i].orders[j].food[0].price* ((ordersA[i].orders[j].quantity)))%>
+                                                    <li><%= ordersA[i].orders[j].food[0].name%></li>
+                                                    <%total+=Number(ordersA[i].orders[j].food[0].price)%>
                                                 <%}%>
                                             </ul>
                                         </td>
@@ -157,9 +154,8 @@
                                     <td><% let total=Number(0);%>
                                         <ul class="list-group">
                                             <% for(let j=0;j<ordersN[i].orders.length;j++){%>
-                                                <li><%= ordersN[i].orders[j].food[0].name%> : <%= ordersN[i].orders[j].quantity %> </li>
-
-                                                <%total+=Number(ordersN[i].orders[j].food[0].price* ((ordersN[i].orders[j].quantity)))%>
+                                                <li><%= ordersN[i].orders[j].food[0].name%></li>
+                                                <%total+=Number(ordersN[i].orders[j].food[0].price)%>
                                             <%}%>
                                         </ul>
                                     </td>

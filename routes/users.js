@@ -16,6 +16,7 @@ const upload = require('../controllers/uploadController');
 const passport = require('passport');
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
+const {isAuthenticatedCustomer} = require("../config/auth");
 
 router.get('/login',function(req,res,next){
   res.render('user/login');
@@ -112,7 +113,7 @@ router.get('/logout',function(req,res,next){
   res.redirect('/users/login');
 });
 
-router.get('/dashboard',function(req,res,next){
+router.get('/dashboard',isAuthenticatedCustomer,function(req,res,next){
   Food.find({}).populate('restaurant').sort({"modified" : -1}).limit(6).exec(function(err,food){
         FoodType.find().exec(function (err,foodtype){
             Restaurant.find({}).exec(function (err,allRestaurants){
@@ -150,7 +151,7 @@ router.get('/dashboard',function(req,res,next){
             })
         })
 });
-router.get('/recommended',function(req,res,next){
+router.get('/recommended',isAuthenticatedCustomer,function(req,res,next){
   //Food,foodtype,restaurant,order
   Restaurant.find({}).exec(function (err,allRestaurants){
     User.findOne({_id: req.user._id}, function (err, user) {
@@ -183,7 +184,7 @@ router.get('/recommended',function(req,res,next){
     })
 });
 
-router.post('/search',function(req,res,next){
+router.post('/search',isAuthenticatedCustomer,function(req,res,next){
   Food.find({name:req.body.nazivArtikla},function(err,food){
     if(typeof food === "undefined" || food.length<1){
       FoodType.find({name:req.body.nazivArtikla},function(err,types){
@@ -205,7 +206,7 @@ router.post('/search',function(req,res,next){
   });
 });
 
-router.get('/sale',function (req,res,next){
+router.get('/sale',isAuthenticatedCustomer,function (req,res,next){
   var today = new Date();
   var dd = today.getDate();
   var mm = today.getMonth()+1;
@@ -241,7 +242,7 @@ router.get('/sale',function (req,res,next){
   })})
 });
 
-router.post('/add-order/:foodID/restaurant/:restaurantID',function (req,res,next){
+router.post('/add-order/:foodID/restaurant/:restaurantID',isAuthenticatedCustomer,function (req,res,next){
     const foodID = req.params.foodID;
     const userID = req.user._id;
     const restaurantID = req.params.restaurantID;
@@ -278,7 +279,7 @@ router.post('/add-order/:foodID/restaurant/:restaurantID',function (req,res,next
     });
 });
 
-router.get('/restaurant/:id',function (req,res,next){
+router.get('/restaurant/:id',isAuthenticatedCustomer,function (req,res,next){
    Restaurant.find({_id:req.params.id},function (err,rest){
        const restID = req.params.id;
        const tipovi = [];
@@ -307,7 +308,7 @@ router.get('/restaurant/:id',function (req,res,next){
        })
    })
 });
-router.get('/order',function(req,res,next){
+router.get('/order',isAuthenticatedCustomer,function(req,res,next){
   TotalOrder.find({customer:req.user._id,status:1}).populate([{
     path: 'orders',
     populate: {
@@ -321,14 +322,14 @@ router.get('/order',function(req,res,next){
     })
   });
 });
-router.delete('/order/:id/:food',function (req,res,next){
+router.delete('/order/:id/:food',isAuthenticatedCustomer,function (req,res,next){
   Order.deleteOne({ _id: req.params.id , food:req.params.food }, function (err) {
     if (err) return err;
     else res.sendStatus(200);
   });
 });
 
-router.get('/rate',function(req,res,next){
+router.get('/rate',isAuthenticatedCustomer,function(req,res,next){
   TotalOrder.find({customer:req.user._id,status:5,rated:false}, { sort: { 'date' : -1 } }).populate([{
     path: 'orders',
     populate: {
@@ -343,7 +344,7 @@ router.get('/rate',function(req,res,next){
     })
   })
 });
-router.post('/rate/:restaurant/:star',function(req,res,next) {
+router.post('/rate/:restaurant/:star',isAuthenticatedCustomer,function(req,res,next) {
   Restaurant.findOneAndUpdate({_id: req.params.restaurant}, {
     $inc: {rated: 1,star: req.params.star}},
       {new: true}, function (err, r) {
@@ -354,7 +355,7 @@ router.post('/rate/:restaurant/:star',function(req,res,next) {
     })
   });
 });
-router.post('/send-order',function(req,res,next) {
+router.post('/send-order',isAuthenticatedCustomer,function(req,res,next) {
   var dostavljacID;
   var najmanja = 100000000000;
   var vrijeme = req.body.vrijeme;
@@ -455,7 +456,7 @@ router.post('/send-order',function(req,res,next) {
 
 });
 
-router.get('/profile',function(req,res,next){
+router.get('/profile',isAuthenticatedCustomer,function(req,res,next){
   User.findOne({ _id: req.user._id },function (err,user){
     TotalOrder.find({customer:req.user._id}).populate([{
       path: 'orders',
@@ -472,10 +473,10 @@ router.get('/profile',function(req,res,next){
   });
 });
 
-router.post('/profile',upload.single('picture'),function(req,res,next){
+router.post('/profile',isAuthenticatedCustomer,upload.single('picture'),function(req,res,next){
   let {name, address,koordinate, email, password} = req.body;
   let newPassword;
-  const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+  const modified = moment().format("MM/DD/YYYY, h:mm:ss");
   if (!req.file && password === "") {
     User.updateOne({_id: req.user._id},
       {
@@ -562,7 +563,7 @@ router.post('/profile',upload.single('picture'),function(req,res,next){
   }
 });
 
-router.get('/foodType/:id',function (req,res,next){
+router.get('/foodType/:id',isAuthenticatedCustomer,function (req,res,next){
   var today = new Date();
   var dd = today.getDate();
   var mm = today.getMonth()+1;

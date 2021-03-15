@@ -21,6 +21,17 @@ module.exports = {
             res.redirect('back');
         }
     },
+    isAuthenticatedCustomer : function (req, res, next) {
+        if (req.isAuthenticated()){
+            if(req.user.role === 'customer'){
+                return next();
+            }else{
+                res.redirect('back');
+            }
+        }else{
+            res.redirect('back');
+        }
+    },
     isAuthenticatedSupplier : function (req, res, next) {
         if (req.isAuthenticated()){
             if(req.user.role === 'supplier'){
@@ -32,6 +43,7 @@ module.exports = {
             res.redirect('back');
         }
     },
+
     isLoggedIN : function(req,res,next){
         if (req.isAuthenticated()){
             if(req.user.role === 'supplier'){

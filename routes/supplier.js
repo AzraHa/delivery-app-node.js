@@ -180,21 +180,22 @@ router.post('/active-order/:id',isAuthenticatedSupplier,function(req,res,next){
   });
 });
 router.post('/profile',isAuthenticatedSupplier,upload.single('picture'),async function (req,res,next){
-  let {name, address, email, password,supplierID} = req.body;
+  let {name, address,koordinate, email, password} = req.body;
   let newPassword;
-  const modified = moment(new Date).format("MM/DD/YYYY, h:mm:ss");
+  const modified = moment().format("MM/DD/YYYY, h:mm:ss");
   if (!req.file && password === "") {
-    Supplier.updateOne({_id: supplierID},
-      {
-        name: name,
-        address: address,
-        email: email,
-        date: modified,
-      },
-      function (error, success) {
-        if(error) console.log("Error "+error.message);
-        res.redirect('/supplier/profile');
-      });
+    Supplier.updateOne({_id: req.user._id},
+        {
+          name: name,
+          s_address: address,
+          koordinate:koordinate,
+          email: email,
+          modified: modified,
+        },
+        function (error, success) {
+          if(error) console.log("Error "+error.message);
+          res.redirect('/supplier/profile');
+        });
   }else if(!req.file && password!== ""){
     bcrypt.genSalt(10, function (saltError, salt) {
       if (saltError) {
@@ -205,35 +206,37 @@ router.post('/profile',isAuthenticatedSupplier,upload.single('picture'),async fu
             throw hashError
           } else {
             newPassword = hash;
-            Supplier.updateOne({_id: supplierID},
-              {
-                name: name,
-                address: address,
-                email: email,
-                date: modified,
-                password:newPassword
-              },
-              function (error, success) {
-                res.redirect('/supplier/profile');
-              });
+            Supplier.updateOne({_id: req.user._id},
+                {
+                  name: name,
+                  s_address: address,
+                  email: email,
+                  modified: modified,
+                  koordinate:koordinate,
+                  password:newPassword
+                },
+                function (err, success) {
+                  if(err) return err;
+                  res.redirect('/supplier/profile');
+                });
           }
         })
       }
     });
   }
   else if(req.file && password === ""){
-    console.log("slika"+req.file.filename)
-    Supplier.updateOne({_id: supplierID},
-      {
-        picture:req.file.filename,
-        name: name,
-        address: address,
-        email: email,
-        date: modified
-      },
-      function (error, success) {
-        res.redirect('/supplier/profile');
-      });
+    Supplier.updateOne({_id: req.user._id},
+        {
+          picture:req.file.filename,
+          name: name,
+          s_address: address,
+          email: email,
+          modified: modified,
+          koordinate:koordinate
+        },
+        function (error, success) {
+          res.redirect('/supplier/profile');
+        });
   }
   else if(req.file && password !== ""){
     bcrypt.genSalt(10, function (saltError, salt) {
@@ -245,20 +248,21 @@ router.post('/profile',isAuthenticatedSupplier,upload.single('picture'),async fu
             throw hashError
           } else {
             newPassword = hash;
-            Supplier.updateOne({_id: supplierID},
-              {
-                picture: req.file.filename,
-                name: name,
-                address: address,
-                email: email,
-                date: modified,
-                password:newPassword,
-              },
-              function (error, success) {
-                if(error)console.log("error"+error+error.message);
-                if(success)console.log("success: " +success)
-                res.redirect('/supplier/profile');
-              });
+            Supplier.updateOne({_id: req.user._id},
+                {
+                  picture: req.file.filename,
+                  name: name,
+                  s_address: address,
+                  email: email,
+                  modified: modified,
+                  password:newPassword,
+                  koordinate:koordinate
+                },
+                function (error, success) {
+                  if(error)console.log("error"+error+error.message);
+                  if(success)console.log("success: " +success)
+                  res.redirect('/supplier/profile');
+                });
           }
         })
       }

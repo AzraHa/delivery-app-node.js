@@ -6,81 +6,88 @@
     <title>Profile</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/stylesheets/style.css" rel="stylesheet">
+    <script src="/script/maps.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
-
 <body>
 <main role="main">
     <% include partials/navigation %>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
-                    <h1 class="h2">Dashboard</h1>
-                </div>
-                <div class="card" style="border: 1px solid orange;">
-                    <div class="card-body" style="border-top: 1px solid orange;">
-                            <div class="card-header">
-                                <h3 class="card-title">My profile : <%= supplier.name %></h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="e-profile">
-                                    <div class="tab-content pt-3">
-                                        <div class="tab-pane active">
-                                            <form action="/supplier/profile" method="post" enctype="multipart/form-data">
-                                                <div class="container">
-                                                    <div class="container__image">
-                                                        <input type="hidden" name="supplierID" value="<%= supplier._id%>">
-                                                        <input type="image" class="container__image"
-                                                               src="../../images/<%= supplier.picture%>"
-                                                               id="picture"
-                                                               name="img">
-                                                        <input type="file" accept="image/*" class="container__image"
-                                                               id="picture"
-                                                               name="picture">
-                                                    </div>
-                                                    <div class="container__text">
-                                                        <label>Name</label>
-                                                        <input type="text"
-                                                               id="name"
-                                                               name="name"
-                                                               class="form-control"
-                                                               placeholder="Name"
-                                                               value="<%= supplier.name%>">
-                                                        <label>Address</label>
-                                                        <input type="text"
-                                                               id="address"
-                                                               name="address"
-                                                               class="form-control"
-                                                               placeholder="Address"
-                                                               value="<%= supplier.s_address%>">
-                                                        <label>Email</label>
-                                                        <input type="email"
-                                                               id="email"
-                                                               name="email"
-                                                               class="form-control"
-                                                               value="<%= supplier.email %>">
-                                                        <label>Change Password</label>
-                                                        <input type="password"
-                                                               id="password"
-                                                               name="password"
-                                                               class="form-control"
-                                                               value="">
-                                                        <p class="project-actions text-right">
-                                                            <button type="submit" class="btn btn-success">Submit</button>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </form>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+            <h1 class="h2">Dashboard</h1>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">My profile : <%= supplier.name %></h3>
+            </div>
+            <div class="card-body" style="border-top: 1px solid #F9723D;">
+                <form action="/supplier/profile" method="post" enctype="multipart/form-data">
+                    <div class="container">
+                        <div class="container__text">
+                            <div class="container__image" style="width: 100%!important;">
+                                <div class="container__image" style="margin:0 auto;">
+                                    <input type="hidden" name="userID" value="<%= supplier._id%>">
+                                    <input type="image" class="container__image"
+                                           src="../../images/<%= supplier.picture%>"
+                                           name="img">
+                                    <input type="file" accept="image/*" class="container__image"
+                                           name="picture">
+                                </div>
+                                <div class="container__text">
+                                    <label>Name</label>
+                                    <input type="text"
+                                           id="name"
+                                           name="name"
+                                           class="form-control"
+                                           placeholder="Name"
+                                           value="<%= supplier.name%>">
+                                    <label>Address</label>
+                                    <div class="input-group mr-3">
+                                        <input type="text"
+                                               id="address"
+                                               name="address"
+                                               class="form-control"
+                                               placeholder="Address"
+                                               value="<%= supplier.s_address %>">
+                                        <div class="input-group-append" >
+                                            <div class="input-group-text">
+                                                <span class="fa fa-map-marker" id="dugme"></span>
+                                            </div>
+                                            <div class="input-group-text">
+                                                <span class="fa fa-search" id="submit"></span>
+                                            </div>
+                                            <input type="hidden" id="koordinate" name="koordinate" value="<%= supplier.s_koordinate %>">
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="inputEmail3 " class="col-sm-2 col-form-label mr-2 "></label>
+                                            <div id="googleMap" class="form-control " style="position: relative; overflow: hidden; width: 100%; margin: 5px; height: 300px; "></div>
                                         </div>
                                     </div>
+                                    <label>Email</label>
+                                    <input type="email"
+                                           id="email"
+                                           name="email"
+                                           class="form-control"
+                                           value="<%= supplier.email %>">
+                                    <label>Change Password</label>
+                                    <input type="password"
+                                           id="password"
+                                           name="password"
+                                           class="form-control"
+                                           value="">
+                                    <p class="project-actions text-right">
+                                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Orders</button>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </p>
                                 </div>
                             </div>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </main>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfOHwnQrFUSJ1CSq0-z2-mvUyeZM10ADg&callback=korisnikMap"></script>
 </body>
 </html>

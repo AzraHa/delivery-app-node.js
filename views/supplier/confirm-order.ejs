@@ -29,8 +29,8 @@
                         <p class="form-control" ><%= order.customer.name%></p>
                         <label>Customer Email</label>
                         <p class="form-control"> <%= order.customer.email%></p>
-                        <label>Customer Address</label>
-                        <p class="form-control" style="height: 80px;"><%= order.customer.address%></p>
+                        <label>Delivery Address</label>
+                        <p class="form-control" style="height: 80px;"><%= order.delivery_address%></p>
                         <label>Customer Status</label>
                         <%if(order.customer.status === 1){ %>
                             <p class="form-control">Active</p>
@@ -51,23 +51,18 @@
                         <div class="container__image">
                             <label>Order</label>
                             <p class="form-control" ><%= order.orders[j].food[0].name%></p>
-                            <label>Quantity</label>
-                            <p class="form-control"> <%= order.orders[j].quantity%></p>
                             <label>Price</label>
                             <p class="form-control"> <%= order.orders[j].food[0].price%></p>
-                            <label>Total</label>
                             <%let total = 0;%>
-                            <p class="form-control">
-                                <%= total+=Number(order.orders[j].food[0].price*((order.orders[j].quantity)))%>
-                            </p>
+                            <% total+=Number(order.orders[j].food[0].price)%>
                             <% totalPrice+=total%>
                         </div>
                     <%}%>
                     <div class="container__image">
                         <label>Total Price</label>
                             <p class="form-control">Total Price : <%= totalPrice%> KM </p>
-                            <input type="hidden" name="newAddress"value="<%= order.customer.address%>">
-                            <input type="hidden" name="newKoordinate" value="<%= order.customer.koordinate%>">
+                            <input type="hidden" name="newAddress"value="<%= order.delivery_address%>">
+                            <input type="hidden" name="newKoordinate" value="<%= order.delivery_latlang%>">
                         <p class="project-actions text-right mt-3"><button type="submit" class="btn btn-success">Submit</button></p>
                     </div>
                 </div>
