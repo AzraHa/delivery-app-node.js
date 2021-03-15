@@ -39,21 +39,21 @@
     <div class="album">
         <div class="container">
             <div class="row">
-                <% for(let i=0;i<recommended.length;i++){%>
+                <% for(let i=0;i<restaurant.length;i++){%>
                     <div class="col-md-4">
                         <div class="card mb-4 shadow-sm">
-                            <img class="bd-placeholder-img card-img-top" width="450" height="300" src="../images/<%= recommended[i].image%>">
+                            <img class="bd-placeholder-img card-img-top" width="450" height="300" src="../images/<%= restaurant[i].image%>">
                             <div class="card-body">
-                                <a href="/users/restaurant/<%=recommended[i]._id%>"><h3><%=recommended[i].name%></h3></a>
-                                <p><%= recommended[i].address %></p>
-                                <% let ocjena = recommended[i].star/recommended[i].rated %>
+                                <a href="/users/restaurant/<%=restaurant[i]._id%>"><h3><%=restaurant[i].name%></h3></a>
+                                <p><%= restaurant[i].address %></p>
+                                <% let ocjena = restaurant[i].star/restaurant[i].rated %>
                                 <%for(let i=0;i<parseInt(ocjena);i++){%>
                                     <span class="fa fa-star checked"></span>
                                 <%}%>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
 
-                                        <a class="btn btn-primary btn-block" href="/users/restaurant/<%=recommended[i]._id%>">View</a>
+                                        <a class="btn btn-primary btn-block" href="/users/restaurant/<%=restaurant[i]._id%>">View</a>
                                     </div>
                                 </div>
                             </div>

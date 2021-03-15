@@ -172,18 +172,14 @@ router.get('/recommended',function(req,res,next){
           restorani.push(allRestaurants[k]);
         }
       }
-      Restaurant.find({}).sort([['rated', -1]]).exec(function (err,recommended){
-        if(err)throw err;
-        FoodType.find({},function (err,foodtype){
+      FoodType.find({},function (err,foodtype){
           res.render('user/recommendation',{
             user:req.user,
-            recommended:recommended,
             foodtype:foodtype,
             restaurant:restorani
           })
         })
       })
-      });
     })
 });
 
