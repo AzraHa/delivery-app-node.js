@@ -100,7 +100,6 @@ router.post('/register',function(req,res,next){
               .catch(err => console.log(err));
           });
         });
-        console.log(newUser);
       }
     });
   }
@@ -486,7 +485,7 @@ router.post('/profile',isAuthenticatedCustomer,upload.single('picture'),function
         email: email,
         modified: modified,
       },
-      function (error, success) {
+      function (error) {
         if(error) console.log("Error "+error.message);
         res.redirect('/users/profile');
       });

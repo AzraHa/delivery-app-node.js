@@ -4,12 +4,10 @@ const Supplier = require("../models/Supplier");
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const moment = require('moment');
-const jwt = require("jsonwebtoken");
 const upload = require('../controllers/uploadController');
 const nodemailer = require('nodemailer');
 const User = require("../models/User");
 const {isAuthenticatedSupplier} = require("../config/auth");
-
 const router = express.Router();
 
 router.get('/login',function (req,res,next){
@@ -25,44 +23,23 @@ router.post('/login',function(req,res,next){
 });
 
 router.get('/dashboard',isAuthenticatedSupplier,function (req,res,next){
-  TotalOrder.find({status: 2,supplier:req.user._id})
-    .populate([{
-      path: 'orders',
-      populate: {
-        path: 'food',
-        model: 'Food'
-      }
-    }]).populate('customer').populate('restaurant').
-  exec(function(err,orders){
-    //Odradjene narudzbe imaju polje status 5
-    TotalOrder.find({status: 5,supplier:req.user._id})
-      .populate([{
-        path: 'orders',
-        populate: {
-          path: 'food',
-          model: 'Food'
-        }
-      }]).populate('customer').populate('restaurant').
-      exec(function(err,ordersN) {
-        //Narudzbe u toku
-      TotalOrder.find({status: 3,supplier:req.user._id}).populate([{
-        path: 'orders',
-        populate: {
-          path: 'food',
-          model: 'Food'
-        }
-      }]).populate('customer').populate('restaurant').
-      exec(function(err,ordersA) {
-        res.render('supplier/dashboard',
-          {
-            user: req.user,
-            orders: orders,
-            ordersN: ordersN,
-            ordersA:ordersA
-          });
-      });
-    });
-  })
+  TotalOrder.find({status: 2,supplier:req.user._id}).populate([{path: 'orders', populate: {path: 'food', model: 'Food'}}]).populate('customer').populate('restaurant').exec(function(err,orders){
+      if(err) return err;
+      //Odradjene narudzbe imaju polje status 5
+        TotalOrder.find({status: 5,supplier:req.user._id}).populate([{path: 'orders', populate: {path: 'food', model: 'Food'}}]).populate('customer').populate('restaurant').exec(function(err,ordersN) {
+            if(err) return err;
+            //Narudzbe u toku
+            TotalOrder.find({status: 3,supplier:req.user._id}).populate([{path: 'orders', populate: {path: 'food', model: 'Food'}}]).populate('customer').populate('restaurant').exec(function(err,ordersA) {
+                if(err) return err;
+                res.render('supplier/dashboard',
+                    {user: req.user,
+                        orders: orders,
+                        ordersN: ordersN,
+                        ordersA:ordersA
+                    });
+            });
+        });
+  });
 });
 
 router.get('/logout',isAuthenticatedSupplier,function (req,res,next){
@@ -72,113 +49,76 @@ router.get('/logout',isAuthenticatedSupplier,function (req,res,next){
 });
 
 router.get('/order-confirm/:id',isAuthenticatedSupplier,function (req,res,next){
-  TotalOrder.findOne({_id: req.params.id}).populate([{path: 'orders', populate: {path: 'food', model: 'Food'}}]).populate('customer').populate('restaurant')
-    .exec(function (err, order) {
+  TotalOrder.findOne({_id: req.params.id}).populate([{path: 'orders', populate: {path: 'food', model: 'Food'}}]).populate('customer').populate('restaurant').exec(function (err, order) {
+      if(err) return err;
       res.render('supplier/confirm-order',{user:req.user,order:order})
     });
 });
 router.post('/order-confirm/:id/:customer',isAuthenticatedSupplier,function (req,res,next){
   //status 3 narudzba potvrđena od strane dostavljaca
-  TotalOrder.updateOne({ _id: req.params.id},  {status: 3}, {new: true}).
-  populate({path:'restaurant', model: 'Restaurant' }).populate({path:'customer', model: 'User' })
-    .exec(function(err,doc) {
-    if (err) {
-      console.log("Something wrong when updating data!");
-    }
-    Supplier.findOneAndUpdate({_id: req.user._id},{s_address:req.body.newAddress,koordinate:req.body.newKoordinate}).populate({
-      path: 'restaurant',
-      model: 'Restaurant'
-    }).exec(function (err, supplier) {
-      User.findOne({_id:req.params.customer},function(err,user){
-        var transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: 'nodeprojekat@gmail.com',
-            pass: 'node1234'
-          }
+  TotalOrder.updateOne({ _id: req.params.id},  {status: 3}, {new: true}).populate({path:'restaurant', model: 'Restaurant' }).populate({path:'customer', model: 'User' }).exec(function(err,doc) {
+    if (err) console.log("Something wrong when updating data!");
+    Supplier.findOneAndUpdate({_id: req.user._id},{s_address:req.body.newAddress,koordinate:req.body.newKoordinate}).populate({path: 'restaurant', model: 'Restaurant'}).exec(function (err, supplier) {
+        if(err) return err;
+        User.findOne({_id:req.params.customer},function(err,user){
+            if(err) return err;
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'nodeprojekat@gmail.com',
+                    pass: 'node1234'
+                }
+            });
+            const mailOptions = {
+                from: supplier.email,
+                to: user.email,
+                subject: 'Order Confirmed',
+                text: 'Your order has been confirmed by our supplier and it is at your door on ' + moment(doc.date).add(30, 'm')
+            };
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) console.log(error);
+                else console.log('Email sent: ' + info.response);
+            }).then(r => res.redirect('/supplier/dashboard'));
         });
-        var mailOptions = {
-          from: supplier.email,
-          to: user.email,
-          subject: 'Order Confirmed',
-          text: 'Your order has been confirmed by our supplier and it is at your door on ' + moment(doc.date).add(30, 'm')
-        };
-
-        transporter.sendMail(mailOptions, function (error, info) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log('Email sent: ' + info.response);
-          }
-        });
-      })
-      const restaurantEmail = (supplier.restaurant[0].email)
-      //nodemailer sa w3schools :)
-      var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'nodeprojekat@gmail.com',
-          pass: 'node1234'
-        }
-      });
-      var mailOptions = {
-        from: supplier.email,
-        to: restaurantEmail,
-        subject: 'Order Confirmed',
-        text: 'I '+supplier.name +' confirm the order ' + req.params.id
-      };
-
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
-      res.redirect('/supplier/dashboard');
     });
   });
 });
 router.get('/profile',isAuthenticatedSupplier,function(req,res,next){
   Supplier.findOne({_id:req.user._id},function(err,supplier){
-    res.render('supplier/profile',
-      {user:req.user,
-      supplier:supplier})
+      if(err) return err;
+      res.render('supplier/profile',
+          {user:req.user,
+              supplier:supplier
+          });
   })
 });
 router.post('/active-order/:id',isAuthenticatedSupplier,function(req,res,next){
   TotalOrder.findOneAndUpdate({_id:req.params.id},{status:5,rated:false},{new:true},function(err,supplier) {
-    Supplier.findOneAndUpdate({_id: req.user._id},{status:1},{new:true}).populate({
-      path: 'restaurant',
-      model: 'Restaurant'
-    }).exec(function (err, supplier) {
-      const restaurantEmail = (supplier.restaurant[0].email)
-      //nodemailer sa w3schools :)
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'nodeprojekat@gmail.com',
-          pass: 'node1234'
-        }
-      });
-      const mailOptions = {
-        from: supplier.email,
-        to: restaurantEmail,
-        subject: 'Order Delivered',
-        text: 'I ' + supplier.name + ' delivered the order ' + req.params.id
-      };
-
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
-      res.redirect('/supplier/dashboard');
+      if(err) return err;
+      Supplier.findOneAndUpdate({_id: req.user._id},{status:1},{new:true}).populate({path: 'restaurant', model: 'Restaurant'}).exec(function (err, supplier) {
+          if(err) return err;
+          const restaurantEmail = (supplier.restaurant[0].email)
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                  user: 'nodeprojekat@gmail.com',
+                  pass: 'node1234'
+                }
+            });
+          const mailOptions = {
+              from: supplier.email,
+                to: restaurantEmail,
+                subject: 'Order Delivered',
+                text: 'I ' + supplier.name + ' delivered the order ' + req.params.id
+          };
+          transporter.sendMail(mailOptions, function (error, info) {
+              if (error)  console.log(error);
+              else console.log('Email sent: ' + info.response);
+          }).then(r => res.redirect('/supplier/dashboard'));
     })
   });
 });
+
 router.post('/profile',isAuthenticatedSupplier,upload.single('picture'),async function (req,res,next){
   let {name, address,koordinate, email, password} = req.body;
   let newPassword;
@@ -215,10 +155,10 @@ router.post('/profile',isAuthenticatedSupplier,upload.single('picture'),async fu
                   koordinate:koordinate,
                   password:newPassword
                 },
-                function (err, success) {
+                function (err) {
                   if(err) return err;
                   res.redirect('/supplier/profile');
-                });
+            });
           }
         })
       }
@@ -234,9 +174,10 @@ router.post('/profile',isAuthenticatedSupplier,upload.single('picture'),async fu
           modified: modified,
           koordinate:koordinate
         },
-        function (error, success) {
-          res.redirect('/supplier/profile');
-        });
+        function (err) {
+        if(err) return err;
+        res.redirect('/supplier/profile');
+    });
   }
   else if(req.file && password !== ""){
     bcrypt.genSalt(10, function (saltError, salt) {
