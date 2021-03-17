@@ -7,9 +7,20 @@
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/adminRestaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/adminRestaurant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/supplier.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/customers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/customers.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/food.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/food.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/menu.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/menu.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/sale.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/sale.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/suppliers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/suppliers.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/admin-restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/admin-restaurant.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/food.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/food.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/foodType.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/foodType.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/restaurantType.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurantType.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/restaurants.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurants.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/suppliers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/suppliers.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/user/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/user/restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/restaurant.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,6 +214,9 @@
       <workItem from="1615654840920" duration="1303000" />
       <workItem from="1615828217498" duration="4747000" />
       <workItem from="1615833042150" duration="4378000" />
+      <workItem from="1615894900058" duration="6000" />
+      <workItem from="1615900846354" duration="897000" />
+      <workItem from="1615983280298" duration="1366000" />
     </task>
     <servers />
   </component>

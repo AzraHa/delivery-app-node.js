@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/stylesheets/style.css" rel="stylesheet">
     <script src="/script/script.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
@@ -51,18 +52,9 @@
                                             <td>Inactive</td>
                                         <%}%>
                                         <td><%= sale[i].salePrice %></td>
-                                        <td class="project-actions text-right">
-                                            <a class="btn btn-primary btn-sm" href="/adminRestaurant/sale/<%= sale[i]._id%>">
-                                                <i class="fa fa-folder">
-                                                </i>
-                                                View
-                                            </a>
-                                            <a class="btn btn-primary btn-sm" href="#" onclick="deleteSale('<%= sale[i]._id%>');">
-                                                <i class="fa fa-folder">
-                                                </i>
-                                                Delete
-                                            </a>
-
+                                        <td class="project-actions text-center">
+                                            <a href="/adminRestaurant/sale/<%= sale[i]._id%>"><i class="fa fa-edit"></i></a>
+                                            <a href="#" onclick="deleteSale('<%= sale[i]._id%>');"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 <%}}%>

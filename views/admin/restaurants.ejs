@@ -35,42 +35,32 @@
                                 <th>Name</th>
                                 <th>Address</th>
                                 <th>Status</th>
-                                <th></th>
+                                <th>Edit/Delete</th>
                             </tr>
                             </thead>
                             <tbody>
                                 <% if (typeof RestaurantArray !== 'undefined' && RestaurantArray.length > 0) {%>
-                                <%for (var i = 0; i < RestaurantArray.length; i++) { %>
-                                <tr id="<%=RestaurantArray[i]._id %>">
-                                    <td></td>
-                                    <% if(RestaurantArray[i].status === true) {%>
-                                        <td><img src="../images/<%= RestaurantArray[i].image%>" style="width: 50px;"></td>
-                                        <td><%= RestaurantArray[i].name %></td>
-                                        <td><%= RestaurantArray[i].address %></td>
-
-                                        <% if(RestaurantArray[i].status === true){%>
-                                            <td>Active</td>
-                                        <%} else {%>
-                                            <td>X</td>
-                                        <%}%>
-                                        <td class="project-actions text-right">
-                                            <a class="btn btn-primary btn-sm" href="/admin/restaurants/<%= RestaurantArray[i]._id%>">
-                                                <i class="fa fa-folder">
-                                                </i>
-                                                View
-                                            </a>
-                                            <a class="btn btn-danger btn-sm" href="#" onclick="deleteRestaurant('<%=RestaurantArray[i]._id%>');">
-                                                <i class="fa fa-trash">
-                                                </i>
-                                                Delete
-                                            </a>
-                                        </td>
-                                    <% } %>
-                            </tr>
-                            <%}%>
-                            <% } %>
+                                    <%for (var i = 0; i < RestaurantArray.length; i++) { %>
+                                        <tr id="<%=RestaurantArray[i]._id %>">
+                                            <td></td>
+                                            <% if(RestaurantArray[i].status === true) {%>
+                                                <td><img src="../images/<%= RestaurantArray[i].image%>" style="width: 50px;"></td>
+                                                <td><%= RestaurantArray[i].name %></td>
+                                                <td><%= RestaurantArray[i].address %></td>
+                                                <% if(RestaurantArray[i].status === true){%>
+                                                    <td>Active</td>
+                                                <%} else {%>
+                                                    <td>X</td>
+                                                <%}%>
+                                                <td class="project-actions text-center">
+                                                    <a href="/admin/restaurants/<%= RestaurantArray[i]._id%>"><i class="fa fa-edit"></i></a>
+                                                    <a href="#" onclick="deleteRestaurant('<%=RestaurantArray[i]._id%>');"><i class="fa fa-trash-alt"></i></a>
+                                                </td>
+                                            <%}%>
+                                        </tr>
+                                    <%}%>
+                                <% } %>
                             </tbody>
-
                         </table>
                     </div>
                 </div>

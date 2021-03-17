@@ -101,13 +101,14 @@ router.post('/add-restaurant-admin',isAuthenticatedSuperAdmin,function(req,res,n
       adminEmail
     });
   }else {
-    Restaurant.findOne({ email: adminEmail }).then(user => {
+    RestaurantAdmin.findOne({ email: adminEmail }).then(user => {
       if (user) {
         errors.push({ msg: 'Email already exists' });
         res.render('admin/add-restaurant-admin', {
           errors,
           adminName,
-          adminEmail
+          adminEmail,
+          user
         });
       } else {
         const newUser = new RestaurantAdmin({

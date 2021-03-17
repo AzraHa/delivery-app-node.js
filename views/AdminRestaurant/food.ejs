@@ -53,18 +53,9 @@
                                         <%}%>
                                         <td><%= foodArray[i].price%>  KM</td>
                                         <td><%= foodArray[i].type.name%></td>
-                                        <td class="project-actions text-right">
-                                            <a class="btn btn-primary btn-sm" href="/adminRestaurant/food/<%= foodArray[i]._id%>">
-                                                <i class="fa fa-folder">
-                                                </i>
-                                                View
-                                            </a>
-                                            <a class="btn btn-danger btn-sm" href="#" onclick="deleteFood('<%= foodArray[i]._id%>');">
-                                                <i class="fa fa-trash">
-                                                </i>
-                                                Delete
-                                            </a>
-
+                                        <td class="project-actions text-center">
+                                            <a href="/adminRestaurant/food/<%= foodArray[i]._id%>"><i class="fa fa-edit"></i></a>
+                                            <a href="#" onclick="deleteFood('<%= foodArray[i]._id%>');"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 <%}}%>

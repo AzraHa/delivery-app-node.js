@@ -12,9 +12,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 </head>
-
 <body>
 <main role="main">
     <% include partials/navbar %>
@@ -44,31 +42,32 @@
                                 </thead>
                                 <tbody>
                                 <% if (typeof order !== 'undefined' && order.length > 0) {%>
-                                <%for(let i=0;i<order.length;i++){%>
-                                    <tr>
-                                        <td><%= i+1 %></td>
-                                        <td><a href="/admin/order/<%=order[i]._id %>"><%=order[i]._id %></a></td>
-                                        <td>
-                                            <%if(order[i].status === 2){%>
-                                                <p>Waiting for confirmation of supplier </p>
-                                            <%}else if(order[i].status === 3){%>
-                                                <p>Delivering</p>
-                                            <%}else if(order[i].status === 5){%>
-                                                <p>Delivered</p>
+                                    <%for(let i=0;i<order.length;i++){%>
+                                        <tr>
+                                            <td><%= i+1 %></td>
+                                            <td><a href="/admin/order/<%=order[i]._id %>"><%=order[i]._id %></a></td>
+                                            <td>
+                                                <%if(order[i].status === 2){%>
+                                                    <p>Waiting for confirmation of supplier </p>
+                                                <%}else if(order[i].status === 3){%>
+                                                    <p>Delivering</p>
+                                                <%}else if(order[i].status === 5){%>
+                                                    <p>Delivered</p>
+                                                <%}%>
+                                            </td>
+                                            <% if (order[i].supplier !== null) {%>
+                                                <td><%= order[i].supplier[0].name %></td>
+                                            <%}else{%>
+                                                <td></td>
                                             <%}%>
-                                        </td>
-                                        <% if (order[i].supplier !== null) {%>
-                                            <td><%= order[i].supplier[0].name %></td>
-                                        <%}else{%>
-                                            <td></td>
-                                        <%}%>
-                                        <%for(let j=0;j<order[i].restaurant.length;j++){%>
-                                            <td><a href="#"><li class="list-group-item"><%= order[i].restaurant[j].name %></li></a> </td>
-                                        <%}%>
-                                        <td><%= order[i].customer.name %></td>
-                                        <td></td>
-                                    </tr>
-                                <%}%>
+                                            <%for(let j=0;j<order[i].restaurant.length;j++){%>
+                                                <td>
+                                                    <a href="#"><li class="list-group-item"><%= order[i].restaurant[j].name %></a>
+                                                </td>
+                                            <%}%>
+                                            <td><%= order[i].customer.name %></td>
+                                        </tr>
+                                    <%}%>
                                 <%}%>
                                 </tbody>
                             </table>
@@ -77,7 +76,6 @@
                     <div class="card-footer clearfix">
                         <a href="/admin/orders" class="btn btn-sm btn-secondary float-right">View All Orders</a>
                     </div>
-
                 </div>
                 <div class="card">
                     <div class="card-header border-transparent">
@@ -92,44 +90,34 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Restaurant</th>
-                                    <th>Status</th>
-                                    <th></th>
+                                    <th>Edit/Delete</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     <% if (typeof suppliersArray !== 'undefined' && suppliersArray.length > 0) {%>
-                                    <%for (var i = 0; i < suppliersArray.length; i++) { %>
-                                        <tr id="<%= suppliersArray[i]._id%>">
-                                            <td><%= i+1 %> </td>
-                                            <td><%= suppliersArray[i].name %></td>
-                                            <td><%= suppliersArray[i].email %></td>
-                                            <td>
-                                                <ul class="list-group">
-                                                    <%for(let j=0;j<suppliersArray[i].restaurant.length;j++){%>
-                                                        <a href="#"><li class="list-group-item"><%= suppliersArray[i].restaurant[j].name %></li></a>
-                                                    <%}%>
-                                                </ul>
-                                            </td>
-                                            <% if(suppliersArray[i].status === true){%>
-                                                <td>Active</td>
-                                            <%} else {%>
-                                                <td>X</td>
-                                            <%}%>
-                                            <td class="project-actions text-right">
-                                                <a class="btn btn-primary btn-sm" href="/admin/suppliers/<%= suppliersArray[i]._id%>">
-                                                    <i class="fa fa-folder">
-                                                    </i>
-                                                    View
-                                                </a>
-                                                <a class="btn btn-danger btn-sm" onclick="deleteSupplierAdmin('<%= suppliersArray[i]._id%>')">
-                                                    <i class="fa fa-trash">
-                                                    </i>
-                                                    Delete
-                                                </a>
-                                            </td>
-                                </tr>
-                                <%}%>
-                                <% } %>
+                                        <%for (var i = 0; i < suppliersArray.length; i++) { %>
+                                            <tr id="<%= suppliersArray[i]._id%>">
+                                                <td><%= i+1 %> </td>
+                                                <td><%= suppliersArray[i].name %></td>
+                                                <td><%= suppliersArray[i].email %></td>
+                                                <td>
+                                                    <ul class="list-group">
+                                                        <%for(let j=0;j<suppliersArray[i].restaurant.length;j++){%>
+                                                            <a href="#"><li class="list-group-item"><%= suppliersArray[i].restaurant[j].name %></li></a>
+                                                        <%}%>
+                                                    </ul>
+                                                </td>
+                                                <td class="project-actions text-center">
+                                                    <a class="" href="/admin/suppliers/<%= suppliersArray[i]._id%>">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                    <a class="" onclick="deleteSupplierAdmin('<%= suppliersArray[i]._id%>')">
+                                                        <i class="fa fa-trash-alt"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <%}%>
+                                    <% } %>
                                 </tbody>
                             </table>
                         </div>
@@ -137,7 +125,6 @@
                     <div class="card-footer clearfix">
                         <a href="/admin/suppliers" class="btn btn-sm btn-secondary float-right">View All Suppliers</a>
                     </div>
-
                 </div>
                 <div class="card">
                     <div class="card-header border-transparent">
@@ -152,43 +139,30 @@
                                     <th>Picture</th>
                                     <th>Name</th>
                                     <th>Address</th>
-                                    <th>Status</th>
-                                    <th></th>
+                                    <th>Edit/Delete</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
                                     <% if (typeof RestaurantArray !== 'undefined' && RestaurantArray.length > 0) {%>
-                                    <%for (var i = 0; i < RestaurantArray.length; i++) { %>
-                                        <tr id="<%=RestaurantArray[i]._id%>">
-                                        <% if(RestaurantArray[i].status === true) {%>
-                                            <td><%= i+1 %></td>
-                                            <td><img src="../images/<%= RestaurantArray[i].image%>" style="width: 50px;"></td>
-                                            <td><%= RestaurantArray[i].name %></td>
-
-                                            <td><%= RestaurantArray[i].address %></td>
-
-                                            <% if(RestaurantArray[i].status === true){%>
-                                                <td>Active</td>
-                                            <%} else {%>
-                                                <td>X</td>
-                                            <%}%>
-                                            <td class="project-actions text-right">
-                                                <a class="btn btn-primary btn-sm" href="/admin/restaurants/<%= RestaurantArray[i]._id%>">
-                                                    <i class="fa fa-folder">
-                                                    </i>
-                                                    View
-                                                </a>
-                                                <a class="btn btn-danger btn-sm" onclick="deleteRestaurant('<%= RestaurantArray[i]._id%>')">
-                                                    <i class="fa fa-trash">
-                                                    </i>
-                                                    Delete
-                                                </a>
-                                            </td>
-                                        <% } %>
-                                </tr>
-                                <%}%>
-                                <% } %>
+                                        <%for (var i = 0; i < RestaurantArray.length; i++) { %>
+                                            <tr id="<%=RestaurantArray[i]._id%>">
+                                                <% if(RestaurantArray[i].status === true) {%>
+                                                    <td><%= i+1 %></td>
+                                                    <td><img src="../images/<%= RestaurantArray[i].image%>" style="width: 50px;"></td>
+                                                    <td><%= RestaurantArray[i].name %></td>
+                                                    <td><%= RestaurantArray[i].address %></td>
+                                                    <td class="project-actions text-center">
+                                                        <a class="" href="/admin/restaurants/<%= RestaurantArray[i]._id%>">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                        <a class="" onclick="deleteRestaurant('<%= RestaurantArray[i]._id%>')">
+                                                            <i class="fa fa-trash-alt"></i>
+                                                        </a>
+                                                    </td>
+                                                <%}%>
+                                            </tr>
+                                        <%}%>
+                                    <%}%>
                                 </tbody>
                             </table>
                         </div>
@@ -196,9 +170,6 @@
                     <div class="card-footer clearfix">
                         <a href="/admin/restaurants" class="btn btn-sm btn-secondary float-right">View All Restaurants</a>
                     </div>
-
-                </div>
-
                 </div>
             </div>
         </div>

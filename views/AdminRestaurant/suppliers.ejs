@@ -35,7 +35,7 @@
                                     <th>Email</th>
                                     <th>Adress</th>
                                     <th>Last modified</th>
-                                    <th></th>
+                                    <th>Edit/Delete</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -47,18 +47,9 @@
                                         <td><%= suppliers[i].email %></td>
                                         <td><%= suppliers[i].s_address %></td>
                                         <td><%= suppliers[i].modified %></td>
-                                        <td class="project-actions text-right">
-                                            <a class="btn btn-primary btn-sm" href="/adminRestaurant/suppliers/<%= suppliers[i]._id%>">
-                                                <i class="fa fa-folder">
-                                                </i>
-                                                View
-                                            </a>
-                                            <a class="btn btn-primary btn-sm" href="#" onclick="deleteSupplier('<%= suppliers[i]._id%>');">
-                                                <i class="fa fa-folder">
-                                                </i>
-                                                Delete
-                                            </a>
-
+                                        <td class="project-actions text-center">
+                                            <a href="/adminRestaurant/suppliers/<%= suppliers[i]._id%>"><i class="fa fa-edit"></i></a>
+                                            <a onclick="deleteSupplier('<%= suppliers[i]._id%>');"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 <%}%>

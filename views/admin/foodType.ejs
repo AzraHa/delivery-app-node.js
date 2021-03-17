@@ -37,7 +37,7 @@
                                     <th>Name</th>
                                     <th>Modified</th>
                                     <th>Status</th>
-                                    <th></th>
+                                    <th>Delete</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -52,9 +52,9 @@
                                         <%} else {%>
                                             <td>X</td>
                                         <%}%>
-                                        <td class="project-actions text-right">
-                                            <a class="btn btn-danger btn-sm" href="#" onclick="deleteFoodType('<%= types[i]._id%>')";>
-                                                <i class="fa fa-trash"></i>Delete
+                                        <td class="project-actions text-center">
+                                            <a href="#" onclick="deleteFoodType('<%= types[i]._id%>')";>
+                                                <i class="fa fa-trash-alt"></i>
                                             </a>
                                         </td>
                                     </tr>
