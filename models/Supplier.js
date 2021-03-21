@@ -31,7 +31,8 @@ const SupplierSchema = new mongoose.Schema({
   },
   status:{
     type: Number,
-    required:true
+    required:true,
+    default: 1
   },
   modified:{
     type:String,

@@ -6,19 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Supplier.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/pizza.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/customers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/customers.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/adminRestaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/adminRestaurant.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/supplier.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/food.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/food.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/menu.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/menu.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/sale.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/sale.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/suppliers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/suppliers.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/admin-restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/admin-restaurant.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/dashboard.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/food.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/food.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/foodType.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/foodType.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/restaurantType.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurantType.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/restaurants.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/restaurants.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/suppliers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/suppliers.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/saleItem.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/saleItem.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/supplier.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/supplier.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/RestaurantAdmin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/RestaurantAdmin.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/user/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/dashboard.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/user/restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/restaurant.ejs" afterDir="false" />
     </list>
@@ -217,6 +215,8 @@
       <workItem from="1615894900058" duration="6000" />
       <workItem from="1615900846354" duration="897000" />
       <workItem from="1615983280298" duration="1366000" />
+      <workItem from="1615994131881" duration="29000" />
+      <workItem from="1616345545592" duration="7430000" />
     </task>
     <servers />
   </component>
@@ -246,7 +246,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/routes/adminRestaurant.js</url>
-          <line>679</line>
+          <line>711</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>

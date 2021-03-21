@@ -73,12 +73,17 @@ router.post('/order-confirm/:id/:customer',isAuthenticatedSupplier,function (req
                 from: supplier.email,
                 to: user.email,
                 subject: 'Order Confirmed',
-                text: 'Your order has been confirmed by our supplier and it is at your door on ' + moment(doc.date).add(30, 'm')
+                text: 'Your order has been confirmed by our supplier and it is at your door in 45 minutes'// + moment(doc.date).add(30, 'minute')
             };
+
             transporter.sendMail(mailOptions, function (error, info) {
                 if (error) console.log(error);
-                else console.log('Email sent: ' + info.response);
-            }).then(r => res.redirect('/supplier/dashboard'));
+                else {
+                    console.log('Email sent: ' + info.response)
+                    res.redirect('/supplier/dashboard')
+
+                }
+            })
         });
     });
   });
@@ -113,8 +118,8 @@ router.post('/active-order/:id',isAuthenticatedSupplier,function(req,res,next){
           };
           transporter.sendMail(mailOptions, function (error, info) {
               if (error)  console.log(error);
-              else console.log('Email sent: ' + info.response);
-          }).then(r => res.redirect('/supplier/dashboard'));
+              else res.sendStatus(200);
+          });
     })
   });
 });

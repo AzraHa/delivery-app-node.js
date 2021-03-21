@@ -44,7 +44,7 @@
                                 <%for (var i = 0; i < sale.length; i++) { %>
                                     <tr id="<%= sale[i]._id%>">
                                         <td><%= i+1 %></td>
-                                        <td><a href="#"><%= sale[i].food.name%></a></td>
+                                        <td><a href="/adminRestaurant/sale/<%= sale[i]._id%>"><%= sale[i].food.name%></a></td>
                                         <td><img src="../images/<%= sale[i].picture%>" style="width: 50px;"></td>
                                         <%if(sale[i].status===true){%>
                                             <td>Active</td>

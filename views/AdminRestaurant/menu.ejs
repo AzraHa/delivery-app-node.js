@@ -35,6 +35,7 @@
                                     <th>Picture</th>
                                     <th>Price</th>
                                     <th>Type</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -42,13 +43,13 @@
                                 <%for (var i = 0; i < menu.length; i++) { %>
                                     <tr id="<%= menu[i]._id %>">
                                         <td></td>
-                                        <td><a href="#"><%= menu[i].name%></a></td>
+                                        <td><a href="/adminRestaurant/menu/<%= menu[i]._id%>"><%= menu[i].name%></a></td>
                                         <td><img src="../../images/<%= menu[i].picture%>" style="width: 50px;"></td>
                                         <td><%= menu[i].price%></td>
                                         <td><%= menu[i].type.name%></td>
                                         <td class="project-actions text-center">
-                                            <a class="btn btn-primary btn-sm" href="/adminRestaurant/menu/<%= menu[i]._id%>"><i class="fa fa-edit"></i></a>
-                                            <a class="btn btn-primary btn-sm" href="#" onclick="deleteFoodMenu('<%= menu[i]._id%>');"><i class="fa fa-trash"></i></a>
+                                            <a href="/adminRestaurant/menu/<%= menu[i]._id%>"><i class="fa fa-edit"></i></a>
+                                            <a href="#" onclick="deleteFoodMenu('<%= menu[i]._id%>');"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 <%}}%>

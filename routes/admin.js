@@ -199,9 +199,10 @@ router.post('/admins/:id',isAuthenticatedSuperAdmin,upload.single('picture'),fun
           address: address,
           koordinate: koordinate
         },
-        function (error) {
+        function (error,success) {
           if (error) return error;
           else res.redirect('/admin/admins');
+
         });
   } else {
     RestaurantAdmin.updateOne({_id: req.params.id},
@@ -211,9 +212,8 @@ router.post('/admins/:id',isAuthenticatedSuperAdmin,upload.single('picture'),fun
           email: email,
           address: address,
           koordinate: koordinate,
-          picture: req.file.filename
         },
-        function (error, success) {
+        function (error,success) {
           if (error) return error;
           else res.redirect('/admin/admins');
         });
@@ -818,8 +818,8 @@ router.get('/add-restaurantType',isAuthenticatedSuperAdmin,function(req,res,next
 });
 router.post('/add-restaurantType',isAuthenticatedSuperAdmin,function(req,res,next){
   const newRestaurantType =  new RestaurantType({
-    name:name,
-    status:status
+    name:req.body.name,
+    status:true
   });
   newRestaurantType.save().then(user => {res.redirect('/admin/restaurantType');}).catch(err => console.log(err));
 });

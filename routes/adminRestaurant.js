@@ -444,7 +444,7 @@ router.get('/order-confirm/:id',isAuthenticatedAdmin,function (req,res,next) {
 });
 router.post('/order-confirm/:id',isAuthenticatedAdmin,function (req,res,next){
   const supplierID = req.body.supplier;
-  TotalOrder.findOneAndUpdate({_id:req.params.id},{status:3,supplier:supplierID},{new:true},function(err,order) {
+  TotalOrder.findOneAndUpdate({_id:req.params.id},{status:3,$push:{supplier:supplierID}},{new:true},function(err,order) {
     if (err) {
       console.log("Something wrong when updating data!");
     }
@@ -475,42 +475,74 @@ router.get('/suppliers/:id',isAuthenticatedAdmin,function (req,res,next){
     })
   })
 });
-router.post('/suppliers/edit/:id',isAuthenticatedAdmin,function (req,res,next){
+router.post('/suppliers/edit/:id',isAuthenticatedAdmin,upload.single('picture'),function (req,res,next){
   const supplierID = req.params.id;
   const {name,address,email,status,password} = req.body;
   const modified = moment().format("MM/DD/YYYY, h:mm:ss");
-  if (password === ""){
-    Supplier.updateOne({ _id: supplierID},  {
-          status: status ,
-          modified:modified,
-          name:name,
-          email:email,
-          s_address:address
-        },
-        function (err) {
-            if(err) return err;
-            res.redirect('/adminRestaurant/suppliers');
+  if(password !== "" && !req.file){
+      bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(password, salt, (err, hash) => {
+              if (err) throw err;
+              Supplier.updateOne({ _id: supplierID},  {
+                      status: status ,
+                      password : hash,
+                      modified:modified,
+                      name:name,
+                      email:email,
+                      s_address:address,
+                    },
+                    function (err) {
+                        if(err) return err;
+                        res.redirect('/adminRestaurant/suppliers');
+                    });
+            });
         });
-  }else{
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(password, salt, (err, hash) => {
-        if (err) throw err;
-        Supplier.updateOne({ _id: supplierID},  {
+  }else if(password === "" && req.file){
+      Supplier.updateOne({ _id: supplierID},  {
+              status: status ,
+              modified:modified,
+              name:name,
+              email:email,
+              s_address:address,
+              picture:req.file.filename
+          },
+          function (err) {
+              if(err) return err;
+              res.redirect('/adminRestaurant/suppliers');
+          });
+  }else if(password !== "" && req.file){
+      bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(password, salt, (err, hash) => {
+              if (err) throw err;
+              Supplier.updateOne({ _id: supplierID},  {
+                      status: status ,
+                      password : hash,
+                      modified:modified,
+                      name:name,
+                      email:email,
+                      s_address:address,
+                      picture:req.file.filename
+                  },
+                  function (err) {
+                      if(err) return err;
+                      res.redirect('/adminRestaurant/suppliers');
+                  });
+          });
+      });
+  }else if(password === "" && !req.file){
+      Supplier.updateOne({ _id: supplierID},  {
               status: status ,
               password : hash,
               modified:modified,
               name:name,
               email:email,
-              s_address:address
-            },
-            function (err) {
-                if(err) return err;
-                res.redirect('/adminRestaurant/suppliers');
-            });
-      });
-    });
+              s_address:address,
+          },
+          function (err) {
+              if(err) return err;
+              res.redirect('/adminRestaurant/suppliers');
+          });
   }
-
 });
 
 

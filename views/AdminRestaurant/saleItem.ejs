@@ -23,9 +23,6 @@
                 <div class="card" style="border: 1px solid orange;">
                     <% for(let i=0;i<sale.length;i++){ %>
                     <div class="card-body" style="border-top: 1px solid orange;">
-                        <div class="card-header">
-                            <h3 class="card-title"><%= sale[i].name  %></h3>
-                        </div>
                         <div class="card-body">
                             <form action="/adminRestaurant/sale/edit/<%= sale[i]._id%>" method="post" enctype="multipart/form-data">
                                 <div class="container">
