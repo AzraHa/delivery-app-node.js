@@ -305,27 +305,15 @@ color: #F9723D;
 }
 
 @media screen and (max-width:776px) {
-.naslovna2 {
-display: none;
-}
-.login-box {
-width: 70% !important;
-}
-.register-box {
-width: 90%;
-}
-}
-
-
-.starter-template {
-padding: 3rem 1.5rem;
-text-align: center;
-}
-
-.feather {
-width: 16px;
-height: 16px;
-vertical-align: text-bottom;
+  .naslovna2 {
+  display: none;
+  }
+  .login-box {
+  width: 70% !important;
+  }
+  .register-box {
+  width: 90%;
+  }
 }
 
 .sidebar {
@@ -334,9 +322,7 @@ top: 0;
 bottom: 0;
 left: 0;
 z-index: 100;
-/* Behind the navbar */
   padding: 48px 0 0;
-  /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
 
@@ -416,20 +402,6 @@ z-index: 100;
 .form-control-dark:focus {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
-}
-
-
-.jumbotron .container {
-  max-width: 40rem;
-}
-
-footer {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-}
-
-footer p {
-  margin-bottom: .25rem;
 }
 
 .bd-placeholder-img {
@@ -638,10 +610,6 @@ ul li{
 .rating {
   float:left;
 }
-
-/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t
-   follow these rules. Every browser that supports :checked also supports :not(), so
-   it doesn’t make the test unnecessarily selective */
 .rating:not(:checked) > input {
   position:absolute;
   top:-9999px;
@@ -691,16 +659,10 @@ ul li{
   left:2px;
 }
 
-/* end of Lea's code */
-
-/*
- * Clearfix from html5 boilerplate
- */
-
 .clearfix:before,
 .clearfix:after {
-  content: " "; /* 1 */
-  display: table; /* 2 */
+  content: " ";
+  display: table;
 }
 
 .clearfix:after {

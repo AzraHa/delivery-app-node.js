@@ -35,7 +35,7 @@
                                         <label>Customer Address</label>
                                         <p class="form-control" style="height: 150px;"><%= order[0].customer.address%></p>
                                     </div>
-                                    <% if (order[0].supplier !== null) {%>
+                                    <% if (order[0].supplier !== null && order[0].supplier.length >0) {%>
                                         <div class="container__text">
                                             <label>Supplier Name</label>
                                             <p class="form-control" style="height: 80px;"><%= order[0].supplier[0].name%></p>
@@ -57,7 +57,7 @@
                                                 <option value="" disabled selected>Supplier</option>
                                                 <% if (typeof suppliers !== 'undefined' && suppliers.length > 0) {%>
                                                     <%for (var i = 0; i < suppliers.length; i++) { %>
-                                                        <option  name ="tip" value="<%= suppliers[i]._id%>"><%= suppliers[i].name %></option>
+                                                        <option  name ="supplier" value="<%= suppliers[i]._id%>"><%= suppliers[i].name %></option>
                                                     <%}%>
                                                 <%}%>
                                             </select>

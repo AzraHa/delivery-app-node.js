@@ -108,7 +108,7 @@ function korisnikMap(){
                 },
                 () => {
                     handleLocationError(true, infoWindow, map.getCenter());
-                }
+                } ,{timeout: 10000}
             );
         } else {
             handleLocationError(false, infoWindow, map.getCenter());
@@ -236,7 +236,7 @@ function myMap() {
                 },
                 () => {
                     handleLocationError(true, infoWindow, map.getCenter());
-                }
+                } ,{timeout: 10000}
             );
         } else {
             handleLocationError(false, infoWindow, map.getCenter());

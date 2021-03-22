@@ -212,6 +212,7 @@ router.post('/admins/:id',isAuthenticatedSuperAdmin,upload.single('picture'),fun
           email: email,
           address: address,
           koordinate: koordinate,
+          picture:req.file.filename
         },
         function (error,success) {
           if (error) return error;

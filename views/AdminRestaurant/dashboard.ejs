@@ -51,7 +51,7 @@
                                                 <p>Delivered</p>
                                             <%}%>
                                         </td>
-                                        <%if (order[i].supplier !== null) {%>
+                                        <%if (order[i].supplier !== null && order[i].supplier.length > 0) {%>
                                             <td><%= order[i].supplier[0].name %></td>
                                         <%}else{%>
                                             <td></td>

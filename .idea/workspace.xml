@@ -6,19 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="f8c68b7b-03ee-4a33-98f2-68add49aae9c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Supplier.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/pizza.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/TotalOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/TotalOrder.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/script/maps.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/script/maps.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/stylesheets/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/adminRestaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/adminRestaurant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/supplier.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/food.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/food.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/menu.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/menu.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/sale.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/sale.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/saleItem.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/saleItem.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/supplier.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/supplier.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/RestaurantAdmin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/RestaurantAdmin.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/user/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/dashboard.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/user/restaurant.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/restaurant.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/confirm-order.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/confirm-order.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AdminRestaurant/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/AdminRestaurant/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/admin/profile.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/profile.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/supplier/profile.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/supplier/profile.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +60,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="14.16.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="14.14.34" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/views/user" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -71,11 +68,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Acer\Desktop" />
       <recent name="C:\Users\Acer\WebstormProjects\projekat\views\user" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views\AdminRestaurant" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views\admin" />
       <recent name="C:\Users\USER\WebstormProjects\projekat\views" />
-      <recent name="C:\Users\USER\WebstormProjects\projekat\views\user" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\USER\WebstormProjects\projekat\views\partials" />
@@ -217,6 +214,7 @@
       <workItem from="1615983280298" duration="1366000" />
       <workItem from="1615994131881" duration="29000" />
       <workItem from="1616345545592" duration="7430000" />
+      <workItem from="1616417108967" duration="7695000" />
     </task>
     <servers />
   </component>

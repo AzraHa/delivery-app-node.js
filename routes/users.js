@@ -151,8 +151,7 @@ router.get('/dashboard',isAuthenticatedCustomer,function(req,res,next){
         })
 });
 router.get('/recommended',isAuthenticatedCustomer,function(req,res,next){
-  //Food,foodtype,restaurant,order
-  Restaurant.find({}).exec(function (err,allRestaurants){
+  Restaurant.find({}).sort({'rated':1}).exec(function (err,allRestaurants){
     User.findOne({_id: req.user._id}, function (err, user) {
       const adresa = user.koordinate.replace("(", "").replace(")", "");
       const nova = adresa.split(",");
@@ -217,12 +216,13 @@ router.get('/sale',isAuthenticatedCustomer,function (req,res,next){
     mm='0'+mm
   }
   today = yyyy+'-'+mm+'-'+dd;
+  console.log(today)
   Restaurant.find({},function (err,rest){
     Food.find({}).exec(function (err,food){
       FoodType.find({},function(err,foodtype){
         Restaurant.find({},function (err,restaurant){
           Order.find({'customer':req.user._id,status:1}).populate('food').populate('restaurant').exec(function (err,order){
-            Sale.find({date_from: today,status:true}).populate('restaurant').populate('food').exec(function(err,sale){
+            Sale.find({status:true}).populate('restaurant').populate('food').exec(function(err,sale){
               console.log(sale)
               res.render('user/sale',{
                 user:req.user,

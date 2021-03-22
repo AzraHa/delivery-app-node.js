@@ -446,9 +446,9 @@ router.post('/order-confirm/:id',isAuthenticatedAdmin,function (req,res,next){
   const supplierID = req.body.supplier;
   TotalOrder.findOneAndUpdate({_id:req.params.id},{status:3,$push:{supplier:supplierID}},{new:true},function(err,order) {
     if (err) {
-      console.log("Something wrong when updating data!");
+      console.log("Something wrong when updating data!",err);
     }
-    Supplier.findOneAndUpdate({_id:supplierID},{status:3,$push:{orders:order._id}},{new:true},function (err){
+    Supplier.findOneAndUpdate({_id:supplierID},{status:3,$push:{orders:req.params.id}},{new:true},function (err){
         if(err) return err;
         res.redirect('/adminRestaurant/dashboard');
     })
