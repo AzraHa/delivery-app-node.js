@@ -392,6 +392,9 @@ router.post('/send-order',isAuthenticatedCustomer,function(req,res,next) {
             dostavljacID = (ObjectId(suppliers[s]._id));
           }
         }
+        if(dostavljacID === undefined){
+          dostavljacID = [];
+        }
         TotalOrder.findOneAndUpdate({_id:doc._id,status:1},
             {
               supplier:dostavljacID,

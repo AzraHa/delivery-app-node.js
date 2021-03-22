@@ -376,7 +376,7 @@ router.get('/orders',isAuthenticatedAdmin,function (req,res,next){
   })
 });
 router.get('/order-confirm',isAuthenticatedAdmin,function (req,res,next){
-  TotalOrder.find({restaurant:req.user.restaurant,status:2,supplier:null}).populate([{
+  TotalOrder.find({restaurant:req.user.restaurant,status:2,supplier:[]}).populate([{
       path: 'orders',
       populate: {
         path: 'food',
