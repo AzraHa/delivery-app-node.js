@@ -23,7 +23,6 @@
             Editing restaurant data (delivery distance, eg we only deliver 10 km of air line)
         </li>
     </ol>
-
     <ol style="list-style-type: circle;">● Deliverer
         <li>
             Created an overview of all orders to be delivered for that day.
@@ -35,7 +34,6 @@
             Created the ability to send information to the administrator (supplied / not delivered order).
         </li>
     </ol>
-
     <ol style="list-style-type: circle;">● Customer
         <li>
             Possibility to log in to the system. The name, surname and address, and e-mail must be entered user.
