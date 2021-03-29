@@ -124,7 +124,6 @@ function korisnikMap(){
         );
         infoWindow.open(map);
     }
-    // Adds a marker to the map and push to the array.
     function setMapOnAll(map) {
         for (let i = 0; i < markers.length; i++) {
             markers[i].setMap(map);
@@ -159,7 +158,7 @@ function korisnikMap(){
         });
     }
 
-    // This event listener will call addMarker() when the map is clicked.
+
     map.addListener("click", (event) => {
         clearMarkers();
         placeMarker(event.latLng);
@@ -198,7 +197,7 @@ function myMap() {
 
     let markers = []; //smjestamo sve markere u niz tako da ih kasnije klikom 'smaknemo' sa mape
 
-    infoWindow = new google.maps.InfoWindow();
+    let infoWindow = new google.maps.InfoWindow();
 
     const locationButton = document.getElementById("dugme"); //dugme za lociranje
 
@@ -252,7 +251,6 @@ function myMap() {
         );
         infoWindow.open(map);
     }
-    // Adds a marker to the map and push to the array.
     function setMapOnAll(map) {
         for (let i = 0; i < markers.length; i++) {
             markers[i].setMap(map);
@@ -287,7 +285,6 @@ function myMap() {
         });
     }
 
-    // This event listener will call addMarker() when the map is clicked.
     map.addListener("click", (event) => {
         clearMarkers();
         placeMarker(event.latLng);

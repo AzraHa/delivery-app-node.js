@@ -174,8 +174,7 @@ body{
   height:90%;
 }
 .restoran-img img{
-  height:90%;
-  margin: 10px 0px;
+  width: 100%;
 }
 .dugmici{
   display: flex;
@@ -582,30 +581,7 @@ ul li{
 .container__text select{
   border:1px solid #F9723D;
 }
-.offer-dedicated-nav{
-  border-top:1px solid #e2e2e2 !important;
-  top:60px;
-  z-index:10;
-}
 
-.offer-dedicated-nav .nav-link.active{
-  color: #fff;
-  background-color: #21c1ab;
-}
-
-.offer-dedicated-nav .nav-link.back{
-  color: #fff;
-  background-color: gray;
-}
-
-.offer-dedicated-nav .nav-link.big{
-  width:240px;
-  font-size:20px;
-  border:1px solid #e2e2e2;
-  padding:10px 20px;
-  text-align:center;
-  margin:20px 10px;
-}
 /*Rate stars*/
 .rating {
   float:left;

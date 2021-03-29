@@ -14,14 +14,8 @@ const Food = require("../models/Food");
 const Admin = require("../models/Admin");
 const bcrypt = require('bcryptjs');
 const RestaurantType = require("../models/RestaurantType");
-const maxAge = 3 *24 *60 *60 ;
-const createToken = (id) => {
-  return jwt.sign({id},'strasno',{
-    expiresIn: maxAge
-  });
-}
-const {isAuthenticatedSuperAdmin} = require('../config/auth');
 
+const {isAuthenticatedSuperAdmin} = require('../config/auth');
 
 router.get('/login',function(req,res,next){
   res.render('admin/login');
@@ -202,7 +196,6 @@ router.post('/admins/:id',isAuthenticatedSuperAdmin,upload.single('picture'),fun
         function (error,success) {
           if (error) return error;
           else res.redirect('/admin/admins');
-
         });
   } else {
     RestaurantAdmin.updateOne({_id: req.params.id},

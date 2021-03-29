@@ -14,7 +14,6 @@ const geolib = require("geolib");
 const nodemailer = require('nodemailer');
 const upload = require('../controllers/uploadController');
 const passport = require('passport');
-const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 const {isAuthenticatedCustomer} = require("../config/auth");
 

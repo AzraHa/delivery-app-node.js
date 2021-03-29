@@ -115,21 +115,33 @@
                             <div class="card">
                                 <table class="table table-hover">
                                     <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Order date</th>
-                                        <th>Food</th>
-                                        <th>Total Price</th>
-                                        <th>Delivery address</th>
-                                    </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>Order date</th>
+                                            <th>Restaurant</th>
+                                            <th>Delivery address</th>
+                                            <th>Food</th>
+                                            <th>Price</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    <%for(let i=0;i<orders.length;i++){%>
+                                        <tr>
+                                            <td><%=i+1%></td>
+                                            <td><%= orders[i].date%></td>
+                                            <td><%= orders[i].restaurant[0].name %></td>
+                                            <td><%= orders[i].delivery_address%></td>
+                                            <td><%let total = 0;%>
+                                                <ul class="list-group">
+                                                    <%for(let j=0;j<orders[i].orders.length;j++){%>
+                                                    <li><%= orders[i].orders[j].food[0].name%></li>
+                                                    <%total +=orders[i].orders[j].food[0].price %>
+                                                    <%}%>
+                                                </ul>
+                                            </td>
+                                            <td><%= total %> KM</td>
+                                        </tr>
+                                    <%}%>
                                     </tbody>
                                 </table>
                             </div>
