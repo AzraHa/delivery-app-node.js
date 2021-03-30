@@ -215,14 +215,12 @@ router.get('/sale',isAuthenticatedCustomer,function (req,res,next){
     mm='0'+mm
   }
   today = yyyy+'-'+mm+'-'+dd;
-  console.log(today)
   Restaurant.find({},function (err,rest){
     Food.find({}).exec(function (err,food){
       FoodType.find({},function(err,foodtype){
         Restaurant.find({},function (err,restaurant){
           Order.find({'customer':req.user._id,status:1}).populate('food').populate('restaurant').exec(function (err,order){
             Sale.find({status:true}).populate('restaurant').populate('food').exec(function(err,sale){
-              console.log(sale)
               res.render('user/sale',{
                 user:req.user,
                 sale:sale,
