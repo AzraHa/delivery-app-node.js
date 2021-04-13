@@ -27,14 +27,9 @@ const db = require('./config/config').mongoURI;
 
 // Connect to MongoDB
 mongoose
-    .connect(
-        db,
-        { useNewUrlParser: true ,useUnifiedTopology: true}
-    )
+    .connect(db, { useNewUrlParser: true ,useUnifiedTopology: true})
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
