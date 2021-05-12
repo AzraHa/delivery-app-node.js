@@ -30,7 +30,8 @@
     "passport-cookie": "^1.0.9",
     "passport-jwt": "^4.0.0",
     "passport-jwt-cookiecombo": "^1.0.5",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "lodash": ">=4.17.21"
   },
   "devDependencies": {
     "bson": "^4.2.3",
